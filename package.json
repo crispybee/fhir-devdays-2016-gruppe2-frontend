@@ -1,6 +1,10 @@
 {
   "name": "fhir-devdays-2016-frontend",
   "version": "1.0.0",
+  "repository": {
+  "type": "git",
+  "url": "git@git.mi.hs-heilbronn.de:tschlage/fhir-devdays-2016-gruppe2-frontend.git"
+  },
   "scripts": {
     "start": "tsc && concurrently \"npm run tsc:w\" \"npm run lite\" ",
     "lite": "lite-server",
@@ -9,7 +13,7 @@
     "tsc:w": "tsc -w",
     "typings": "typings"
   },
-  "license": "Apache 2.0",
+  "license": "Apache-2.0",
   "dependencies": {
     "@angular/common": "2.0.0",
     "@angular/compiler": "2.0.0",
