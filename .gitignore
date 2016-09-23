@@ -42,6 +42,11 @@ jspm_packages
 .node_repl_history
 
 
+### Typings ###
+## Ignore downloaded typings
+typings
+
+
 ### VisualStudioCode ###
 .vscode/*
 !.vscode/settings.json
