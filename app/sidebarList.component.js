@@ -45,6 +45,15 @@ var SidebarListComponent = (function () {
             new Entry('Test 14'),
             new Entry('Test 15')
         ];
+        this.smart = new FHIR.client({
+            serviceUrl: 'https://fhir.iap.hs-heilbronn.de/baseDstu2',
+            patientId: '1'
+        });
+        this.specimen = this.smart.patient.api.search({ type: 'Specimen' });
+        this.specimen.done(function (specimens) {
+            // specimens = JSON.parse(specimens);
+            console.log(JSON.stringify(specimens));
+        });
     }
     SidebarListComponent = __decorate([
         core_1.Component({

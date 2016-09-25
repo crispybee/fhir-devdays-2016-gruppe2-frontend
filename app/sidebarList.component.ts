@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NgClass } from '@angular/common';
 
+declare var FHIR: any;
+
 class Entry {
 constructor(
     public description:string) { }
@@ -17,6 +19,23 @@ export class SidebarListComponent {
     patientBirthday: string = '01.01.1987';
     patientGender: string = 'male';
     calculatedAge: number = 29;
+
+    smart: any;
+    specimen: any;
+
+    constructor() {
+        this.smart = new FHIR.client({
+            serviceUrl: 'https://fhir.iap.hs-heilbronn.de/baseDstu2',
+            patientId: '1'
+        });
+
+        this.specimen = this.smart.patient.api.search({type: 'Specimen'});        
+
+        this.specimen.done(function(specimens) {
+            specimens = JSON.parse(specimens);
+            console.log(this.specimen);
+        });        
+    }
 
     dataPool: Entry[] = [
         new Entry('Blood sugar'),
