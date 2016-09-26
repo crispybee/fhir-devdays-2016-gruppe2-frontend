@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
-import { NgClass } from '@angular/common';
+import { Component }    from '@angular/core';
+import { NgClass }      from '@angular/common';
 import { FhirProvider } from './fhirProvider.service'
-import { DateToAge } from './dateAgeCalculator';
+import { DateToAge }    from './dateAgeCalculator';
 
 
 class Entry {
@@ -48,7 +48,7 @@ export class SidebarListComponent {
         fhirProvider.getPatients().subscribe(data => {
             console.log(data);
 
-            let patient = (<fhir.Patient>data[0].resource);
+            let patient = <fhir.Patient>data[0].resource;
             let dateToAge = new DateToAge(patient.birthDate);       
 
             this.patientFirstName = patient.name[0].given[0];
