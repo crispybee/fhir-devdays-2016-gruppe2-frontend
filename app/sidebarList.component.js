@@ -9,6 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var fhirProvider_service_1 = require('./fhirProvider.service');
+var dateAgeCalculator_1 = require('./dateAgeCalculator');
 var Entry = (function () {
     function Entry(description) {
         this.description = description;
@@ -16,13 +18,27 @@ var Entry = (function () {
     return Entry;
 }());
 var SidebarListComponent = (function () {
-    function SidebarListComponent() {
+    function SidebarListComponent(fhirProvider) {
+        var _this = this;
+        this.fhirProvider = fhirProvider;
         this.patientFirstName = 'Hans';
         this.patientMiddleName = 'Hack';
         this.patientLastName = 'Wurst';
         this.patientBirthday = '01.01.1987';
         this.patientGender = 'male';
         this.calculatedAge = 29;
+        /*
+        this.smart = new FHIR.client({
+            serviceUrl: 'https://fhir.iap.hs-heilbronn.de/baseDstu2',
+            patientId: '1'
+        });
+
+        this.specimen = this.smart.patient.api.search({type: 'Specimen'});
+
+        this.specimen.done(function(specimens) {
+            specimens = JSON.parse(specimens);
+            console.log(this.specimen);
+        });     */
         this.dataPool = [
             new Entry('Blood sugar'),
             new Entry('Cholesterine'),
@@ -45,14 +61,17 @@ var SidebarListComponent = (function () {
             new Entry('Test 14'),
             new Entry('Test 15')
         ];
-        this.smart = new FHIR.client({
-            serviceUrl: 'https://fhir.iap.hs-heilbronn.de/baseDstu2',
-            patientId: '1'
-        });
-        this.specimen = this.smart.patient.api.search({ type: 'Specimen' });
-        this.specimen.done(function (specimens) {
-            // specimens = JSON.parse(specimens);
-            console.log(JSON.stringify(specimens));
+        fhirProvider.init('https://fhir.iap.hs-heilbronn.de/baseDstu2');
+        fhirProvider.getPatients().subscribe(function (data) {
+            console.log(data);
+            var patient = data[0].resource;
+            var dateToAge = new dateAgeCalculator_1.DateToAge(patient.birthDate);
+            _this.patientFirstName = patient.name[0].given[0];
+            _this.patientMiddleName = '';
+            _this.patientLastName = patient.name[0].family[0];
+            _this.patientBirthday = dateToAge.getReadableDate();
+            _this.patientGender = patient.gender;
+            _this.calculatedAge = dateToAge.getAge();
         });
     }
     SidebarListComponent = __decorate([
@@ -60,7 +79,7 @@ var SidebarListComponent = (function () {
             selector: 'sidebar-list',
             templateUrl: 'app/sidebarlist/sidebarlist.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [fhirProvider_service_1.FhirProvider])
     ], SidebarListComponent);
     return SidebarListComponent;
 }());

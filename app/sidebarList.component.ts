@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { NgClass } from '@angular/common';
+import { FhirProvider } from './fhirProvider.service'
+import { DateToAge } from './dateAgeCalculator';
 
-declare var FHIR: any;
 
 class Entry {
-constructor(
-    public description:string) { }
+constructor(public description:string) { }
 }
 
 @Component({
@@ -20,10 +20,24 @@ export class SidebarListComponent {
     patientGender: string = 'male';
     calculatedAge: number = 29;
 
-    smart: any;
-    specimen: any;
+    constructor(private fhirProvider: FhirProvider) {
+        fhirProvider.init('https://fhir.iap.hs-heilbronn.de/baseDstu2');
+        fhirProvider.getPatients().subscribe(data => {
+            console.log(data);
 
-    constructor() {
+            let patient = (<fhir.Patient>data[0].resource);
+            let dateToAge = new DateToAge(patient.birthDate);       
+
+            this.patientFirstName = patient.name[0].given[0];
+            this.patientMiddleName = '';
+            this.patientLastName = patient.name[0].family[0];
+            this.patientBirthday = dateToAge.getReadableDate();
+            this.patientGender = patient.gender;  
+            this.calculatedAge = dateToAge.getAge();
+        });
+    }
+
+        /*
         this.smart = new FHIR.client({
             serviceUrl: 'https://fhir.iap.hs-heilbronn.de/baseDstu2',
             patientId: '1'
@@ -34,8 +48,7 @@ export class SidebarListComponent {
         this.specimen.done(function(specimens) {
             specimens = JSON.parse(specimens);
             console.log(this.specimen);
-        });        
-    }
+        });     */   
 
     dataPool: Entry[] = [
         new Entry('Blood sugar'),
