@@ -13,6 +13,7 @@
 
     <link rel="stylesheet" href="app/css/bootstrap.css">
     <link rel="stylesheet" href="app/css/dashboard.css">
+    <link rel="stylesheet" href="app/css/loading-animation.css">
     <link rel="stylesheet" href="app/css/styles.css">
     <!-- 1. Load libraries -->
      <!-- Polyfill(s) for older browsers -->
@@ -32,10 +33,34 @@
         <div class="container-fluid">
       <div class="row">
         <div class="col-md-2 col-sm-3 sidebar">
-          <sidebar-list>Loading...</sidebar-list>
-          <my-app>Loading...</my-app>          
+          <sidebar-list>
+            <div class="spinner">
+              <div class="rect1"></div>
+              <div class="rect2"></div>
+              <div class="rect3"></div>
+              <div class="rect4"></div>
+              <div class="rect5"></div>
+            </div>
+          </sidebar-list>
+          <my-app>
+            <div class="spinner">
+              <div class="rect1"></div>
+              <div class="rect2"></div>
+              <div class="rect3"></div>
+              <div class="rect4"></div>
+              <div class="rect5"></div>
+            </div>
+          </my-app>          
         </div>
-        <canvas-component>Loading...</canvas-component>
+        <canvas-component>            
+          <div class="spinner">
+            <div class="rect1"></div>
+            <div class="rect2"></div>
+            <div class="rect3"></div>
+            <div class="rect4"></div>
+            <div class="rect5"></div>
+          </div>
+        </canvas-component>
       </div>
     </div>
 

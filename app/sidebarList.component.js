@@ -39,6 +39,15 @@ var SidebarListComponent = (function () {
             new Entry('Test 4'),
             new Entry('Test 5'),
             new Entry('Test 6'),
+            new Entry('Test 7'),
+            new Entry('Test 8'),
+            new Entry('Test 9'),
+            new Entry('Test 10'),
+            new Entry('Test 11'),
+            new Entry('Test 12'),
+            new Entry('Test 13'),
+            new Entry('Test 14'),
+            new Entry('Test 15')
         ];
         fhirProvider.init('https://fhir.iap.hs-heilbronn.de/baseDstu2');
         fhirProvider.getPatients().subscribe(function (data) {
