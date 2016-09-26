@@ -10,7 +10,7 @@ constructor(public description:string) { }
 
 @Component({
     selector: 'sidebar-list',
-    templateUrl: 'app/sidebarlist/sidebarlist.html'
+    templateUrl: 'app/html/sidebarlist.html'
 })
 export class SidebarListComponent {
     patientFirstName: string = 'Hans';
@@ -19,36 +19,6 @@ export class SidebarListComponent {
     patientBirthday: string = '00.00.0000';
     patientGender: string = 'male';
     calculatedAge: number = 0;
-
-    constructor(private fhirProvider: FhirProvider) {
-        fhirProvider.init('https://fhir.iap.hs-heilbronn.de/baseDstu2');
-        fhirProvider.getPatients().subscribe(data => {
-            console.log(data);
-
-            let patient = (<fhir.Patient>data[0].resource);
-            let dateToAge = new DateToAge(patient.birthDate);       
-
-            this.patientFirstName = patient.name[0].given[0];
-            this.patientMiddleName = '';
-            this.patientLastName = patient.name[0].family[0];
-            this.patientBirthday = dateToAge.getReadableDate();
-            this.patientGender = patient.gender;  
-            this.calculatedAge = dateToAge.getAge();
-        });
-    }
-
-        /*
-        this.smart = new FHIR.client({
-            serviceUrl: 'https://fhir.iap.hs-heilbronn.de/baseDstu2',
-            patientId: '1'
-        });
-
-        this.specimen = this.smart.patient.api.search({type: 'Specimen'});        
-
-        this.specimen.done(function(specimens) {
-            specimens = JSON.parse(specimens);
-            console.log(this.specimen);
-        });     */   
 
     dataPool: Entry[] = [
         new Entry('Blood sugar'),
@@ -72,4 +42,21 @@ export class SidebarListComponent {
         new Entry('Test 14'),
         new Entry('Test 15')
     ];
+
+    constructor(private fhirProvider: FhirProvider) {
+        fhirProvider.init('https://fhir.iap.hs-heilbronn.de/baseDstu2');
+        fhirProvider.getPatients().subscribe(data => {
+            console.log(data);
+
+            let patient = (<fhir.Patient>data[0].resource);
+            let dateToAge = new DateToAge(patient.birthDate);       
+
+            this.patientFirstName = patient.name[0].given[0];
+            this.patientMiddleName = '';
+            this.patientLastName = patient.name[0].family[0];
+            this.patientBirthday = dateToAge.getReadableDate();
+            this.patientGender = patient.gender;  
+            this.calculatedAge = dateToAge.getAge();
+        });
+    }
 }

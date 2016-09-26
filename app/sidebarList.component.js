@@ -27,18 +27,6 @@ var SidebarListComponent = (function () {
         this.patientBirthday = '00.00.0000';
         this.patientGender = 'male';
         this.calculatedAge = 0;
-        /*
-        this.smart = new FHIR.client({
-            serviceUrl: 'https://fhir.iap.hs-heilbronn.de/baseDstu2',
-            patientId: '1'
-        });
-
-        this.specimen = this.smart.patient.api.search({type: 'Specimen'});
-
-        this.specimen.done(function(specimens) {
-            specimens = JSON.parse(specimens);
-            console.log(this.specimen);
-        });     */
         this.dataPool = [
             new Entry('Blood sugar'),
             new Entry('Cholesterine'),
@@ -51,15 +39,6 @@ var SidebarListComponent = (function () {
             new Entry('Test 4'),
             new Entry('Test 5'),
             new Entry('Test 6'),
-            new Entry('Test 7'),
-            new Entry('Test 8'),
-            new Entry('Test 9'),
-            new Entry('Test 10'),
-            new Entry('Test 11'),
-            new Entry('Test 12'),
-            new Entry('Test 13'),
-            new Entry('Test 14'),
-            new Entry('Test 15')
         ];
         fhirProvider.init('https://fhir.iap.hs-heilbronn.de/baseDstu2');
         fhirProvider.getPatients().subscribe(function (data) {
@@ -77,7 +56,7 @@ var SidebarListComponent = (function () {
     SidebarListComponent = __decorate([
         core_1.Component({
             selector: 'sidebar-list',
-            templateUrl: 'app/sidebarlist/sidebarlist.html'
+            templateUrl: 'app/html/sidebarlist.html'
         }), 
         __metadata('design:paramtypes', [fhirProvider_service_1.FhirProvider])
     ], SidebarListComponent);
