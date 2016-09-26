@@ -16,9 +16,9 @@ export class SidebarListComponent {
     patientFirstName: string = 'Hans';
     patientMiddleName: string = 'Hack';
     patientLastName: string = 'Wurst';
-    patientBirthday: string = '01.01.1987';
+    patientBirthday: string = '00.00.0000';
     patientGender: string = 'male';
-    calculatedAge: number = 29;
+    calculatedAge: number = 0;
 
     constructor(private fhirProvider: FhirProvider) {
         fhirProvider.init('https://fhir.iap.hs-heilbronn.de/baseDstu2');

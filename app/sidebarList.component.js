@@ -24,9 +24,9 @@ var SidebarListComponent = (function () {
         this.patientFirstName = 'Hans';
         this.patientMiddleName = 'Hack';
         this.patientLastName = 'Wurst';
-        this.patientBirthday = '01.01.1987';
+        this.patientBirthday = '00.00.0000';
         this.patientGender = 'male';
-        this.calculatedAge = 29;
+        this.calculatedAge = 0;
         /*
         this.smart = new FHIR.client({
             serviceUrl: 'https://fhir.iap.hs-heilbronn.de/baseDstu2',
