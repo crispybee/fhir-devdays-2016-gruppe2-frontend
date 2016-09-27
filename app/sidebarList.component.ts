@@ -1,5 +1,4 @@
 import { Component }    from '@angular/core';
-import { NgClass }      from '@angular/common';
 import { FhirProvider } from './fhirProvider.service'
 import { DateToAge }    from './dateAgeCalculator';
 
