@@ -27,18 +27,6 @@ var SidebarListComponent = (function () {
         this.patientBirthday = '00.00.0000';
         this.patientGender = 'male';
         this.calculatedAge = 0;
-        /*
-        this.smart = new FHIR.client({
-            serviceUrl: 'https://fhir.iap.hs-heilbronn.de/baseDstu2',
-            patientId: '1'
-        });
-
-        this.specimen = this.smart.patient.api.search({type: 'Specimen'});
-
-        this.specimen.done(function(specimens) {
-            specimens = JSON.parse(specimens);
-            console.log(this.specimen);
-        });     */
         this.dataPool = [
             new Entry('Blood sugar'),
             new Entry('Cholesterine'),
@@ -77,7 +65,7 @@ var SidebarListComponent = (function () {
     SidebarListComponent = __decorate([
         core_1.Component({
             selector: 'sidebar-list',
-            templateUrl: 'app/sidebarlist/sidebarlist.html'
+            templateUrl: 'app/html/sidebarlist.html'
         }), 
         __metadata('design:paramtypes', [fhirProvider_service_1.FhirProvider])
     ], SidebarListComponent);
