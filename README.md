@@ -20,3 +20,9 @@ Changes will be automatically compiled into JavaScript and are shown immediately
 * Create user interface
 * Embed app in Atom Electron
 * (Ionic)
+
+## Todo Features:
+* Login UI + Service (OAuth)
+* Config Service (config/config.json)
+* Routing
+* Clean components + add new ones
