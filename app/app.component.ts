@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
 	selector: 'my-app',
-	template: '<h1>My First Angular 2 App</h1>'
+	templateUrl: 'app/html/app.html'
 })
 export class AppComponent {
-
+	constructor(router: Router) {
+		// router.navigateByUrl('/(sidebarlist:sidebarlist//canvas:canvas)');
+	}
 }

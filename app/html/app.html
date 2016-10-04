@@ -1,0 +1,24 @@
+<!--<h1>Angular Router</h1>
+<nav>
+    <a routerLink="(sidebarlist:sidebarlist)">Sidebar</a><br>
+    <a routerLink="(canvas:canvas)">Canvas</a><br>
+
+   <a [routerLink]="['/', {
+    outlets: {
+    'sidebarlist':['sidebarlist'],
+    'canvas': ['canvas']
+    }
+    }]">Route Error</a>
+</nav>-->
+<!--
+<div [routerLink]="['/', {
+    outlets: {
+    'sidebarlist':['sidebarlist'],
+    'canvas': ['canvas']
+    }
+    }]">Route Error</div>-->
+<router-outlet></router-outlet>
+<div class="row">
+    <router-outlet name="sidebarlist"></router-outlet>
+    <router-outlet name="canvas"></router-outlet>
+</div>
