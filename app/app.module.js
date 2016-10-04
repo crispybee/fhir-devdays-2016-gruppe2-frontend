@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var app_component_1 = require('./app.component');
-var sidebarList_component_1 = require('./sidebarList.component');
+var sidebarPatientData_component_1 = require('./sidebarPatientData.component');
 var navBar_component_1 = require('./navBar.component');
 var canvas_component_1 = require('./canvas.component');
 var default_component_1 = require("./default.component");
@@ -25,7 +25,7 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, app_routing_1.routing],
             providers: [app_routing_1.appRoutingProvider, fhirProvider_service_1.FhirProvider],
-            declarations: [app_component_1.AppComponent, sidebarList_component_1.SidebarListComponent, navBar_component_1.NavBarComponent, canvas_component_1.CanvasComponent, default_component_1.DefaultComponent, pageNotFound_component_1.PageNotFoundComponent],
+            declarations: [app_component_1.AppComponent, sidebarPatientData_component_1.SidebarPatientDataComponent, navBar_component_1.NavBarComponent, canvas_component_1.CanvasComponent, default_component_1.DefaultComponent, pageNotFound_component_1.PageNotFoundComponent],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

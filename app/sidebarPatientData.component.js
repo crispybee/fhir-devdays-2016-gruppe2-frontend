@@ -17,8 +17,8 @@ var Entry = (function () {
     }
     return Entry;
 }());
-var SidebarListComponent = (function () {
-    function SidebarListComponent(fhirProvider) {
+var SidebarPatientDataComponent = (function () {
+    function SidebarPatientDataComponent(fhirProvider) {
         var _this = this;
         this.fhirProvider = fhirProvider;
         this.patientFirstName = 'Hans';
@@ -62,14 +62,14 @@ var SidebarListComponent = (function () {
             _this.calculatedAge = dateToAge.getAge();
         });
     }
-    SidebarListComponent = __decorate([
+    SidebarPatientDataComponent = __decorate([
         core_1.Component({
-            selector: 'sidebar-list',
-            templateUrl: 'app/html/sidebarlist.html'
+            selector: 'sidebar-patient-data-component',
+            templateUrl: 'app/html/sidebarPatientData.html'
         }), 
         __metadata('design:paramtypes', [fhirProvider_service_1.FhirProvider])
-    ], SidebarListComponent);
-    return SidebarListComponent;
+    ], SidebarPatientDataComponent);
+    return SidebarPatientDataComponent;
 }());
-exports.SidebarListComponent = SidebarListComponent;
-//# sourceMappingURL=sidebarList.component.js.map
+exports.SidebarPatientDataComponent = SidebarPatientDataComponent;
+//# sourceMappingURL=sidebarPatientData.component.js.map

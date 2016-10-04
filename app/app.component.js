@@ -12,7 +12,7 @@ var core_1 = require('@angular/core');
 var router_1 = require("@angular/router");
 var AppComponent = (function () {
     function AppComponent(router) {
-        // router.navigateByUrl('/(sidebarlist:sidebarlist//canvas:canvas)');
+        // router.navigateByUrl('/(sidebar:sidebar//canvas:canvas)');
     }
     AppComponent = __decorate([
         core_1.Component({

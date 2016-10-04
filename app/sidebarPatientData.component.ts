@@ -8,10 +8,10 @@ constructor(public description:string) { }
 }
 
 @Component({
-    selector: 'sidebar-list',
-    templateUrl: 'app/html/sidebarlist.html'
+    selector: 'sidebar-patient-data-component',
+    templateUrl: 'app/html/sidebarPatientData.html'
 })
-export class SidebarListComponent {
+export class SidebarPatientDataComponent {
     patientFirstName: string = 'Hans';
     patientMiddleName: string = 'Hack';
     patientLastName: string = 'Wurst';

@@ -7,6 +7,6 @@ import {Router} from "@angular/router";
 })
 export class AppComponent {
 	constructor(router: Router) {
-		// router.navigateByUrl('/(sidebarlist:sidebarlist//canvas:canvas)');
+		// router.navigateByUrl('/(sidebar:sidebar//canvas:canvas)');
 	}
 }

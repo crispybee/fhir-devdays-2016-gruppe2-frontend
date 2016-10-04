@@ -1,7 +1,7 @@
 import { NgModule } 					from '@angular/core';
 import { BrowserModule } 				from '@angular/platform-browser';
 import { AppComponent } 				from './app.component';
-import { SidebarListComponent } 		from './sidebarList.component';
+import { SidebarPatientDataComponent } 	from './sidebarPatientData.component';
 import { NavBarComponent } 				from './navBar.component';
 import { CanvasComponent } 				from './canvas.component';
 import { DefaultComponent } 			from "./default.component";
@@ -12,7 +12,7 @@ import { routing, appRoutingProvider }  from "./app.routing";
 @NgModule({
 	imports: [ BrowserModule, routing ],
 	providers: [ appRoutingProvider, FhirProvider ],
-	declarations: [ AppComponent, SidebarListComponent, NavBarComponent, CanvasComponent, DefaultComponent, PageNotFoundComponent ],
+	declarations: [ AppComponent, SidebarPatientDataComponent, NavBarComponent, CanvasComponent, DefaultComponent, PageNotFoundComponent ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {
