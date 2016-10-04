@@ -11,6 +11,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var CanvasComponent = (function () {
     function CanvasComponent() {
+        this.data = [
+            'Bla',
+            'Blub',
+            'Bleb',
+            'Blib'
+        ];
         this.canvasTitle = "Blood sugar";
         this.sectionTitle = "Latest blood sugar values";
     }

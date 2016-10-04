@@ -1,4 +1,4 @@
-import { Component }    from '@angular/core';
+import { Component } from '@angular/core';
 
 
 @Component({
@@ -8,6 +8,12 @@ import { Component }    from '@angular/core';
 export class CanvasComponent {
     canvasTitle: string;
     sectionTitle: string;
+    data: string[] = [
+        'Bla',
+        'Blub',
+        'Bleb',
+        'Blib'
+    ];
     
     constructor() {
         this.canvasTitle = "Blood sugar";
