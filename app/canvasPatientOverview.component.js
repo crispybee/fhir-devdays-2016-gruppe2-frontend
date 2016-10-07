@@ -9,8 +9,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var CanvasComponent = (function () {
-    function CanvasComponent() {
+var CanvasPatientOverviewComponent = (function () {
+    function CanvasPatientOverviewComponent() {
         this.data = [
             'Bla',
             'Blub',
@@ -20,14 +20,14 @@ var CanvasComponent = (function () {
         this.canvasTitle = "Blood sugar";
         this.sectionTitle = "Latest blood sugar values";
     }
-    CanvasComponent = __decorate([
+    CanvasPatientOverviewComponent = __decorate([
         core_1.Component({
             selector: 'canvas-component',
             templateUrl: 'app/html/canvas.html'
         }), 
         __metadata('design:paramtypes', [])
-    ], CanvasComponent);
-    return CanvasComponent;
+    ], CanvasPatientOverviewComponent);
+    return CanvasPatientOverviewComponent;
 }());
-exports.CanvasComponent = CanvasComponent;
-//# sourceMappingURL=canvas.component.js.map
+exports.CanvasPatientOverviewComponent = CanvasPatientOverviewComponent;
+//# sourceMappingURL=canvasPatientOverview.component.js.map

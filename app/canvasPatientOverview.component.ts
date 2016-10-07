@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
     selector: 'canvas-component',
     templateUrl: 'app/html/canvas.html'
 })
-export class CanvasComponent {
+export class CanvasPatientOverviewComponent {
     canvasTitle: string;
     sectionTitle: string;
     data: string[] = [

@@ -4,7 +4,7 @@ import { NavBarComponent }        		from "./navBar.component";
 import { SidebarLoadingComponent } 		from "./sidebarLoading.component";
 import { SidebarPatientsComponent } 	from "./sidebarPatients.component";
 import { SidebarPatientDataComponent }  from "./sidebarPatientData.component";
-import { CanvasComponent }        		from "./canvas.component";
+import { CanvasPatientOverviewComponent }        		from "./canvasPatientOverview.component";
 import { DefaultComponent }       		from "./default.component";
 import { PageNotFoundComponent }  		from "./pageNotFound.component";
 import {CanvasLoadingComponent} from "./canvasLoading.component";
@@ -42,7 +42,7 @@ export const appRoutes: Routes = [
 			},
 			{
 				path: 'canvas-patient-overview',
-				component: CanvasComponent
+				component: CanvasPatientOverviewComponent
 			}
 		]
 	},
