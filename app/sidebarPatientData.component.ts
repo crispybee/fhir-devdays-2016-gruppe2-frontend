@@ -48,13 +48,13 @@ export class SidebarPatientDataComponent {
             console.log(data);
 
             let patient = <fhir.Patient>data[0].resource;
-            let dateToAge = new DateToAge(patient.birthDate);       
+            let dateToAge = new DateToAge(patient.birthDate);
 
             this.patientFirstName = patient.name[0].given[0];
             this.patientMiddleName = '';
             this.patientLastName = patient.name[0].family[0];
             this.patientBirthday = dateToAge.getReadableDate();
-            this.patientGender = patient.gender;  
+            this.patientGender = patient.gender;
             this.calculatedAge = dateToAge.getAge();
         });
     }

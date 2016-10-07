@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 })
 export class NavBarComponent {
     navBarTitle: string;
-    
+
     constructor() {
         this.navBarTitle = "Patient";
     }

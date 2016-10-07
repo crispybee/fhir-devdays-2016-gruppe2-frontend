@@ -8,7 +8,7 @@ import { Component } from '@angular/core';
 export class CanvasPatientOverviewComponent {
     canvasOverviewTitle: string;
     sectionTitle: string;
-    
+
     constructor() {
         this.canvasOverviewTitle = "Patient X";
         this.sectionTitle = "Personal Data";
