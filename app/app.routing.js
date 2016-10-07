@@ -1,7 +1,9 @@
 "use strict";
 var router_1 = require("@angular/router");
 var navBar_component_1 = require("./navBar.component");
+var sidebarLoading_component_1 = require("./sidebarLoading.component");
 var sidebarPatients_component_1 = require("./sidebarPatients.component");
+var sidebarPatientData_component_1 = require("./sidebarPatientData.component");
 var canvas_component_1 = require("./canvas.component");
 var default_component_1 = require("./default.component");
 var pageNotFound_component_1 = require("./pageNotFound.component");
@@ -12,13 +14,34 @@ exports.appRoutes = [
     },
     {
         path: 'sidebar',
-        component: sidebarPatients_component_1.SidebarPatientsComponent,
-        outlet: 'sidebar'
+        outlet: 'sidebar',
+        children: [
+            {
+                path: '',
+                component: sidebarLoading_component_1.SidebarLoadingComponent
+            },
+            {
+                path: 'sidebar-patients',
+                component: sidebarPatients_component_1.SidebarPatientsComponent
+            },
+            {
+                path: 'sidebar-patient-data',
+                component: sidebarPatientData_component_1.SidebarPatientDataComponent
+            }
+        ]
     },
     {
         path: 'canvas',
-        component: canvas_component_1.CanvasComponent,
-        outlet: 'canvas'
+        outlet: 'canvas',
+        children: [
+            {
+                path: ''
+            },
+            {
+                path: 'canvas-patient-overview',
+                component: canvas_component_1.CanvasComponent
+            }
+        ]
     },
     {
         path: '',

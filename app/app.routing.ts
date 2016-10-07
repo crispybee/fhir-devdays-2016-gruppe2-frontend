@@ -1,11 +1,13 @@
 import { Routes, RouterModule }   		from "@angular/router";
 import { ModuleWithProviders }    		from "@angular/core";
 import { NavBarComponent }        		from "./navBar.component";
+import { SidebarLoadingComponent } 		from "./sidebarLoading.component";
 import { SidebarPatientsComponent } 	from "./sidebarPatients.component";
 import { SidebarPatientDataComponent }  from "./sidebarPatientData.component";
 import { CanvasComponent }        		from "./canvas.component";
 import { DefaultComponent }       		from "./default.component";
 import { PageNotFoundComponent }  		from "./pageNotFound.component";
+import {CanvasLoadingComponent} from "./canvasLoading.component";
 
 
 export const appRoutes: Routes = [
@@ -15,13 +17,34 @@ export const appRoutes: Routes = [
 	},
 	{
 		path: 'sidebar',
-		component: SidebarPatientsComponent,
-		outlet: 'sidebar'
+		outlet: 'sidebar',
+		children: [
+			{
+				path: '',
+				component: SidebarLoadingComponent
+			},
+			{
+				path: 'sidebar-patients',
+				component: SidebarPatientsComponent
+			},
+			{
+				path: 'sidebar-patient-data',
+				component: SidebarPatientDataComponent
+			}
+		]
 	},
 	{
 		path: 'canvas',
-		component: CanvasComponent,
-		outlet: 'canvas'
+		outlet: 'canvas',
+		children: [
+			{
+				path: ''
+			},
+			{
+				path: 'canvas-patient-overview',
+				component: CanvasComponent
+			}
+		]
 	},
 	{
 		path: '',
