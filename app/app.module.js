@@ -15,6 +15,7 @@ var sidebarList_component_1 = require('./sidebarList.component');
 var navBar_component_1 = require('./navBar.component');
 var canvas_component_1 = require('./canvas.component');
 var fhirProvider_service_1 = require('./fhirProvider.service');
+var login_component_1 = require('./login.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -22,7 +23,7 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule],
             providers: [fhirProvider_service_1.FhirProvider],
-            declarations: [app_component_1.AppComponent, sidebarList_component_1.SidebarListComponent, navBar_component_1.NavBarComponent, canvas_component_1.CanvasComponent],
+            declarations: [app_component_1.AppComponent, sidebarList_component_1.SidebarListComponent, navBar_component_1.NavBarComponent, canvas_component_1.CanvasComponent, login_component_1.LoginComponent],
             bootstrap: [app_component_1.AppComponent, sidebarList_component_1.SidebarListComponent, navBar_component_1.NavBarComponent, canvas_component_1.CanvasComponent]
         }), 
         __metadata('design:paramtypes', [])
