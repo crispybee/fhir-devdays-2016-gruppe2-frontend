@@ -1,7 +1,7 @@
 "use strict";
 var router_1 = require("@angular/router");
 var navBar_component_1 = require("./navBar.component");
-var sidebarPatientData_component_1 = require("./sidebarPatientData.component");
+var sidebarPatients_component_1 = require("./sidebarPatients.component");
 var canvas_component_1 = require("./canvas.component");
 var default_component_1 = require("./default.component");
 var pageNotFound_component_1 = require("./pageNotFound.component");
@@ -12,7 +12,7 @@ exports.appRoutes = [
     },
     {
         path: 'sidebar',
-        component: sidebarPatientData_component_1.SidebarPatientDataComponent,
+        component: sidebarPatients_component_1.SidebarPatientsComponent,
         outlet: 'sidebar'
     },
     {

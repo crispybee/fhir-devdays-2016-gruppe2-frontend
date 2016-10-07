@@ -1,6 +1,7 @@
 import { Routes, RouterModule }   		from "@angular/router";
 import { ModuleWithProviders }    		from "@angular/core";
 import { NavBarComponent }        		from "./navBar.component";
+import { SidebarPatientsComponent } 	from "./sidebarPatients.component";
 import { SidebarPatientDataComponent }  from "./sidebarPatientData.component";
 import { CanvasComponent }        		from "./canvas.component";
 import { DefaultComponent }       		from "./default.component";
@@ -14,7 +15,7 @@ export const appRoutes: Routes = [
 	},
 	{
 		path: 'sidebar',
-		component: SidebarPatientDataComponent,
+		component: SidebarPatientsComponent,
 		outlet: 'sidebar'
 	},
 	{

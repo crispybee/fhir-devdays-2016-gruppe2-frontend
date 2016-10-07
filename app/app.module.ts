@@ -8,11 +8,12 @@ import { DefaultComponent } 			from "./default.component";
 import { PageNotFoundComponent } 		from "./pageNotFound.component";
 import { FhirProvider } 				from './fhirProvider.service';
 import { routing, appRoutingProvider }  from "./app.routing";
+import { SidebarPatientsComponent } 	from "./sidebarPatients.component";
 
 @NgModule({
 	imports: [ BrowserModule, routing ],
 	providers: [ appRoutingProvider, FhirProvider ],
-	declarations: [ AppComponent, SidebarPatientDataComponent, NavBarComponent, CanvasComponent, DefaultComponent, PageNotFoundComponent ],
+	declarations: [ AppComponent, SidebarPatientDataComponent, SidebarPatientsComponent, NavBarComponent, CanvasComponent, DefaultComponent, PageNotFoundComponent ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {
