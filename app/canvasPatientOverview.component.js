@@ -11,19 +11,13 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var CanvasPatientOverviewComponent = (function () {
     function CanvasPatientOverviewComponent() {
-        this.data = [
-            'Bla',
-            'Blub',
-            'Bleb',
-            'Blib'
-        ];
-        this.canvasTitle = "Blood sugar";
-        this.sectionTitle = "Latest blood sugar values";
+        this.canvasOverviewTitle = "Patient X";
+        this.sectionTitle = "Personal Data";
     }
     CanvasPatientOverviewComponent = __decorate([
         core_1.Component({
-            selector: 'canvas-component',
-            templateUrl: 'app/html/canvas.html'
+            selector: 'canvas-overview-component',
+            templateUrl: 'app/html/canvasOverview.html'
         }), 
         __metadata('design:paramtypes', [])
     ], CanvasPatientOverviewComponent);

@@ -2,21 +2,15 @@ import { Component } from '@angular/core';
 
 
 @Component({
-    selector: 'canvas-component',
-    templateUrl: 'app/html/canvas.html'
+    selector: 'canvas-overview-component',
+    templateUrl: 'app/html/canvasOverview.html'
 })
 export class CanvasPatientOverviewComponent {
-    canvasTitle: string;
+    canvasOverviewTitle: string;
     sectionTitle: string;
-    data: string[] = [
-        'Bla',
-        'Blub',
-        'Bleb',
-        'Blib'
-    ];
     
     constructor() {
-        this.canvasTitle = "Blood sugar";
-        this.sectionTitle = "Latest blood sugar values";
+        this.canvasOverviewTitle = "Patient X";
+        this.sectionTitle = "Personal Data";
     }
 }

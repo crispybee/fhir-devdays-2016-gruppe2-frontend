@@ -4,6 +4,7 @@ var navBar_component_1 = require("./navBar.component");
 var sidebarLoading_component_1 = require("./sidebarLoading.component");
 var sidebarPatients_component_1 = require("./sidebarPatients.component");
 var sidebarPatientData_component_1 = require("./sidebarPatientData.component");
+var canvasPatientDetail_component_1 = require("./canvasPatientDetail.component");
 var canvasPatientOverview_component_1 = require("./canvasPatientOverview.component");
 var default_component_1 = require("./default.component");
 var pageNotFound_component_1 = require("./pageNotFound.component");
@@ -40,6 +41,10 @@ exports.appRoutes = [
             {
                 path: 'canvas-patient-overview',
                 component: canvasPatientOverview_component_1.CanvasPatientOverviewComponent
+            },
+            {
+                path: 'canvas-patient-detail',
+                component: canvasPatientDetail_component_1.CanvasPatientDetailComponent
             }
         ]
     },
