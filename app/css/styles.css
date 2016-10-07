@@ -35,3 +35,7 @@
 {
   border-radius: 0px;
 }
+
+.clickable-element {
+  cursor: pointer;
+}
