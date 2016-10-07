@@ -30,5 +30,5 @@ exports.appRoutes = [
     }
 ];
 exports.appRoutingProvider = [];
-exports.routing = router_1.RouterModule.forRoot(exports.appRoutes);
+exports.routing = router_1.RouterModule.forRoot(exports.appRoutes, { useHash: true });
 //# sourceMappingURL=app.routing.js.map
