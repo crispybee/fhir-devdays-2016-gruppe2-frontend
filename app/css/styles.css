@@ -23,9 +23,15 @@
 .nav-sidebar > .active > a:focus {
   color: #fff;
   background-color: #428bca;
-  -webkit-user-select: none; /* Chrome/Safari */        
+  -webkit-user-select: none; /* Chrome/Safari */
   -moz-user-select: none; /* Firefox */
   -ms-user-select: none; /* IE10+ */
   -o-user-select: none;
   user-select: none;
+}
+
+/* remove round border for search form in the sidebar */
+.form-control
+{
+  border-radius: 0px;
 }
