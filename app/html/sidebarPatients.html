@@ -1,0 +1,15 @@
+<div class="col-md-2 col-sm-3 sidebar">
+    <ul class="nav nav-sidebar">
+        <li class="form-group has-feedback">
+            <form>
+                <input type="text" class="form-control" (input)="onInput($event)" placeholder="Search">
+                <span class="glyphicon glyphicon-search form-control-feedback"></span>
+            </form>
+        </li>
+        <li *ngFor="let entry of shownDataPool"><a [routerLink]="['/', {
+    outlets: {
+        'canvas': ['canvas', 'canvas-patient-overview']
+    }
+    }]">{{entry.description}}</a></li>
+    </ul>
+</div>

@@ -1,7 +1,0 @@
-<ul class="nav nav-sidebar">
-	<li class="active"><a>Name: 		{{patientLastName}}, {{patientFirstName}} {{patientMiddleName}}</a></li>
-	<li class="active"><a>Birth date: 	{{patientBirthday}} (Age: {{calculatedAge}})</a></li>
-	<li class="active"><a>Gender: 		{{patientGender}}</a></li>
-	<li><br></li>
-	<li *ngFor="let entry of dataPool"><a href="#">{{entry.description}}</a></li>
-</ul>

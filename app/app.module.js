@@ -11,20 +11,26 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
 var app_component_1 = require('./app.component');
-var sidebarList_component_1 = require('./sidebarList.component');
 var navBar_component_1 = require('./navBar.component');
-var canvas_component_1 = require('./canvas.component');
+var sidebarLoading_component_1 = require('./sidebarLoading.component');
+var sidebarPatients_component_1 = require('./sidebarPatients.component');
+var sidebarPatientData_component_1 = require('./sidebarPatientData.component');
+var canvasLoading_component_1 = require("./canvasLoading.component");
+var canvasPatientOverview_component_1 = require('./canvasPatientOverview.component');
+var canvasPatientDetail_component_1 = require("./canvasPatientDetail.component");
+var default_component_1 = require('./default.component');
+var pageNotFound_component_1 = require('./pageNotFound.component');
 var fhirProvider_service_1 = require('./fhirProvider.service');
-var login_component_1 = require('./login.component');
+var app_routing_1 = require('./app.routing');
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule],
-            providers: [fhirProvider_service_1.FhirProvider],
-            declarations: [app_component_1.AppComponent, sidebarList_component_1.SidebarListComponent, navBar_component_1.NavBarComponent, canvas_component_1.CanvasComponent, login_component_1.LoginComponent],
-            bootstrap: [app_component_1.AppComponent, sidebarList_component_1.SidebarListComponent, navBar_component_1.NavBarComponent, canvas_component_1.CanvasComponent]
+            imports: [platform_browser_1.BrowserModule, app_routing_1.routing],
+            providers: [app_routing_1.appRoutingProvider, fhirProvider_service_1.FhirProvider],
+            declarations: [app_component_1.AppComponent, sidebarLoading_component_1.SidebarLoadingComponent, sidebarPatientData_component_1.SidebarPatientDataComponent, sidebarPatients_component_1.SidebarPatientsComponent, navBar_component_1.NavBarComponent, canvasLoading_component_1.CanvasLoadingComponent, canvasPatientOverview_component_1.CanvasPatientOverviewComponent, canvasPatientDetail_component_1.CanvasPatientDetailComponent, default_component_1.DefaultComponent, pageNotFound_component_1.PageNotFoundComponent],
+            bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

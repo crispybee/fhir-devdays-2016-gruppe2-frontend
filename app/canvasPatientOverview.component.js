@@ -9,19 +9,19 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var router_1 = require("@angular/router");
-var AppComponent = (function () {
-    function AppComponent(router) {
-        // router.navigateByUrl('/(sidebar:sidebar//canvas:canvas)');
+var CanvasPatientOverviewComponent = (function () {
+    function CanvasPatientOverviewComponent() {
+        this.canvasOverviewTitle = "Patient X";
+        this.sectionTitle = "Personal Data";
     }
-    AppComponent = __decorate([
+    CanvasPatientOverviewComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app/html/app.html'
+            selector: 'canvas-overview-component',
+            templateUrl: 'app/html/canvasOverview.html'
         }), 
-        __metadata('design:paramtypes', [router_1.Router])
-    ], AppComponent);
-    return AppComponent;
+        __metadata('design:paramtypes', [])
+    ], CanvasPatientOverviewComponent);
+    return CanvasPatientOverviewComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.CanvasPatientOverviewComponent = CanvasPatientOverviewComponent;
+//# sourceMappingURL=canvasPatientOverview.component.js.map

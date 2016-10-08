@@ -7,7 +7,7 @@ export class DateToAge {
         let splitDate = inputDate.split('-');
         this.year = splitDate[0];
         this.month = splitDate[1];
-        this.day = splitDate[2];        
+        this.day = splitDate[2];
     }
 
     getAge(): number {
@@ -16,7 +16,7 @@ export class DateToAge {
 
         // remove numbers after floating point
         let age = Math.trunc(dateMilliseconds/31536000000);
-        
+
         return age;
     }
 

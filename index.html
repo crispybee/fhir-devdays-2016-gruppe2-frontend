@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="app/css/loading-animation.css">
     <link rel="stylesheet" href="app/css/styles.css">
     <!-- 1. Load libraries -->
-     <!-- Polyfill(s) for older browsers -->
+    <!-- Polyfill(s) for older browsers -->
     <script src="node_modules/core-js/client/shim.min.js"></script>
     <script src="node_modules/zone.js/dist/zone.js"></script>
     <script src="node_modules/reflect-metadata/Reflect.js"></script>
@@ -24,48 +24,26 @@
     <!-- 2. Configure SystemJS -->
     <script src="systemjs.config.js"></script>
     <script>
-      System.import('app').catch(function(err){ console.error(err); });
+        System.import('app').catch(function(err){ console.error(err); });
     </script>
-  </head>
-  <!-- 3. Display the application -->
-  <body>
-    <navbar-component></navbar-component>
-        <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-2 col-sm-3 sidebar">
-          <sidebar-list>
-            <div class="spinner">
-              <div class="rect1"></div>
-              <div class="rect2"></div>
-              <div class="rect3"></div>
-              <div class="rect4"></div>
-              <div class="rect5"></div>
-            </div>
-          </sidebar-list>
-          <my-app>
-            <div class="spinner">
-              <div class="rect1"></div>
-              <div class="rect2"></div>
-              <div class="rect3"></div>
-              <div class="rect4"></div>
-              <div class="rect5"></div>
-            </div>
-          </my-app>          
-        </div>
-        <canvas-component>            
-          <div class="spinner">
+</head>
+
+<!-- Necessary for Angular 2! -->
+<base href="/">
+
+<!-- 3. Display the application -->
+<body>
+    <my-app>
+        <div class="spinner">
             <div class="rect1"></div>
             <div class="rect2"></div>
             <div class="rect3"></div>
             <div class="rect4"></div>
             <div class="rect5"></div>
-          </div>
-        </canvas-component>
-      </div>
-    </div>
-
+        </div>
+    </my-app>
     <script src="app/js/jquery-1.12.4.js"></script>
     <script src="app/js/bootstrap.js"></script>
     <script src="app/js/fhir-client.js"></script>
-  </body>
+</body>
 </html>

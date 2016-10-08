@@ -9,19 +9,17 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var CanvasComponent = (function () {
-    function CanvasComponent() {
-        this.canvasTitle = "Blood sugar";
-        this.sectionTitle = "Latest blood sugar values";
+var SidebarLoadingComponent = (function () {
+    function SidebarLoadingComponent() {
     }
-    CanvasComponent = __decorate([
+    SidebarLoadingComponent = __decorate([
         core_1.Component({
-            selector: 'canvas-component',
-            templateUrl: 'app/html/canvas.html'
+            selector: 'sidebar-loading-component',
+            templateUrl: 'app/html/sidebarLoading.html'
         }), 
         __metadata('design:paramtypes', [])
-    ], CanvasComponent);
-    return CanvasComponent;
+    ], SidebarLoadingComponent);
+    return SidebarLoadingComponent;
 }());
-exports.CanvasComponent = CanvasComponent;
-//# sourceMappingURL=canvas.component.js.map
+exports.SidebarLoadingComponent = SidebarLoadingComponent;
+//# sourceMappingURL=sidebarLoading.component.js.map
