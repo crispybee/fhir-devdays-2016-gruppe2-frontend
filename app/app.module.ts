@@ -10,13 +10,14 @@ import { CanvasPatientOverviewComponent } 	from './canvasPatientOverview.compone
 import { CanvasPatientDetailComponent } 	from "./canvasPatientDetail.component";
 import { DefaultComponent } 				from './default.component';
 import { PageNotFoundComponent } 			from './pageNotFound.component';
+import { LoginComponent } 			        from './login.component';
 import { FhirProvider } 					from './fhirProvider.service';
 import { routing, appRoutingProvider }  	from './app.routing';
 
 @NgModule({
 	imports: [ BrowserModule, routing ],
 	providers: [ appRoutingProvider, FhirProvider ],
-	declarations: [ AppComponent, SidebarLoadingComponent, SidebarPatientDataComponent, SidebarPatientsComponent, NavBarComponent, CanvasLoadingComponent, CanvasPatientOverviewComponent, CanvasPatientDetailComponent, DefaultComponent, PageNotFoundComponent ],
+	declarations: [ AppComponent, SidebarLoadingComponent, SidebarPatientDataComponent, SidebarPatientsComponent, NavBarComponent, CanvasLoadingComponent, CanvasPatientOverviewComponent, CanvasPatientDetailComponent, DefaultComponent, PageNotFoundComponent, LoginComponent ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {

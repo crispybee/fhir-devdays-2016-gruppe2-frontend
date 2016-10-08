@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
+import { Router    } from "@angular/router";
+import {AuthenticationService} from "./authentication.service";
 
 @Component({
     selector: 'login-component',
@@ -7,5 +8,21 @@ import {Router} from "@angular/router";
 })
 
 export class LoginComponent {
+    name:string;
+    password:string;
+    authService:AuthenticationService;
+    errorMsg:string;
+
+    constructor() {
+
+    }
+
+    login():void {
+        if (!this.authService.login()) {
+            this.errorMsg = 'FAiled to login';
+        }
+
+    }
+    
 
 }

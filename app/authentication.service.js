@@ -9,22 +9,22 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
-var LoginComponent = (function () {
-    function LoginComponent() {
+var AuthenticationService = (function () {
+    function AuthenticationService() {
     }
-    LoginComponent.prototype.login = function () {
-        if (!this.authService.login()) {
-            this.errorMsg = 'FAiled to login';
-        }
+    AuthenticationService.prototype.login = function () {
+        //TODO
+        return false;
     };
-    LoginComponent = __decorate([
-        core_1.Component({
-            selector: 'login-component',
-            templateUrl: 'app/html/login.html'
-        }), 
+    AuthenticationService.prototype.logout = function () {
+        //TODO
+        return false;
+    };
+    AuthenticationService = __decorate([
+        core_1.Injectable(), 
         __metadata('design:paramtypes', [])
-    ], LoginComponent);
-    return LoginComponent;
+    ], AuthenticationService);
+    return AuthenticationService;
 }());
-exports.LoginComponent = LoginComponent;
-//# sourceMappingURL=login.component.js.map
+exports.AuthenticationService = AuthenticationService;
+//# sourceMappingURL=authentication.service.js.map

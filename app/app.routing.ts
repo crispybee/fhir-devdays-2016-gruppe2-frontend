@@ -9,6 +9,7 @@ import { CanvasPatientDetailComponent } 	from "./canvasPatientDetail.component";
 import { CanvasPatientOverviewComponent }   from "./canvasPatientOverview.component";
 import { DefaultComponent }       			from "./default.component";
 import { PageNotFoundComponent }  			from "./pageNotFound.component";
+import { LoginComponent}                     from "./login.component";
 
 
 export const appRoutes: Routes = [
@@ -58,6 +59,10 @@ export const appRoutes: Routes = [
 	{
 		path: '**',
 		component: PageNotFoundComponent
+	},
+	{
+		path: 'login',
+		component: LoginComponent
 	}
 ];
 

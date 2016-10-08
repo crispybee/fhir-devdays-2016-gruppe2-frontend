@@ -8,6 +8,7 @@ var canvasPatientDetail_component_1 = require("./canvasPatientDetail.component")
 var canvasPatientOverview_component_1 = require("./canvasPatientOverview.component");
 var default_component_1 = require("./default.component");
 var pageNotFound_component_1 = require("./pageNotFound.component");
+var login_component_1 = require("./login.component");
 exports.appRoutes = [
     {
         path: '',
@@ -55,6 +56,10 @@ exports.appRoutes = [
     {
         path: '**',
         component: pageNotFound_component_1.PageNotFoundComponent
+    },
+    {
+        path: 'login',
+        component: login_component_1.LoginComponent
     }
 ];
 exports.appRoutingProvider = [];
