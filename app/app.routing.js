@@ -3,10 +3,9 @@ var router_1 = require("@angular/router");
 var navBar_component_1 = require("./navBar.component");
 var sidebarLoading_component_1 = require("./sidebarLoading.component");
 var sidebarPatients_component_1 = require("./sidebarPatients.component");
-var sidebarPatientData_component_1 = require("./sidebarPatientData.component");
+var canvasLoading_component_1 = require("./canvasLoading.component");
 var canvasPatientDetail_component_1 = require("./canvasPatientDetail.component");
 var canvasPatientOverview_component_1 = require("./canvasPatientOverview.component");
-var default_component_1 = require("./default.component");
 var pageNotFound_component_1 = require("./pageNotFound.component");
 exports.appRoutes = [
     {
@@ -26,8 +25,8 @@ exports.appRoutes = [
                 component: sidebarPatients_component_1.SidebarPatientsComponent
             },
             {
-                path: 'sidebar-patient-data',
-                component: sidebarPatientData_component_1.SidebarPatientDataComponent
+                path: '**',
+                component: pageNotFound_component_1.PageNotFoundComponent
             }
         ]
     },
@@ -36,7 +35,8 @@ exports.appRoutes = [
         outlet: 'canvas',
         children: [
             {
-                path: ''
+                path: '',
+                component: canvasLoading_component_1.CanvasLoadingComponent
             },
             {
                 path: 'canvas-patient-overview',
@@ -45,12 +45,12 @@ exports.appRoutes = [
             {
                 path: 'canvas-patient-detail',
                 component: canvasPatientDetail_component_1.CanvasPatientDetailComponent
+            },
+            {
+                path: '**',
+                component: pageNotFound_component_1.PageNotFoundComponent
             }
         ]
-    },
-    {
-        path: '',
-        component: default_component_1.DefaultComponent
     },
     {
         path: '**',

@@ -3,7 +3,6 @@ import { ModuleWithProviders }    			from "@angular/core";
 import { NavBarComponent }        			from "./navBar.component";
 import { SidebarLoadingComponent } 			from "./sidebarLoading.component";
 import { SidebarPatientsComponent } 		from "./sidebarPatients.component";
-import { SidebarPatientDataComponent }  	from "./sidebarPatientData.component";
 import { CanvasLoadingComponent } 			from "./canvasLoading.component";
 import { CanvasPatientDetailComponent } 	from "./canvasPatientDetail.component";
 import { CanvasPatientOverviewComponent }   from "./canvasPatientOverview.component";
@@ -29,8 +28,8 @@ export const appRoutes: Routes = [
 				component: SidebarPatientsComponent
 			},
 			{
-				path: 'sidebar-patient-data',
-				component: SidebarPatientDataComponent
+				path: '**',
+				component: PageNotFoundComponent
 			}
 		]
 	},
@@ -39,7 +38,8 @@ export const appRoutes: Routes = [
 		outlet: 'canvas',
 		children: [
 			{
-				path: ''
+				path: '',
+				component: CanvasLoadingComponent
 			},
 			{
 				path: 'canvas-patient-overview',
@@ -48,12 +48,12 @@ export const appRoutes: Routes = [
 			{
 				path: 'canvas-patient-detail',
 				component: CanvasPatientDetailComponent
+			},
+			{
+				path: '**',
+				component: PageNotFoundComponent
 			}
 		]
-	},
-	{
-		path: '',
-		component: DefaultComponent
 	},
 	{
 		path: '**',
@@ -61,8 +61,6 @@ export const appRoutes: Routes = [
 	}
 ];
 
-export const appRoutingProvider: any[] = [
-
-];
+export const appRoutingProvider: any[] = [];
 
 export const routing: ModuleWithProviders = RouterModule.forRoot(appRoutes, {useHash: true});
