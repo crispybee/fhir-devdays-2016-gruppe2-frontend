@@ -10,33 +10,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var sidebarSearchFilter_service_1 = require("./sidebarSearchFilter.service");
+var fhirProvider_service_1 = require("./fhirProvider.service");
 var SidebarPatientsComponent = (function () {
-    function SidebarPatientsComponent() {
+    function SidebarPatientsComponent(fhirProvider) {
+        var _this = this;
+        this.fhirProvider = fhirProvider;
         this.searchList = new sidebarSearchFilter_service_1.SidebarSearchFilter;
-        this.dataPool = [
-            new sidebarSearchFilter_service_1.Entry('Tom Doe'),
-            new sidebarSearchFilter_service_1.Entry('Max Mustermann'),
-            new sidebarSearchFilter_service_1.Entry('Dr. Hans Wurst'),
-            new sidebarSearchFilter_service_1.Entry('Martina Mustermann'),
-            new sidebarSearchFilter_service_1.Entry('Test 0'),
-            new sidebarSearchFilter_service_1.Entry('Test 1'),
-            new sidebarSearchFilter_service_1.Entry('Test 2'),
-            new sidebarSearchFilter_service_1.Entry('Test 3'),
-            new sidebarSearchFilter_service_1.Entry('Test 4'),
-            new sidebarSearchFilter_service_1.Entry('Test 5'),
-            new sidebarSearchFilter_service_1.Entry('Test 6'),
-            new sidebarSearchFilter_service_1.Entry('Test 7'),
-            new sidebarSearchFilter_service_1.Entry('Test 8'),
-            new sidebarSearchFilter_service_1.Entry('Test 9'),
-            new sidebarSearchFilter_service_1.Entry('Test 10'),
-            new sidebarSearchFilter_service_1.Entry('Test 11'),
-            new sidebarSearchFilter_service_1.Entry('Test 12'),
-            new sidebarSearchFilter_service_1.Entry('Test 13'),
-            new sidebarSearchFilter_service_1.Entry('Test 14'),
-            new sidebarSearchFilter_service_1.Entry('Test 15')
-        ];
+        this.dataPool = [];
         this.shownDataPool = [];
-        this.dataPool.push(new sidebarSearchFilter_service_1.Entry('Added new Patient'));
+        this.dataPool.push(new sidebarSearchFilter_service_1.Entry('Local dummy patient', 'dummyIdentifier'));
+        fhirProvider.getPatients().subscribe(function (data) {
+            console.log(data);
+            for (var i = 0; i < data.length; i++) {
+                var patient = data[i].resource;
+                var lastName = patient.name[0].family[0];
+                var firstName = patient.name[0].given[0];
+                var identifier = patient.identifier[0].value;
+                _this.dataPool.push(new sidebarSearchFilter_service_1.Entry(firstName + ' ' + lastName, identifier));
+            }
+        });
         this.shownDataPool = this.dataPool;
     }
     SidebarPatientsComponent.prototype.onInput = function (event) {
@@ -50,7 +42,7 @@ var SidebarPatientsComponent = (function () {
             selector: 'sidebar-patients-component',
             templateUrl: 'app/html/sidebarPatients.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [fhirProvider_service_1.FhirProvider])
     ], SidebarPatientsComponent);
     return SidebarPatientsComponent;
 }());

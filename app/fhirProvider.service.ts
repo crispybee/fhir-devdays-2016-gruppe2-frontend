@@ -4,10 +4,11 @@ import {Observable} from "rxjs/Rx";
 declare var FHIR:any;
 declare var jQuery:any;
 
+
 @Injectable()
 export class FhirProvider {
 
-    serviceURL:string = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
+    serviceURL:string = 'https://fhir-open-api-dstu2.smarthealthit.org';
     smart:any;
 
     constructor() {
@@ -31,12 +32,40 @@ export class FhirProvider {
         return Observable.throw(error || 'Server error');
     }
 
-    public getPatients():Observable<fhir.BundleEntry[]> {
+    public getDiagnosticReports():Observable<fhir.BundleEntry[]> {
         return this.deferredToObservable(this.smart.api.search({
-            type: "Patient", query: {}
+            type: "DiagnosticReport", query: {}
         })).map(res => <fhir.BundleEntry[]> res.data.entry)
             .catch(this.handleError);
-        }
+    }
+
+    public getObservations():Observable<fhir.BundleEntry[]> {
+        return this.deferredToObservable(this.smart.api.search({
+            type: "Observation", query: {}
+        })).map(res => <fhir.BundleEntry[]> res.data.entry)
+            .catch(this.handleError);
+    }
+
+    public getOrganizations():Observable<fhir.BundleEntry[]> {
+        return this.deferredToObservable(this.smart.api.search({
+            type: "Organization", query: {}
+        })).map(res => <fhir.BundleEntry[]> res.data.entry)
+            .catch(this.handleError);
+    }
+
+    public getPractitioners():Observable<fhir.BundleEntry[]> {
+        return this.deferredToObservable(this.smart.api.search({
+            type: "Practitioner", query: {}
+        })).map(res => <fhir.BundleEntry[]> res.data.entry)
+            .catch(this.handleError);
+    }
+
+	public getPatients():Observable<fhir.BundleEntry[]> {
+		return this.deferredToObservable(this.smart.api.search({
+			type: "Patient", query: {}
+		})).map(res => <fhir.BundleEntry[]> res.data.entry)
+			.catch(this.handleError);
+	}
 
     /**
      * Initializes the smart on fhir client

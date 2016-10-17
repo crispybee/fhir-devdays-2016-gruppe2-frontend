@@ -12,7 +12,7 @@ var core_1 = require("@angular/core");
 var Rx_1 = require("rxjs/Rx");
 var FhirProvider = (function () {
     function FhirProvider() {
-        this.serviceURL = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
+        this.serviceURL = 'https://fhir-open-api-dstu2.smarthealthit.org';
         this.init(this.serviceURL);
     }
     /**
@@ -29,6 +29,30 @@ var FhirProvider = (function () {
         // instead of just logging it to the console
         console.error(error);
         return Rx_1.Observable.throw(error || 'Server error');
+    };
+    FhirProvider.prototype.getDiagnosticReports = function () {
+        return this.deferredToObservable(this.smart.api.search({
+            type: "DiagnosticReport", query: {}
+        })).map(function (res) { return res.data.entry; })
+            .catch(this.handleError);
+    };
+    FhirProvider.prototype.getObservations = function () {
+        return this.deferredToObservable(this.smart.api.search({
+            type: "Observation", query: {}
+        })).map(function (res) { return res.data.entry; })
+            .catch(this.handleError);
+    };
+    FhirProvider.prototype.getOrganizations = function () {
+        return this.deferredToObservable(this.smart.api.search({
+            type: "Organization", query: {}
+        })).map(function (res) { return res.data.entry; })
+            .catch(this.handleError);
+    };
+    FhirProvider.prototype.getPractitioners = function () {
+        return this.deferredToObservable(this.smart.api.search({
+            type: "Practitioner", query: {}
+        })).map(function (res) { return res.data.entry; })
+            .catch(this.handleError);
     };
     FhirProvider.prototype.getPatients = function () {
         return this.deferredToObservable(this.smart.api.search({

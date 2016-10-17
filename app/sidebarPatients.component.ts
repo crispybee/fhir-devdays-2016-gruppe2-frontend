@@ -1,5 +1,6 @@
 import { Component } 					from '@angular/core';
 import { Entry, SidebarSearchFilter } 	from "./sidebarSearchFilter.service";
+import { FhirProvider }                from "./fhirProvider.service";
 
 
 @Component({
@@ -10,7 +11,7 @@ export class SidebarPatientsComponent {
 	private searchList: SidebarSearchFilter = new SidebarSearchFilter;
 
 	dataPool: Entry[] = [
-		new Entry('Tom Doe'),
+		/*new Entry('Tom Doe'),
 		new Entry('Max Mustermann'),
 		new Entry('Dr. Hans Wurst'),
 		new Entry('Martina Mustermann'),
@@ -29,13 +30,25 @@ export class SidebarPatientsComponent {
 		new Entry('Test 12'),
 		new Entry('Test 13'),
 		new Entry('Test 14'),
-		new Entry('Test 15')
+		new Entry('Test 15')*/
 	];
 
 	shownDataPool: Entry[] = [];
 
-	constructor() {
-		this.dataPool.push(new Entry('Added new Patient'));
+	constructor(private fhirProvider: FhirProvider) {
+		this.dataPool.push(new Entry('Local dummy patient', 'dummyIdentifier'));
+
+		fhirProvider.getPatients().subscribe(data => {
+			console.log(data);
+
+			for (let i = 0; i < data.length; i++) {
+				let patient = <fhir.Patient>data[i].resource;
+				let lastName: string = patient.name[0].family[0];
+				let firstName: string = patient.name[0].given[0];
+				let identifier: string = patient.identifier[0].value;
+				this.dataPool.push(new Entry(firstName + ' ' + lastName, identifier));
+			}
+		});
 
 		this.shownDataPool = this.dataPool;
 	}

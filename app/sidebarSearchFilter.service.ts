@@ -1,5 +1,5 @@
 export class Entry {
-	constructor(public description:string) { }
+	constructor(public description: string, public identifier: string) { }
 }
 
 export class SidebarSearchFilter {
@@ -15,7 +15,7 @@ export class SidebarSearchFilter {
 			let contains: boolean = pattern.test(entry.description);
 
 			if (contains === true) {
-				listOfMatchedNames.push(new Entry(entry.description));
+				listOfMatchedNames.push(new Entry(entry.description, entry.identifier));
 			}
 		});
 

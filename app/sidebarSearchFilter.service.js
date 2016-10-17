@@ -1,7 +1,8 @@
 "use strict";
 var Entry = (function () {
-    function Entry(description) {
+    function Entry(description, identifier) {
         this.description = description;
+        this.identifier = identifier;
     }
     return Entry;
 }());
@@ -15,7 +16,7 @@ var SidebarSearchFilter = (function () {
         inputArray.forEach(function (entry) {
             var contains = pattern.test(entry.description);
             if (contains === true) {
-                listOfMatchedNames.push(new Entry(entry.description));
+                listOfMatchedNames.push(new Entry(entry.description, entry.identifier));
             }
         });
         return listOfMatchedNames;

@@ -6,10 +6,13 @@
                 <span class="glyphicon glyphicon-search form-control-feedback"></span>
             </form>
         </li>
-        <li *ngFor="let entry of shownDataPool"><a [routerLink]="['/', {
-    outlets: {
-        'canvas': ['canvas', 'canvas-patient-overview']
-    }
-    }]">{{entry.description}}</a></li>
+        <li *ngFor="let entry of shownDataPool">
+            <a [routerLink]="['/', {
+                outlets: {
+                    'canvas': ['canvas', 'canvas-patient-overview', { identifier: entry.identifier }]
+                }
+            }]">{{entry.description}}
+            </a>
+        </li>
     </ul>
 </div>
