@@ -16,7 +16,7 @@ import { routing, appRoutingProvider }  	from './app.routing';
 @NgModule({
 	imports: [ BrowserModule, routing ],
 	providers: [ appRoutingProvider, FhirProvider ],
-	declarations: [ AppComponent, SidebarLoadingComponent, SidebarPatientsComponent, NavBarComponent, CanvasLoadingComponent, CanvasPatientOverviewComponent, CanvasPatientDetailComponent, DefaultComponent, PageNotFoundComponent ],
+	declarations: [ AppComponent, SidebarLoadingComponent, SidebarPatientsComponent, NavBarComponent, CanvasLoadingComponent, CanvasPatientOverviewComponent, CanvasPatientDetailComponent, DiagramComponent, DefaultComponent, PageNotFoundComponent ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {

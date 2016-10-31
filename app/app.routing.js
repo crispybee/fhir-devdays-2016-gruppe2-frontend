@@ -7,7 +7,6 @@ var canvasLoading_component_1 = require("./canvasLoading.component");
 var canvasPatientDetail_component_1 = require("./canvasPatientDetail.component");
 var canvasPatientOverview_component_1 = require("./canvasPatientOverview.component");
 var pageNotFound_component_1 = require("./pageNotFound.component");
-var canvasChart_component_1 = require("./canvasChart.component");
 exports.appRoutes = [
     {
         path: '',
@@ -46,10 +45,6 @@ exports.appRoutes = [
             {
                 path: 'canvas-patient-detail',
                 component: canvasPatientDetail_component_1.CanvasPatientDetailComponent
-            },
-            {
-                path: 'canvas-chart-component',
-                component: canvasChart_component_1.CanvasChartComponent
             },
             {
                 path: '**',

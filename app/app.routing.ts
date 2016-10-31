@@ -8,7 +8,6 @@ import {CanvasPatientDetailComponent}    from "./canvasPatientDetail.component";
 import {CanvasPatientOverviewComponent}   from "./canvasPatientOverview.component";
 import {DefaultComponent}                from "./default.component";
 import {PageNotFoundComponent}            from "./pageNotFound.component";
-import {CanvasChartComponent} from "./canvasChart.component";
 
 
 export const appRoutes: Routes = [
@@ -49,10 +48,6 @@ export const appRoutes: Routes = [
             {
                 path: 'canvas-patient-detail',
                 component: CanvasPatientDetailComponent
-            },
-            {
-                path: 'canvas-chart-component',
-                component: CanvasChartComponent
             },
             {
                 path: '**',

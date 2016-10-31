@@ -22,8 +22,6 @@ var default_component_1 = require('./default.component');
 var pageNotFound_component_1 = require('./pageNotFound.component');
 var fhirProvider_service_1 = require('./fhirProvider.service');
 var app_routing_1 = require('./app.routing');
-var ng2_charts_1 = require('ng2-charts/ng2-charts');
-var canvasChart_component_1 = require('./canvasChart.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -31,7 +29,7 @@ var AppModule = (function () {
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, app_routing_1.routing],
             providers: [app_routing_1.appRoutingProvider, fhirProvider_service_1.FhirProvider],
-            declarations: [app_component_1.AppComponent, sidebarLoading_component_1.SidebarLoadingComponent, sidebarPatients_component_1.SidebarPatientsComponent, navBar_component_1.NavBarComponent, canvasLoading_component_1.CanvasLoadingComponent, canvasPatientOverview_component_1.CanvasPatientOverviewComponent, canvasPatientDetail_component_1.CanvasPatientDetailComponent, default_component_1.DefaultComponent, pageNotFound_component_1.PageNotFoundComponent],
+            declarations: [app_component_1.AppComponent, sidebarLoading_component_1.SidebarLoadingComponent, sidebarPatients_component_1.SidebarPatientsComponent, navBar_component_1.NavBarComponent, canvasLoading_component_1.CanvasLoadingComponent, canvasPatientOverview_component_1.CanvasPatientOverviewComponent, canvasPatientDetail_component_1.CanvasPatientDetailComponent, diagram_component_1.DiagramComponent, default_component_1.DefaultComponent, pageNotFound_component_1.PageNotFoundComponent],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])
