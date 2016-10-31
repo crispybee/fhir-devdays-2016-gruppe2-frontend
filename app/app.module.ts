@@ -7,18 +7,16 @@ import { SidebarPatientsComponent } 		from './sidebarPatients.component';
 import { CanvasLoadingComponent } 			from "./canvasLoading.component";
 import { CanvasPatientOverviewComponent } 	from './canvasPatientOverview.component';
 import { CanvasPatientDetailComponent } 	from "./canvasPatientDetail.component";
+import { DiagramComponent } 				from "./diagram.component";
 import { DefaultComponent } 				from './default.component';
 import { PageNotFoundComponent } 			from './pageNotFound.component';
 import { FhirProvider } 					from './fhirProvider.service';
 import { routing, appRoutingProvider }  	from './app.routing';
-import { ChartsModule } from 'ng2-charts/ng2-charts';
-import {CanvasChartComponent} from './canvasChart.component'
-
 
 @NgModule({
-	imports: [ BrowserModule, routing , ChartsModule],
+	imports: [ BrowserModule, routing ],
 	providers: [ appRoutingProvider, FhirProvider ],
-	declarations: [ AppComponent, SidebarLoadingComponent, SidebarPatientsComponent, NavBarComponent, CanvasLoadingComponent, CanvasPatientOverviewComponent, CanvasPatientDetailComponent, DefaultComponent, PageNotFoundComponent, CanvasChartComponent],
+	declarations: [ AppComponent, SidebarLoadingComponent, SidebarPatientsComponent, NavBarComponent, CanvasLoadingComponent, CanvasPatientOverviewComponent, CanvasPatientDetailComponent, DefaultComponent, PageNotFoundComponent ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {
