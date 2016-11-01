@@ -1,41 +1,50 @@
 /* Set above for mobile, show later */
 .sidebar {
-  display: initial;
+    display: initial;
 }
+
 @media (min-width: 768px) {
-  .sidebar {
-    position: fixed;
-    top: 30px;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    display: block;
-    padding: 20px;
-    overflow-x: hidden;
-    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
-    background-color: #eee;
-    border-right: 5px solid #222;
-  }
+    .sidebar {
+        position: fixed;
+        top: 30px;
+        bottom: 0;
+        left: 0;
+        z-index: 1000;
+        display: block;
+        padding: 20px;
+        overflow-x: hidden;
+        overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+        background-color: #eee;
+        border-right: 5px solid #222;
+    }
 }
 
 .nav-sidebar > .active > a,
 .nav-sidebar > .active > a:hover,
 .nav-sidebar > .active > a:focus {
-  color: #fff;
-  background-color: #428bca;
-  -webkit-user-select: none; /* Chrome/Safari */
-  -moz-user-select: none; /* Firefox */
-  -ms-user-select: none; /* IE10+ */
-  -o-user-select: none;
-  user-select: none;
+    color: #fff;
+    background-color: #428bca;
+    -webkit-user-select: none; /* Chrome/Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */
+    -o-user-select: none;
+    user-select: none;
 }
 
 /* remove round border for search form in the sidebar */
-.form-control
-{
-  border-radius: 0px;
+.form-control {
+    border-radius: 0px;
 }
 
 .clickable-element {
-  cursor: pointer;
+    cursor: pointer;
+}
+
+.chart-buffer {
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.top-buffer {
+    margin-top: 100px;
 }

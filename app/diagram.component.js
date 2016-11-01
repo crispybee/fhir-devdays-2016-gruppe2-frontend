@@ -15,9 +15,10 @@ var DiagramComponent = (function () {
         this.config = {
             type: 'line',
             data: {
-                labels: ["January", "February", "March", "April", "May", "June", "July"],
+                labels: ["day 1", "day 2", "day 3", "day 4", "day 5", "day 6", "day 7"],
                 datasets: [{
-                        label: "My First dataset",
+                        label: "Natrium",
+                        fill: false,
                         backgroundColor: "rgba(155, 0, 0, 1)",
                         borderColor: "rgba(155, 0, 0, 1)",
                         data: [
@@ -27,30 +28,29 @@ var DiagramComponent = (function () {
                             7,
                             9,
                             4,
-                            4
-                        ],
-                        fill: false,
+                            5
+                        ]
                     }, {
-                        label: "My Second dataset",
+                        label: "Kalium ",
                         fill: false,
                         backgroundColor: "rgba(0, 0, 155, 1)",
                         borderColor: "rgba(0, 0, 155, 1)",
                         data: [
                             8,
+                            5,
                             8,
+                            2,
+                            7,
                             8,
-                            8,
-                            8,
-                            8,
-                            8
-                        ],
+                            16
+                        ]
                     }]
             },
             options: {
                 responsive: true,
                 title: {
                     display: true,
-                    text: 'Chart.js Line Chart'
+                    text: 'Lab result'
                 },
                 tooltips: {
                     mode: 'index',
@@ -65,7 +65,7 @@ var DiagramComponent = (function () {
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'Month'
+                                labelString: 'Day'
                             }
                         }],
                     yAxes: [{
@@ -81,8 +81,8 @@ var DiagramComponent = (function () {
     }
     DiagramComponent.prototype.ngAfterViewInit = function () {
         this.canvas = this.canvasRef.nativeElement;
-        this.canvas.width = 300;
-        this.canvas.height = 300;
+        this.canvas.width = 400;
+        this.canvas.height = 400;
         var context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
     };
