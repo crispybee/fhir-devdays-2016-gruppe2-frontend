@@ -21,6 +21,7 @@ var default_component_1 = require('./default.component');
 var pageNotFound_component_1 = require('./pageNotFound.component');
 var fhirProvider_service_1 = require('./fhirProvider.service');
 var app_routing_1 = require('./app.routing');
+// import { NorwayObjectValidator } from "./norwayObjectValidator.service";
 var AppModule = (function () {
     function AppModule() {
     }

@@ -11,6 +11,7 @@ import { DefaultComponent } 				from './default.component';
 import { PageNotFoundComponent } 			from './pageNotFound.component';
 import { FhirProvider } 					from './fhirProvider.service';
 import { routing, appRoutingProvider }  	from './app.routing';
+// import { NorwayObjectValidator } from "./norwayObjectValidator.service";
 
 @NgModule({
 	imports: [ BrowserModule, routing ],

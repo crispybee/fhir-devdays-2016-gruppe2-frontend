@@ -8,7 +8,8 @@ declare var jQuery:any;
 @Injectable()
 export class FhirProvider {
 
-    serviceURL:string = 'https://fhir-open-api-dstu2.smarthealthit.org';
+    // serviceURL:string = 'https://fhir-open-api-dstu2.smarthealthit.org';
+    serviceURL:string = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
     smart:any;
 
     constructor() {
@@ -62,7 +63,9 @@ export class FhirProvider {
 
 	public getPatients():Observable<fhir.BundleEntry[]> {
 		return this.deferredToObservable(this.smart.api.search({
-			type: "Patient", query: {}
+			type: "Patient", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabPatientNorway"
+            }
 		})).map(res => <fhir.BundleEntry[]> res.data.entry)
 			.catch(this.handleError);
 	}
