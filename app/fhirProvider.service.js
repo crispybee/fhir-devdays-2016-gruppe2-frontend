@@ -33,25 +33,33 @@ var FhirProvider = (function () {
     };
     FhirProvider.prototype.getDiagnosticReports = function () {
         return this.deferredToObservable(this.smart.api.search({
-            type: "DiagnosticReport", query: {}
+            type: "DiagnosticReport", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabDiagnosticReportNorway"
+            }
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
     FhirProvider.prototype.getObservations = function () {
         return this.deferredToObservable(this.smart.api.search({
-            type: "Observation", query: {}
+            type: "Observation", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabObservationNorway"
+            }
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
     FhirProvider.prototype.getOrganizations = function () {
         return this.deferredToObservable(this.smart.api.search({
-            type: "Organization", query: {}
+            type: "Organization", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabOrganizationNorway"
+            }
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
     FhirProvider.prototype.getPractitioners = function () {
         return this.deferredToObservable(this.smart.api.search({
-            type: "Practitioner", query: {}
+            type: "Practitioner", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabPractitionerNorway"
+            }
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
