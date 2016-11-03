@@ -10,8 +10,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var router_1 = require("@angular/router");
+var fhirProvider_service_1 = require('./fhirProvider.service');
 var AppComponent = (function () {
-    function AppComponent(router) {
+    function AppComponent(router, _fhir) {
+        this._fhir = _fhir;
+        _fhir.init();
         // router.navigateByUrl('/(sidebar:sidebar//canvas:canvas)');
     }
     AppComponent = __decorate([
@@ -19,7 +22,7 @@ var AppComponent = (function () {
             selector: 'my-app',
             templateUrl: 'app/html/app.html'
         }), 
-        __metadata('design:paramtypes', [router_1.Router])
+        __metadata('design:paramtypes', [router_1.Router, fhirProvider_service_1.FhirProvider])
     ], AppComponent);
     return AppComponent;
 }());

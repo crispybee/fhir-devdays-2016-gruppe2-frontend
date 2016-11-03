@@ -1,6 +1,7 @@
 import { Component } 					from '@angular/core';
 import { Entry, SidebarSearchFilter } 	from "./sidebarSearchFilter.service";
 import { FhirProvider }                	from "./fhirProvider.service";
+import {NorwayObjectValidator} from './norwayObjectValidator.service';
 
 
 @Component({
@@ -13,15 +14,16 @@ export class SidebarPatientsComponent {
 	dataPool: Entry[] = [];
 	shownDataPool: Entry[] = [];
 
-	constructor(private fhirProvider: FhirProvider) {
+	constructor(private fhirProvider: FhirProvider, private validator:NorwayObjectValidator) {
 		this.dataPool.push(new Entry('Local dummy patient', 'dummyIdentifier'));
 
-		fhirProvider.getDiagnosticReports().subscribe(data => {
-			let diagnosticReportResource: fhir.DiagnosticReport = <fhir.DiagnosticReport>data[0].resource;
-
-			console.log("Diagnostic Report:");
-			console.log(data);
-		});
+		// fhirProvider.getDiagnosticReports().subscribe(data => {
+		// 	let diagnosticReportResource: fhir.DiagnosticReport = <fhir.DiagnosticReport>data[0].resource;
+        //
+		// 	// this.validator.validateNorwayDiagnosticReport(diagnosticReportResource);
+		// 	console.log("Diagnostic Report:");
+		// 	console.log(data);
+		// });
 
 		fhirProvider.getPatients().subscribe(data => {
 			console.log(data);
@@ -32,6 +34,7 @@ export class SidebarPatientsComponent {
 				let firstName: string = patient.name[0].given[0];
 				let text: string = patient.name[0].text;
 				let identifier: string = patient.identifier[0].value;
+
 
 				this.dataPool.push(new Entry(firstName + " " + lastName, identifier));
 			}

@@ -11,19 +11,23 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var sidebarSearchFilter_service_1 = require("./sidebarSearchFilter.service");
 var fhirProvider_service_1 = require("./fhirProvider.service");
+var norwayObjectValidator_service_1 = require('./norwayObjectValidator.service');
 var SidebarPatientsComponent = (function () {
-    function SidebarPatientsComponent(fhirProvider) {
+    function SidebarPatientsComponent(fhirProvider, validator) {
         var _this = this;
         this.fhirProvider = fhirProvider;
+        this.validator = validator;
         this.searchList = new sidebarSearchFilter_service_1.SidebarSearchFilter;
         this.dataPool = [];
         this.shownDataPool = [];
         this.dataPool.push(new sidebarSearchFilter_service_1.Entry('Local dummy patient', 'dummyIdentifier'));
-        fhirProvider.getDiagnosticReports().subscribe(function (data) {
-            var diagnosticReportResource = data[0].resource;
-            console.log("Diagnostic Report:");
-            console.log(data);
-        });
+        // fhirProvider.getDiagnosticReports().subscribe(data => {
+        // 	let diagnosticReportResource: fhir.DiagnosticReport = <fhir.DiagnosticReport>data[0].resource;
+        //
+        // 	// this.validator.validateNorwayDiagnosticReport(diagnosticReportResource);
+        // 	console.log("Diagnostic Report:");
+        // 	console.log(data);
+        // });
         fhirProvider.getPatients().subscribe(function (data) {
             console.log(data);
             for (var i = 0; i < data.length; i++) {
@@ -48,7 +52,7 @@ var SidebarPatientsComponent = (function () {
             selector: 'sidebar-patients-component',
             templateUrl: 'app/html/sidebarPatients.html'
         }), 
-        __metadata('design:paramtypes', [fhirProvider_service_1.FhirProvider])
+        __metadata('design:paramtypes', [fhirProvider_service_1.FhirProvider, norwayObjectValidator_service_1.NorwayObjectValidator])
     ], SidebarPatientsComponent);
     return SidebarPatientsComponent;
 }());
