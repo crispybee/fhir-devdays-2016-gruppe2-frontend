@@ -12,7 +12,8 @@ var core_1 = require("@angular/core");
 var Rx_1 = require("rxjs/Rx");
 var FhirProvider = (function () {
     function FhirProvider() {
-        this.serviceURL = 'https://fhir-open-api-dstu2.smarthealthit.org';
+        // serviceURL:string = 'https://fhir-open-api-dstu2.smarthealthit.org';
+        this.serviceURL = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
         this.init(this.serviceURL);
     }
     /**
@@ -32,31 +33,41 @@ var FhirProvider = (function () {
     };
     FhirProvider.prototype.getDiagnosticReports = function () {
         return this.deferredToObservable(this.smart.api.search({
-            type: "DiagnosticReport", query: {}
+            type: "DiagnosticReport", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabDiagnosticReportNorway"
+            }
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
     FhirProvider.prototype.getObservations = function () {
         return this.deferredToObservable(this.smart.api.search({
-            type: "Observation", query: {}
+            type: "Observation", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabObservationNorway"
+            }
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
     FhirProvider.prototype.getOrganizations = function () {
         return this.deferredToObservable(this.smart.api.search({
-            type: "Organization", query: {}
+            type: "Organization", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabOrganizationNorway"
+            }
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
     FhirProvider.prototype.getPractitioners = function () {
         return this.deferredToObservable(this.smart.api.search({
-            type: "Practitioner", query: {}
+            type: "Practitioner", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabPractitionerNorway"
+            }
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
     FhirProvider.prototype.getPatients = function () {
         return this.deferredToObservable(this.smart.api.search({
-            type: "Patient", query: {}
+            type: "Patient", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabPatientNorway"
+            }
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };

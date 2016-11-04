@@ -19,14 +19,20 @@ var SidebarPatientsComponent = (function () {
         this.dataPool = [];
         this.shownDataPool = [];
         this.dataPool.push(new sidebarSearchFilter_service_1.Entry('Local dummy patient', 'dummyIdentifier'));
+        fhirProvider.getDiagnosticReports().subscribe(function (data) {
+            var diagnosticReportResource = data[0].resource;
+            console.log("Diagnostic Report:");
+            console.log(data);
+        });
         fhirProvider.getPatients().subscribe(function (data) {
             console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var patient = data[i].resource;
                 var lastName = patient.name[0].family[0];
                 var firstName = patient.name[0].given[0];
+                var text = patient.name[0].text;
                 var identifier = patient.identifier[0].value;
-                _this.dataPool.push(new sidebarSearchFilter_service_1.Entry(firstName + ' ' + lastName, identifier));
+                _this.dataPool.push(new sidebarSearchFilter_service_1.Entry(firstName + " " + lastName, identifier));
             }
         });
         this.shownDataPool = this.dataPool;
