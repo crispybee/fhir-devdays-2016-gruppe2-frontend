@@ -10,33 +10,71 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var fhirProvider_service_1 = require("./fhirProvider.service");
-var ObservationCleaned = (function () {
-    function ObservationCleaned(fhirProvider, text) {
+var OneObservationCleaned = (function () {
+    function OneObservationCleaned(date, value, referenceRange, text) {
+        this.date = date;
+        this.value = value;
+        this.referenceRange = referenceRange;
+        this.text = text;
+    }
+    return OneObservationCleaned;
+}());
+exports.OneObservationCleaned = OneObservationCleaned;
+var AllObservations = (function () {
+    function AllObservations(fhirProvider) {
         var _this = this;
         this.fhirProvider = fhirProvider;
-        this.text = text;
+        this.observationsCleanedList = [];
+        this.date = "";
+        this.value = "";
+        this.reference = "";
+        this.text = "";
         fhirProvider.getObservations().subscribe(function (data) {
+            console.log("All Observations before inserting");
+            console.log(data);
             for (var i = 0; i < data.length; i++) {
-                var observationResource = data[i].resource;
-                if (observationResource.status == "preliminary") {
-                    text = observationResource.code.text;
-                    _this.effectiveDate = observationResource.effectiveDateTime;
-                    console.log("Observationdata");
-                    console.log(data);
-                    console.log("oneObservation");
-                    console.log(observationResource);
-                    console.log(text);
-                    console.log(_this.effectiveDate);
+                var obsRes = data[i].resource;
+                if (obsRes.status == "preliminary") {
+                    _this.fillProperties(obsRes);
+                    var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
+                    _this.observationsCleanedList.push(obs);
+                }
+                else if (obsRes.status == "final") {
+                    _this.fillProperties(obsRes);
+                    var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
+                    _this.observationsCleanedList.push(obs);
                 }
             }
+            console.log("nach for in constructor");
+            console.log(_this.observationsCleanedList);
         });
+        console.log(this.observationsCleanedList);
     }
-    return ObservationCleaned;
+    AllObservations.prototype.fillProperties = function (obsRes) {
+        if (typeof obsRes.issued !== 'undefined') {
+            this.date = obsRes.issued.toString();
+        }
+        if (typeof obsRes.valueQuantity !== 'undefined') {
+            this.value = obsRes.valueQuantity.value;
+        }
+        if (typeof obsRes.referenceRange !== 'undefined') {
+            this.reference = obsRes.referenceRange[0];
+        }
+        if (typeof obsRes.code !== 'undefined') {
+            this.text = obsRes.code.text.toString();
+        }
+    };
+    AllObservations.prototype.getAllObs = function () {
+        console.log("getter");
+        console.log(this.observationsCleanedList);
+        return this.observationsCleanedList;
+    };
+    return AllObservations;
 }());
-exports.ObservationCleaned = ObservationCleaned;
+exports.AllObservations = AllObservations;
 var DiagramComponent = (function () {
     function DiagramComponent() {
-        this.observation = new ObservationCleaned(new fhirProvider_service_1.FhirProvider(), "");
+        this.observationsCleanedList = [];
         this.config = {
             type: 'line',
             data: {
@@ -45,23 +83,10 @@ var DiagramComponent = (function () {
             },
             options: {}
         };
-        this.labels = [this.observation.effectiveDate, "02-01-2001", "03-01-2001", "04-01-2001", "05-01-2001", "06-01-2001", "07-01-2001"];
-        this.datasets =
-            [{
-                    label: "Natrium",
-                    fill: false,
-                    backgroundColor: "rgba(155, 0, 0, 1)",
-                    borderColor: "rgba(155, 0, 0, 1)",
-                    data: [
-                        1,
-                        2,
-                        3,
-                        7,
-                        9,
-                        4,
-                        5
-                    ]
-                }];
+        this.observations = new AllObservations(new fhirProvider_service_1.FhirProvider());
+        this.observationsCleanedList = this.observations.getAllObs();
+        this.labels = [];
+        this.datasets = [];
         this.options = {
             responsive: true,
             tooltips: {
@@ -89,10 +114,29 @@ var DiagramComponent = (function () {
                     }]
             }
         };
+        this.fillDatasets();
         this.config.data.labels = this.labels;
         this.config.data.datasets = this.datasets;
         this.config.options = this.options;
     }
+    DiagramComponent.prototype.fillDatasets = function () {
+        console.log("blalalalal");
+        console.log(this.observationsCleanedList.length);
+        for (var i = 0; i < this.observationsCleanedList.length; i++) {
+            if (this.observationsCleanedList[i].value !== "") {
+                var currentOb = this.observationsCleanedList[i];
+                this.labels.push(currentOb.date);
+                console.log("date " + this.observationsCleanedList[i].date);
+                this.datasets.push({
+                    label: currentOb.text,
+                    fill: false,
+                    backgroundColor: "rgba(155, 0, 0, 1)",
+                    borderColor: "rgba(155, 0, 0, 1)",
+                    data: [currentOb.value]
+                });
+            }
+        }
+    };
     DiagramComponent.prototype.ngAfterViewInit = function () {
         this.canvas = this.canvasRef.nativeElement;
         this.canvas.width = 500;

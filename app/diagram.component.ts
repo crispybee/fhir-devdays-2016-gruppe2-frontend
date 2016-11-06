@@ -4,25 +4,79 @@ import Observation = fhir.Observation;
 
 declare var Chart: any;
 
-export class ObservationCleaned {
+export class OneObservationCleaned {
+    public date: string;
+    public value: any;
+    public referenceRange: any;
+    public text: string;
 
-    public effectiveDate:any;
-    constructor(private fhirProvider: FhirProvider, public text: any) {
+    constructor(date: string, value: any, referenceRange: any, text: string) {
+        this.date = date;
+        this.value = value;
+        this.referenceRange = referenceRange;
+        this.text = text;
+    }
+}
+
+export class AllObservations {
+    private observationsCleanedList: OneObservationCleaned[] = [];
+    date: string = "";
+    value: any = "";
+    reference: any = "";
+    text: any = "";
+
+    constructor(private fhirProvider: FhirProvider) {
         fhirProvider.getObservations().subscribe(data=> {
+            console.log("All Observations before inserting");
+            console.log(data);
             for (let i = 0; i < data.length; i++) {
-                let observationResource: fhir.Observation = <fhir.Observation>data[i].resource;
-                if (observationResource.status == "preliminary") {
-                    text = observationResource.code.text;
-                    this.effectiveDate = observationResource.effectiveDateTime;
-                    console.log("Observationdata");
-                    console.log(data);
-                    console.log("oneObservation");
-                    console.log(observationResource);
-                    console.log(text);
-                    console.log(this.effectiveDate);
+                let obsRes: fhir.Observation = <fhir.Observation>data[i].resource;
+                if (obsRes.status == "preliminary") {
+                    this.fillProperties(obsRes);
+                    let obs: OneObservationCleaned = new OneObservationCleaned(
+                        this.date,
+                        this.value,
+                        this.reference,
+                        this.text);
+
+                    this.observationsCleanedList.push(obs);
+                }
+                else if (obsRes.status == "final") {
+                    this.fillProperties(obsRes);
+                    let obs: OneObservationCleaned = new OneObservationCleaned(
+                        this.date,
+                        this.value,
+                        this.reference,
+                        this.text);
+
+                    this.observationsCleanedList.push(obs);
                 }
             }
+            console.log("nach for in constructor");
+            console.log(this.observationsCleanedList);
         });
+        console.log(this.observationsCleanedList);
+    }
+
+    fillProperties(obsRes: fhir.Observation) {
+        if (typeof obsRes.issued !== 'undefined') {
+            this.date = obsRes.issued.toString();
+        }
+        if (typeof obsRes.valueQuantity !== 'undefined') {
+            this.value = obsRes.valueQuantity.value;
+        }
+        if (typeof obsRes.referenceRange !== 'undefined') {
+            this.reference = obsRes.referenceRange[0];
+        }
+        if (typeof obsRes.code !== 'undefined') {
+            this.text = obsRes.code.text.toString();
+        }
+    }
+
+    getAllObs(): OneObservationCleaned[] {
+        console.log("getter");
+        console.log(this.observationsCleanedList);
+        return this.observationsCleanedList;
     }
 }
 @Component({
@@ -36,7 +90,8 @@ export class DiagramComponent {
 
     private chart;
 
-    observation: ObservationCleaned = new ObservationCleaned(new FhirProvider(), "");
+    observations: AllObservations;
+    observationsCleanedList: OneObservationCleaned[] = [];
     labels: any;
     datasets: any[];
     options: any;
@@ -51,24 +106,10 @@ export class DiagramComponent {
     };
 
     constructor() {
-        this.labels = [this.observation.effectiveDate, "02-01-2001", "03-01-2001", "04-01-2001", "05-01-2001", "06-01-2001", "07-01-2001"];
-        this.datasets =
-            [{
-                label: "Natrium",
-                fill: false,
-                backgroundColor: "rgba(155, 0, 0, 1)",
-                borderColor: "rgba(155, 0, 0, 1)",
-                data: [
-                    1,
-                    2,
-                    3,
-                    7,
-                    9,
-                    4,
-                    5
-                ]
-
-            }];
+        this.observations = new AllObservations(new FhirProvider());
+        this.observationsCleanedList = this.observations.getAllObs();
+        this.labels = [];
+        this.datasets = [];
 
         this.options = {
             responsive: true,
@@ -98,9 +139,33 @@ export class DiagramComponent {
             }
         };
 
-        this.config.data.labels= this.labels;
+        this.fillDatasets();
+        this.config.data.labels = this.labels;
         this.config.data.datasets = this.datasets;
         this.config.options = this.options;
+    }
+
+
+    fillDatasets() {
+        console.log("blalalalal");
+        console.log(this.observationsCleanedList.length);
+
+        for (let i = 0; i < this.observationsCleanedList.length; i++) {
+            if (this.observationsCleanedList[i].value !== "") {
+                let currentOb = this.observationsCleanedList[i];
+                this.labels.push(currentOb.date);
+                console.log("date " + this.observationsCleanedList[i].date);
+                this.datasets.push({
+                    label: currentOb.text,
+                    fill: false,
+                    backgroundColor: "rgba(155, 0, 0, 1)",
+                    borderColor: "rgba(155, 0, 0, 1)",
+                    data: [currentOb.value]
+                });
+            }
+        }
+
+
     }
 
     ngAfterViewInit() {
