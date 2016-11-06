@@ -155,13 +155,33 @@ export class DiagramComponent {
                 let currentOb = this.observationsCleanedList[i];
                 this.labels.push(currentOb.date);
                 console.log("date " + this.observationsCleanedList[i].date);
-                this.datasets.push({
-                    label: currentOb.text,
-                    fill: false,
-                    backgroundColor: "rgba(155, 0, 0, 1)",
-                    borderColor: "rgba(155, 0, 0, 1)",
-                    data: [currentOb.value]
-                });
+                //check if there is already data
+                if (this.datasets.length > 0) {
+                    for (let j = 0; j < this.datasets; j++) {
+                        //check if there is already data with same label
+                        if (this.datasets[j].label == currentOb.text) {
+                            this.datasets[j].data.push(currentOb.value);
+                        }
+                        else {
+                            this.datasets.push({
+                                label: currentOb.text,
+                                fill: false,
+                                backgroundColor: "rgba(155, 0, 0, 1)",
+                                borderColor: "rgba(155, 0, 0, 1)",
+                                data: [currentOb.value]
+                            });
+                        }
+                    }
+                }
+                else {
+                    this.datasets.push({
+                        label: currentOb.text,
+                        fill: false,
+                        backgroundColor: "rgba(155, 0, 0, 1)",
+                        borderColor: "rgba(155, 0, 0, 1)",
+                        data: [currentOb.value]
+                    });
+                }
             }
         }
 
