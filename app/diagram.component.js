@@ -9,8 +9,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var fhirProvider_service_1 = require("./fhirProvider.service");
+var ObservationCleaned = (function () {
+    function ObservationCleaned(fhirProvider, text) {
+        var _this = this;
+        this.fhirProvider = fhirProvider;
+        this.text = text;
+        fhirProvider.getObservations().subscribe(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var observationResource = data[i].resource;
+                if (observationResource.status == "preliminary") {
+                    text = observationResource.code.text;
+                    _this.effectiveDate = observationResource.effectiveDateTime;
+                    console.log("Observationdata");
+                    console.log(data);
+                    console.log("oneObservation");
+                    console.log(observationResource);
+                    console.log(text);
+                    console.log(_this.effectiveDate);
+                }
+            }
+        });
+    }
+    return ObservationCleaned;
+}());
+exports.ObservationCleaned = ObservationCleaned;
 var DiagramComponent = (function () {
     function DiagramComponent() {
+        this.observation = new ObservationCleaned(new fhirProvider_service_1.FhirProvider(), "");
         this.config = {
             type: 'line',
             data: {
@@ -19,7 +45,7 @@ var DiagramComponent = (function () {
             },
             options: {}
         };
-        this.labels = ["01-01-2001", "02-01-2001", "03-01-2001", "04-01-2001", "05-01-2001", "06-01-2001", "07-01-2001"];
+        this.labels = [this.observation.effectiveDate, "02-01-2001", "03-01-2001", "04-01-2001", "05-01-2001", "06-01-2001", "07-01-2001"];
         this.datasets =
             [{
                     label: "Natrium",
@@ -34,20 +60,6 @@ var DiagramComponent = (function () {
                         9,
                         4,
                         5
-                    ]
-                }, {
-                    label: "Kalium ",
-                    fill: false,
-                    backgroundColor: "rgba(0, 0, 155, 1)",
-                    borderColor: "rgba(0, 0, 155, 1)",
-                    data: [
-                        8,
-                        5,
-                        8,
-                        2,
-                        7,
-                        8,
-                        16
                     ]
                 }];
         this.options = {

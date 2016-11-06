@@ -1,8 +1,30 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
+import {FhirProvider} from "./fhirProvider.service";
+import Observation = fhir.Observation;
 
 declare var Chart: any;
 
+export class ObservationCleaned {
 
+    public effectiveDate:any;
+    constructor(private fhirProvider: FhirProvider, public text: any) {
+        fhirProvider.getObservations().subscribe(data=> {
+            for (let i = 0; i < data.length; i++) {
+                let observationResource: fhir.Observation = <fhir.Observation>data[i].resource;
+                if (observationResource.status == "preliminary") {
+                    text = observationResource.code.text;
+                    this.effectiveDate = observationResource.effectiveDateTime;
+                    console.log("Observationdata");
+                    console.log(data);
+                    console.log("oneObservation");
+                    console.log(observationResource);
+                    console.log(text);
+                    console.log(this.effectiveDate);
+                }
+            }
+        });
+    }
+}
 @Component({
     selector: 'diagram-component',
     templateUrl: 'app/html/diagram.html'
@@ -14,7 +36,7 @@ export class DiagramComponent {
 
     private chart;
 
-
+    observation: ObservationCleaned = new ObservationCleaned(new FhirProvider(), "");
     labels: any;
     datasets: any[];
     options: any;
@@ -29,7 +51,7 @@ export class DiagramComponent {
     };
 
     constructor() {
-        this.labels = ["01-01-2001", "02-01-2001", "03-01-2001", "04-01-2001", "05-01-2001", "06-01-2001", "07-01-2001"];
+        this.labels = [this.observation.effectiveDate, "02-01-2001", "03-01-2001", "04-01-2001", "05-01-2001", "06-01-2001", "07-01-2001"];
         this.datasets =
             [{
                 label: "Natrium",
@@ -46,20 +68,6 @@ export class DiagramComponent {
                     5
                 ]
 
-            }, {
-                label: "Kalium ",
-                fill: false,
-                backgroundColor: "rgba(0, 0, 155, 1)",
-                borderColor: "rgba(0, 0, 155, 1)",
-                data: [
-                    8,
-                    5,
-                    8,
-                    2,
-                    7,
-                    8,
-                    16
-                ]
             }];
 
         this.options = {
@@ -90,7 +98,7 @@ export class DiagramComponent {
             }
         };
 
-        this.config.data.labels = this.labels;
+        this.config.data.labels= this.labels;
         this.config.data.datasets = this.datasets;
         this.config.options = this.options;
     }
