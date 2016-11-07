@@ -21,33 +21,42 @@ var OneObservationCleaned = (function () {
 }());
 exports.OneObservationCleaned = OneObservationCleaned;
 var AllObservations = (function () {
-    function AllObservations(fhirProvider) {
+    function AllObservations(fhirProvider, referenceToPatient) {
         var _this = this;
         this.fhirProvider = fhirProvider;
+        this.referenceToPatient = referenceToPatient;
+        this.allObservationsOfPatient = [];
         this.observationsCleanedList = [];
         this.date = "";
         this.value = "";
         this.reference = "";
         this.text = "";
         fhirProvider.getObservations().subscribe(function (data) {
-            console.log("All Observations before inserting");
-            console.log(data);
             for (var i = 0; i < data.length; i++) {
                 var obsRes = data[i].resource;
-                if (obsRes.status == "preliminary") {
-                    _this.fillProperties(obsRes);
-                    var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
-                    _this.observationsCleanedList.push(obs);
-                }
-                else if (obsRes.status == "final") {
-                    _this.fillProperties(obsRes);
-                    var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
-                    _this.observationsCleanedList.push(obs);
+                if (obsRes.subject.reference == referenceToPatient) {
+                    _this.allObservationsOfPatient.push(obsRes);
                 }
             }
-            console.log("nach for in constructor");
-            console.log(_this.observationsCleanedList);
         });
+        console.log("Patient-Observation");
+        console.log(this.allObservationsOfPatient);
+        for (var i = 0; i < this.observationsCleanedList.length; i++) {
+            var obsRes = this.allObservationsOfPatient[i];
+            if (typeof obsRes.valueQuantity !== 'undefined') {
+                if (obsRes.status == "preliminary") {
+                    this.fillProperties(obsRes);
+                    var obs = new OneObservationCleaned(this.date, this.value, this.reference, this.text);
+                    this.observationsCleanedList.push(obs);
+                }
+                else if (obsRes.status == "final") {
+                    this.fillProperties(obsRes);
+                    var obs = new OneObservationCleaned(this.date, this.value, this.reference, this.text);
+                    this.observationsCleanedList.push(obs);
+                }
+            }
+        }
+        console.log("nach for in constructor");
         console.log(this.observationsCleanedList);
     }
     AllObservations.prototype.fillProperties = function (obsRes) {
@@ -64,17 +73,12 @@ var AllObservations = (function () {
             this.text = obsRes.code.text.toString();
         }
     };
-    AllObservations.prototype.getAllObs = function () {
-        console.log("getter");
-        console.log(this.observationsCleanedList);
-        return this.observationsCleanedList;
-    };
     return AllObservations;
 }());
 exports.AllObservations = AllObservations;
 var DiagramComponent = (function () {
     function DiagramComponent() {
-        this.observationsCleanedList = [];
+        this.observationsCleanedList = new AllObservations(new fhirProvider_service_1.FhirProvider(), "Patient/6").observationsCleanedList;
         this.config = {
             type: 'line',
             data: {
@@ -83,8 +87,6 @@ var DiagramComponent = (function () {
             },
             options: {}
         };
-        this.observations = new AllObservations(new fhirProvider_service_1.FhirProvider());
-        this.observationsCleanedList = this.observations.getAllObs();
         this.labels = [];
         this.datasets = [];
         this.options = {
@@ -120,7 +122,7 @@ var DiagramComponent = (function () {
         this.config.options = this.options;
     }
     DiagramComponent.prototype.fillDatasets = function () {
-        console.log("blalalalal");
+        console.log("size of obs");
         console.log(this.observationsCleanedList.length);
         for (var i = 0; i < this.observationsCleanedList.length; i++) {
             if (this.observationsCleanedList[i].value !== "") {
@@ -129,7 +131,7 @@ var DiagramComponent = (function () {
                 console.log("date " + this.observationsCleanedList[i].date);
                 //check if there is already data
                 if (this.datasets.length > 0) {
-                    for (var j = 0; j < this.datasets; j++) {
+                    for (var j = 0; j < this.datasets.length; j++) {
                         //check if there is already data with same label
                         if (this.datasets[j].label == currentOb.text) {
                             this.datasets[j].data.push(currentOb.value);
@@ -138,7 +140,7 @@ var DiagramComponent = (function () {
                             this.datasets.push({
                                 label: currentOb.text,
                                 fill: false,
-                                backgroundColor: "rgba(155, 0, 0, 1)",
+                                backgroundColor: "rgba(0, 155, 0, 1)",
                                 borderColor: "rgba(155, 0, 0, 1)",
                                 data: [currentOb.value]
                             });
@@ -149,7 +151,7 @@ var DiagramComponent = (function () {
                     this.datasets.push({
                         label: currentOb.text,
                         fill: false,
-                        backgroundColor: "rgba(155, 0, 0, 1)",
+                        backgroundColor: "rgba(0, 0, 155, 1)",
                         borderColor: "rgba(155, 0, 0, 1)",
                         data: [currentOb.value]
                     });

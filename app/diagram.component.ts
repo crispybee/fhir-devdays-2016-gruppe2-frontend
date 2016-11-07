@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, ViewChild, Input} from '@angular/core';
 import {FhirProvider} from "./fhirProvider.service";
 import Observation = fhir.Observation;
 
@@ -19,18 +19,28 @@ export class OneObservationCleaned {
 }
 
 export class AllObservations {
-    private observationsCleanedList: OneObservationCleaned[] = [];
+    public allObservationsOfPatient: fhir.Observation[] = [];
+    public observationsCleanedList: OneObservationCleaned[] = [];
     date: string = "";
     value: any = "";
     reference: any = "";
     text: any = "";
 
-    constructor(private fhirProvider: FhirProvider) {
-        fhirProvider.getObservations().subscribe(data=> {
-            console.log("All Observations before inserting");
-            console.log(data);
-            for (let i = 0; i < data.length; i++) {
-                let obsRes: fhir.Observation = <fhir.Observation>data[i].resource;
+    constructor(private fhirProvider: FhirProvider, private referenceToPatient: string) {
+        fhirProvider.getObservations().subscribe(data => {
+                for (let i = 0; i < data.length; i++) {
+                    let obsRes: fhir.Observation = <fhir.Observation>data[i].resource;
+                    if (obsRes.subject.reference == referenceToPatient) {
+                        this.allObservationsOfPatient.push(obsRes)
+                    }
+                }
+            }
+        );
+        console.log("Patient-Observation");
+        console.log(this.allObservationsOfPatient)
+        for (let i = 0; i < this.observationsCleanedList.length; i++) {
+            let obsRes: fhir.Observation = this.allObservationsOfPatient[i]
+            if (typeof obsRes.valueQuantity !== 'undefined') {
                 if (obsRes.status == "preliminary") {
                     this.fillProperties(obsRes);
                     let obs: OneObservationCleaned = new OneObservationCleaned(
@@ -52,9 +62,8 @@ export class AllObservations {
                     this.observationsCleanedList.push(obs);
                 }
             }
-            console.log("nach for in constructor");
-            console.log(this.observationsCleanedList);
-        });
+        }
+        console.log("nach for in constructor");
         console.log(this.observationsCleanedList);
     }
 
@@ -73,11 +82,6 @@ export class AllObservations {
         }
     }
 
-    getAllObs(): OneObservationCleaned[] {
-        console.log("getter");
-        console.log(this.observationsCleanedList);
-        return this.observationsCleanedList;
-    }
 }
 @Component({
     selector: 'diagram-component',
@@ -87,11 +91,9 @@ export class DiagramComponent {
 
     @ViewChild('canvas') canvasRef: ElementRef;
     private canvas: any;
-
     private chart;
-
-    observations: AllObservations;
-    observationsCleanedList: OneObservationCleaned[] = [];
+    
+    observationsCleanedList: OneObservationCleaned[] = new AllObservations(new FhirProvider(), "Patient/6").observationsCleanedList;
     labels: any;
     datasets: any[];
     options: any;
@@ -106,8 +108,6 @@ export class DiagramComponent {
     };
 
     constructor() {
-        this.observations = new AllObservations(new FhirProvider());
-        this.observationsCleanedList = this.observations.getAllObs();
         this.labels = [];
         this.datasets = [];
 
@@ -147,9 +147,8 @@ export class DiagramComponent {
 
 
     fillDatasets() {
-        console.log("blalalalal");
+        console.log("size of obs");
         console.log(this.observationsCleanedList.length);
-
         for (let i = 0; i < this.observationsCleanedList.length; i++) {
             if (this.observationsCleanedList[i].value !== "") {
                 let currentOb = this.observationsCleanedList[i];
@@ -157,7 +156,7 @@ export class DiagramComponent {
                 console.log("date " + this.observationsCleanedList[i].date);
                 //check if there is already data
                 if (this.datasets.length > 0) {
-                    for (let j = 0; j < this.datasets; j++) {
+                    for (let j = 0; j < this.datasets.length; j++) {
                         //check if there is already data with same label
                         if (this.datasets[j].label == currentOb.text) {
                             this.datasets[j].data.push(currentOb.value);
@@ -166,7 +165,7 @@ export class DiagramComponent {
                             this.datasets.push({
                                 label: currentOb.text,
                                 fill: false,
-                                backgroundColor: "rgba(155, 0, 0, 1)",
+                                backgroundColor: "rgba(0, 155, 0, 1)",
                                 borderColor: "rgba(155, 0, 0, 1)",
                                 data: [currentOb.value]
                             });
@@ -177,7 +176,7 @@ export class DiagramComponent {
                     this.datasets.push({
                         label: currentOb.text,
                         fill: false,
-                        backgroundColor: "rgba(155, 0, 0, 1)",
+                        backgroundColor: "rgba(0, 0, 155, 1)",
                         borderColor: "rgba(155, 0, 0, 1)",
                         data: [currentOb.value]
                     });
