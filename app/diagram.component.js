@@ -20,64 +20,47 @@ var OneObservationCleaned = (function () {
     return OneObservationCleaned;
 }());
 exports.OneObservationCleaned = OneObservationCleaned;
-/*
-export class AllObservations {
-    public allObservationsOfPatient: fhir.Observation[] = [];
-    public observationsCleanedList: OneObservationCleaned[] = [];
-    date: string = "";
-    value: any = "";
-    reference: any = "";
-    text: any = "";
-
-    constructor(private referenceToPatient: string) {
-        let fhirProvider = new FhirProvider();
-
-        fhirProvider.getObservations().subscribe(data => {
-                for (let i = 0; i < data.length; i++) {
-                    let obsRes = <fhir.Observation>data[i].resource;
-
-                    if (obsRes.subject.reference === referenceToPatient) {
-                        this.allObservationsOfPatient.push(obsRes);
-                    }
+var AllObservations = (function () {
+    function AllObservations(referenceToPatient) {
+        var _this = this;
+        this.referenceToPatient = referenceToPatient;
+        this.allObservationsOfPatient = [];
+        this.observationsCleanedList = [];
+        this.date = "";
+        this.value = "";
+        this.reference = "";
+        this.text = "";
+        var fhirProvider = new fhirProvider_service_1.FhirProvider();
+        fhirProvider.getObservations().subscribe(function (data) {
+            for (var i = 0; i < data.length; i++) {
+                var obsRes = data[i].resource;
+                if (obsRes.subject.reference === referenceToPatient) {
+                    _this.allObservationsOfPatient.push(obsRes);
                 }
-
+            }
             console.log("Patient-Observation");
-            console.log(this.allObservationsOfPatient.length);
-            console.log(this.allObservationsOfPatient);
-
-            for (let j = 0; j < this.allObservationsOfPatient.length; j++) {
-                let observation: fhir.Observation = this.allObservationsOfPatient[j];
-
+            console.log(_this.allObservationsOfPatient.length);
+            console.log(_this.allObservationsOfPatient);
+            for (var j = 0; j < _this.allObservationsOfPatient.length; j++) {
+                var observation = _this.allObservationsOfPatient[j];
                 if (typeof observation.valueQuantity !== "undefined") {
                     if (observation.status == "preliminary") {
-                        this.fillProperties(observation);
-                        let obs: OneObservationCleaned = new OneObservationCleaned(
-                            this.date,
-                            this.value,
-                            this.reference,
-                            this.text);
-
-                        this.observationsCleanedList.push(obs);
+                        _this.fillProperties(observation);
+                        var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
+                        _this.observationsCleanedList.push(obs);
                     }
                     else if (observation.status == "final") {
-                        this.fillProperties(observation);
-                        let obs: OneObservationCleaned = new OneObservationCleaned(
-                            this.date,
-                            this.value,
-                            this.reference,
-                            this.text);
-
-                        this.observationsCleanedList.push(obs);
+                        _this.fillProperties(observation);
+                        var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
+                        _this.observationsCleanedList.push(obs);
                     }
                 }
             }
-
             console.log("nach for in constructor");
-            console.log(this.observationsCleanedList);
+            console.log(_this.observationsCleanedList);
         });
     }
-
-    fillProperties(obsRes: fhir.Observation) {
+    AllObservations.prototype.fillProperties = function (obsRes) {
         if (typeof obsRes.issued !== 'undefined') {
             this.date = obsRes.issued.toString();
         }
@@ -90,10 +73,10 @@ export class AllObservations {
         if (typeof obsRes.code !== 'undefined') {
             this.text = obsRes.code.text.toString();
         }
-    }
-
-}
-*/
+    };
+    return AllObservations;
+}());
+exports.AllObservations = AllObservations;
 var DiagramComponent = (function () {
     function DiagramComponent(fhirProvider) {
         var _this = this;

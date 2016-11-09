@@ -18,7 +18,7 @@ export class OneObservationCleaned {
     }
 }
 
-/*
+
 export class AllObservations {
     public allObservationsOfPatient: fhir.Observation[] = [];
     public observationsCleanedList: OneObservationCleaned[] = [];
@@ -91,7 +91,7 @@ export class AllObservations {
     }
 
 }
-*/
+
 
 @Component({
     selector: 'diagram-component',
@@ -200,7 +200,7 @@ export class DiagramComponent {
                 }]
             }
         };
-			this.fillDatasets(this.observationsCleanedList)
+			this.fillDatasets(this.observationsCleanedList);
 
         this.config.data.labels = this.labels;
         this.config.data.datasets = this.datasets;
@@ -236,7 +236,7 @@ export class DiagramComponent {
 
                 console.log("date " + observationList[i].date);
 
-				console.log("DATASET:")
+				console.log("DATASET:");
 				console.log(this.datasets);
 				console.log(this.datasets.length);
 
