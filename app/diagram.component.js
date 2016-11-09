@@ -161,8 +161,8 @@ var DiagramComponent = (function () {
     };
     DiagramComponent.prototype.ngAfterViewInit = function () {
         this.canvas = this.canvasRef.nativeElement;
-        this.canvas.width = 500;
-        this.canvas.height = 600;
+        // this.canvas.width = 500;
+        this.canvas.height = 200;
         var context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
     };

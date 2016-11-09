@@ -39,12 +39,3 @@
 .clickable-element {
     cursor: pointer;
 }
-
-.chart-buffer {
-    margin-top: 5%;
-    margin-bottom: 5%;
-}
-
-.top-buffer {
-    margin-top: 20%;
-}
