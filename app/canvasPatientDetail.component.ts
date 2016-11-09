@@ -12,8 +12,8 @@ export class CanvasPatientDetailComponent {
 	data: string[] = [];
 
 	constructor(private fhirProvider: FhirProvider) {
-		this.canvasDetailTitle = "Blood sugar";
-		this.sectionTitle = "Latest blood sugar values";
+		this.canvasDetailTitle = "Patient Name Placeholder";
+		this.sectionTitle = "Latest X values";
 
 		fhirProvider.getObservations().subscribe(data => {
 			console.log(data);
