@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild, Input} from '@angular/core';
+import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FhirProvider} from "./fhirProvider.service";
 import Observation = fhir.Observation;
 
@@ -17,81 +17,6 @@ export class OneObservationCleaned {
         this.text = text;
     }
 }
-
-
-export class AllObservations {
-    public allObservationsOfPatient: fhir.Observation[] = [];
-    public observationsCleanedList: OneObservationCleaned[] = [];
-    date: string = "";
-    value: any = "";
-    reference: any = "";
-    text: any = "";
-
-    constructor(private referenceToPatient: string) {
-		let fhirProvider = new FhirProvider();
-
-        fhirProvider.getObservations().subscribe(data => {
-                for (let i = 0; i < data.length; i++) {
-                    let obsRes = <fhir.Observation>data[i].resource;
-
-                    if (obsRes.subject.reference === referenceToPatient) {
-                        this.allObservationsOfPatient.push(obsRes);
-                    }
-                }
-
-			console.log("Patient-Observation");
-			console.log(this.allObservationsOfPatient.length);
-			console.log(this.allObservationsOfPatient);
-
-			for (let j = 0; j < this.allObservationsOfPatient.length; j++) {
-				let observation: fhir.Observation = this.allObservationsOfPatient[j];
-
-				if (typeof observation.valueQuantity !== "undefined") {
-					if (observation.status == "preliminary") {
-						this.fillProperties(observation);
-						let obs: OneObservationCleaned = new OneObservationCleaned(
-							this.date,
-							this.value,
-							this.reference,
-							this.text);
-
-						this.observationsCleanedList.push(obs);
-					}
-					else if (observation.status == "final") {
-						this.fillProperties(observation);
-						let obs: OneObservationCleaned = new OneObservationCleaned(
-							this.date,
-							this.value,
-							this.reference,
-							this.text);
-
-						this.observationsCleanedList.push(obs);
-					}
-				}
-			}
-
-			console.log("nach for in constructor");
-			console.log(this.observationsCleanedList);
-		});
-    }
-
-    fillProperties(obsRes: fhir.Observation) {
-        if (typeof obsRes.issued !== 'undefined') {
-            this.date = obsRes.issued.toString();
-        }
-        if (typeof obsRes.valueQuantity !== 'undefined') {
-            this.value = obsRes.valueQuantity.value;
-        }
-        if (typeof obsRes.referenceRange !== 'undefined') {
-            this.reference = obsRes.referenceRange[0];
-        }
-        if (typeof obsRes.code !== 'undefined') {
-            this.text = obsRes.code.text.toString();
-        }
-    }
-
-}
-
 
 @Component({
     selector: 'diagram-component',

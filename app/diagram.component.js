@@ -20,63 +20,6 @@ var OneObservationCleaned = (function () {
     return OneObservationCleaned;
 }());
 exports.OneObservationCleaned = OneObservationCleaned;
-var AllObservations = (function () {
-    function AllObservations(referenceToPatient) {
-        var _this = this;
-        this.referenceToPatient = referenceToPatient;
-        this.allObservationsOfPatient = [];
-        this.observationsCleanedList = [];
-        this.date = "";
-        this.value = "";
-        this.reference = "";
-        this.text = "";
-        var fhirProvider = new fhirProvider_service_1.FhirProvider();
-        fhirProvider.getObservations().subscribe(function (data) {
-            for (var i = 0; i < data.length; i++) {
-                var obsRes = data[i].resource;
-                if (obsRes.subject.reference === referenceToPatient) {
-                    _this.allObservationsOfPatient.push(obsRes);
-                }
-            }
-            console.log("Patient-Observation");
-            console.log(_this.allObservationsOfPatient.length);
-            console.log(_this.allObservationsOfPatient);
-            for (var j = 0; j < _this.allObservationsOfPatient.length; j++) {
-                var observation = _this.allObservationsOfPatient[j];
-                if (typeof observation.valueQuantity !== "undefined") {
-                    if (observation.status == "preliminary") {
-                        _this.fillProperties(observation);
-                        var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
-                        _this.observationsCleanedList.push(obs);
-                    }
-                    else if (observation.status == "final") {
-                        _this.fillProperties(observation);
-                        var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
-                        _this.observationsCleanedList.push(obs);
-                    }
-                }
-            }
-            console.log("nach for in constructor");
-            console.log(_this.observationsCleanedList);
-        });
-    }
-    AllObservations.prototype.fillProperties = function (obsRes) {
-        if (typeof obsRes.issued !== 'undefined') {
-            this.date = obsRes.issued.toString();
-        }
-        if (typeof obsRes.valueQuantity !== 'undefined') {
-            this.value = obsRes.valueQuantity.value;
-        }
-        if (typeof obsRes.referenceRange !== 'undefined') {
-            this.reference = obsRes.referenceRange[0];
-        }
-        if (typeof obsRes.code !== 'undefined') {
-            this.text = obsRes.code.text.toString();
-        }
-    };
-    return AllObservations;
-}());
-exports.AllObservations = AllObservations;
 var DiagramComponent = (function () {
     function DiagramComponent(fhirProvider) {
         var _this = this;
