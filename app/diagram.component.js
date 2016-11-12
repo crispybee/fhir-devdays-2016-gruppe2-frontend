@@ -28,8 +28,8 @@ var DiagramComponent = (function () {
         this.date = "";
         this.value = "";
         this.reference = "";
-        this.text = "";
-        this.referenceToPatient = "Patient/6";
+        this.text = "Not specified";
+        this.referenceToPatient = "";
         this.config = {
             type: 'line',
             data: {
@@ -44,29 +44,28 @@ var DiagramComponent = (function () {
                 //if (obsRes.subject.reference === this.referenceToPatient) {
                 _this.allObservationsOfPatient.push(obsRes);
             }
-            console.log("Patient-Observation");
-            console.log(_this.allObservationsOfPatient.length);
-            console.log(_this.allObservationsOfPatient);
             for (var j = 0; j < _this.allObservationsOfPatient.length; j++) {
                 var observation = _this.allObservationsOfPatient[j];
                 if (typeof observation.valueQuantity !== "undefined") {
-                    if (observation.status == "preliminary") {
-                        _this.fillProperties(observation);
-                        var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
-                        _this.observationsCleanedList.push(obs);
-                    }
-                    else if (observation.status == "final") {
+                    // if (observation.status == "preliminary") {
+                    // 	this.fillProperties(observation);
+                    // 	let obs: OneObservationCleaned = new OneObservationCleaned(
+                    // 		this.date,
+                    // 		this.value,
+                    // 		this.reference,
+                    // 		this.text);
+                    //
+                    // 	this.observationsCleanedList.push(obs);
+                    // }
+                    if (observation.status == "final") {
                         _this.fillProperties(observation);
                         var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
                         _this.observationsCleanedList.push(obs);
                     }
                 }
             }
-            console.log("nach for in constructor");
-            console.log(_this.observationsCleanedList);
             _this.labels = [];
             _this.datasets = [];
-            // this.observationsCleanedList = new AllObservations("Patient/6").observationsCleanedList;
             _this.options = {
                 responsive: true,
                 tooltips: {
@@ -111,13 +110,10 @@ var DiagramComponent = (function () {
             this.reference = obsRes.referenceRange[0];
         }
         if (typeof obsRes.code.text !== 'undefined') {
-            this.text = obsRes.code.text.toString();
+            this.text = obsRes.code.text;
         }
     };
     DiagramComponent.prototype.fillDatasets = function (observationList) {
-        console.log("size of obs");
-        console.log(observationList.length);
-        console.log(observationList);
         for (var i = 0; i < observationList.length; i++) {
             if (observationList[i].value !== "") {
                 var currentOb = observationList[i];

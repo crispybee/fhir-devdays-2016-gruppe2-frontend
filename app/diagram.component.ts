@@ -33,10 +33,9 @@ export class DiagramComponent {
 	date: string = "";
 	value: any = "";
 	reference: any = "";
-	text: any = "";
-	referenceToPatient: string = "Patient/6";
-    
-    // observationsCleanedList: OneObservationCleaned[];
+	text: any = "Not specified";
+	referenceToPatient: string = "";
+
     labels: any;
     datasets: any[];
     options: any;
@@ -54,31 +53,25 @@ export class DiagramComponent {
 		fhirProvider.getObservations().subscribe(data => {
 			for (let i = 0; i < data.length; i++) {
 				let obsRes = <fhir.Observation>data[i].resource;
-
 				//if (obsRes.subject.reference === this.referenceToPatient) {
 					this.allObservationsOfPatient.push(obsRes);
 				//}
 			}
 
-			console.log("Patient-Observation");
-			console.log(this.allObservationsOfPatient.length);
-			console.log(this.allObservationsOfPatient);
-
 			for (let j = 0; j < this.allObservationsOfPatient.length; j++) {
 				let observation: fhir.Observation = this.allObservationsOfPatient[j];
-
 				if (typeof observation.valueQuantity !== "undefined") {
-					if (observation.status == "preliminary") {
-						this.fillProperties(observation);
-						let obs: OneObservationCleaned = new OneObservationCleaned(
-							this.date,
-							this.value,
-							this.reference,
-							this.text);
-
-						this.observationsCleanedList.push(obs);
-					}
-					else if (observation.status == "final") {
+					// if (observation.status == "preliminary") {
+					// 	this.fillProperties(observation);
+					// 	let obs: OneObservationCleaned = new OneObservationCleaned(
+					// 		this.date,
+					// 		this.value,
+					// 		this.reference,
+					// 		this.text);
+                    //
+					// 	this.observationsCleanedList.push(obs);
+					// }
+					if (observation.status == "final") {
 						this.fillProperties(observation);
 						let obs: OneObservationCleaned = new OneObservationCleaned(
 							this.date,
@@ -91,13 +84,8 @@ export class DiagramComponent {
 				}
 			}
 
-			console.log("nach for in constructor");
-			console.log(this.observationsCleanedList);
-
         this.labels = [];
         this.datasets = [];
-		// this.observationsCleanedList = new AllObservations("Patient/6").observationsCleanedList;
-
         this.options = {
             responsive: true,
             tooltips: {
@@ -125,12 +113,10 @@ export class DiagramComponent {
                 }]
             }
         };
-			this.fillDatasets(this.observationsCleanedList);
-
+        this.fillDatasets(this.observationsCleanedList);
         this.config.data.labels = this.labels;
         this.config.data.datasets = this.datasets;
         this.config.options = this.options;
-
 		});
     }
 
@@ -146,21 +132,17 @@ export class DiagramComponent {
 			this.reference = obsRes.referenceRange[0];
 		}
 		if (typeof obsRes.code.text !== 'undefined') {
-			this.text = obsRes.code.text.toString();
+			this.text = obsRes.code.text;
 		}
 	}
 
     fillDatasets(observationList: OneObservationCleaned[]) {
-        console.log("size of obs");
-		console.log(observationList.length);
-		console.log(observationList);
         for (let i = 0; i < observationList.length; i++) {
             if (observationList[i].value !== "") {
                 let currentOb = observationList[i];
                 this.labels.push(currentOb.date);
 
                 console.log("date " + observationList[i].date);
-
 				console.log("DATASET:");
 				console.log(this.datasets);
 				console.log(this.datasets.length);
@@ -168,12 +150,13 @@ export class DiagramComponent {
                 //check if there is already data
                 if (this.datasets.length > 0) {
                     for (let h = 0; h < this.datasets.length; h++) {
-
                         //check if there is already data with same label
-                        if (this.datasets[h].label === currentOb.text) {
+                        if (this.datasets[h].label === currentOb.text)
+                        {
                             this.datasets[h].data.push(currentOb.value);
 							console.log("YAY");
-                        } else {
+                        } else
+                        {
                             this.datasets.push({
                                 label: currentOb.text,
                                 fill: false,
@@ -184,7 +167,8 @@ export class DiagramComponent {
                         }
                     }
                 }
-                else {
+                else
+                {
                     this.datasets.push({
                         label: currentOb.text,
                         fill: false,
@@ -199,7 +183,6 @@ export class DiagramComponent {
 
     ngAfterViewInit() {
         this.canvas = this.canvasRef.nativeElement;
-        // this.canvas.width = 500;
         this.canvas.height = 200;
         let context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
