@@ -41,9 +41,8 @@ var DiagramComponent = (function () {
         fhirProvider.getObservations().subscribe(function (data) {
             for (var i = 0; i < data.length; i++) {
                 var obsRes = data[i].resource;
-                if (obsRes.subject.reference === _this.referenceToPatient) {
-                    _this.allObservationsOfPatient.push(obsRes);
-                }
+                //if (obsRes.subject.reference === this.referenceToPatient) {
+                _this.allObservationsOfPatient.push(obsRes);
             }
             console.log("Patient-Observation");
             console.log(_this.allObservationsOfPatient.length);
@@ -105,13 +104,13 @@ var DiagramComponent = (function () {
         if (typeof obsRes.issued !== 'undefined') {
             this.date = obsRes.issued.toString();
         }
-        if (typeof obsRes.valueQuantity !== 'undefined') {
+        if (typeof obsRes.valueQuantity.value !== 'undefined') {
             this.value = obsRes.valueQuantity.value;
         }
         if (typeof obsRes.referenceRange !== 'undefined') {
             this.reference = obsRes.referenceRange[0];
         }
-        if (typeof obsRes.code !== 'undefined') {
+        if (typeof obsRes.code.text !== 'undefined') {
             this.text = obsRes.code.text.toString();
         }
     };

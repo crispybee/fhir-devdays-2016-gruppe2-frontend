@@ -55,9 +55,9 @@ export class DiagramComponent {
 			for (let i = 0; i < data.length; i++) {
 				let obsRes = <fhir.Observation>data[i].resource;
 
-				if (obsRes.subject.reference === this.referenceToPatient) {
+				//if (obsRes.subject.reference === this.referenceToPatient) {
 					this.allObservationsOfPatient.push(obsRes);
-				}
+				//}
 			}
 
 			console.log("Patient-Observation");
@@ -139,13 +139,13 @@ export class DiagramComponent {
 		if (typeof obsRes.issued !== 'undefined') {
 			this.date = obsRes.issued.toString();
 		}
-		if (typeof obsRes.valueQuantity !== 'undefined') {
+		if (typeof obsRes.valueQuantity.value !== 'undefined') {
 			this.value = obsRes.valueQuantity.value;
 		}
 		if (typeof obsRes.referenceRange !== 'undefined') {
 			this.reference = obsRes.referenceRange[0];
 		}
-		if (typeof obsRes.code !== 'undefined') {
+		if (typeof obsRes.code.text !== 'undefined') {
 			this.text = obsRes.code.text.toString();
 		}
 	}
