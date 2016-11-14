@@ -93,7 +93,7 @@ var DiagramComponent = (function () {
                         }]
                 }
             };
-            _this.fillDatasets(_this.observationsCleanedList);
+            _this.fillDatasets(_this.observationsCleanedList, _this.datasets);
             _this.config.data.labels = _this.labels;
             _this.config.data.datasets = _this.datasets;
             _this.config.options = _this.options;
@@ -113,25 +113,26 @@ var DiagramComponent = (function () {
             this.text = obsRes.code.text;
         }
     };
-    DiagramComponent.prototype.fillDatasets = function (observationList) {
+    DiagramComponent.prototype.fillDatasets = function (observationList, datasets) {
         for (var i = 0; i < observationList.length; i++) {
             if (observationList[i].value !== "") {
                 var currentOb = observationList[i];
                 this.labels.push(currentOb.date);
                 console.log("date " + observationList[i].date);
                 console.log("DATASET:");
-                console.log(this.datasets);
-                console.log(this.datasets.length);
+                console.log(datasets);
+                console.log(datasets.length);
+                var datasetsize = datasets.length;
                 //check if there is already data
-                if (this.datasets.length > 0) {
-                    for (var h = 0; h < this.datasets.length; h++) {
+                if (datasetsize > 0) {
+                    for (var h = 0; h < datasetsize; h++) {
                         //check if there is already data with same label
-                        if (this.datasets[h].label === currentOb.text) {
-                            this.datasets[h].data.push(currentOb.value);
+                        if (datasets[h].label === currentOb.text) {
+                            datasets[h].data.push(currentOb.value);
                             console.log("YAY");
                         }
                         else {
-                            this.datasets.push({
+                            datasets.push({
                                 label: currentOb.text,
                                 fill: false,
                                 backgroundColor: "rgba(0, 155, 0, 1)",
@@ -142,7 +143,7 @@ var DiagramComponent = (function () {
                     }
                 }
                 else {
-                    this.datasets.push({
+                    datasets.push({
                         label: currentOb.text,
                         fill: false,
                         backgroundColor: "rgba(0, 0, 155, 1)",
@@ -158,6 +159,7 @@ var DiagramComponent = (function () {
         this.canvas.height = 200;
         var context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
+        this.chart.update();
     };
     __decorate([
         core_1.ViewChild('canvas'), 

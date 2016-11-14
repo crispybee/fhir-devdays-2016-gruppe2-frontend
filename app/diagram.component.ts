@@ -113,7 +113,7 @@ export class DiagramComponent {
                 }]
             }
         };
-        this.fillDatasets(this.observationsCleanedList);
+        this.fillDatasets(this.observationsCleanedList, this.datasets);
         this.config.data.labels = this.labels;
         this.config.data.datasets = this.datasets;
         this.config.options = this.options;
@@ -136,7 +136,7 @@ export class DiagramComponent {
 		}
 	}
 
-    fillDatasets(observationList: OneObservationCleaned[]) {
+    fillDatasets(observationList: OneObservationCleaned[], datasets:any[]) {
         for (let i = 0; i < observationList.length; i++) {
             if (observationList[i].value !== "") {
                 let currentOb = observationList[i];
@@ -144,20 +144,21 @@ export class DiagramComponent {
 
                 console.log("date " + observationList[i].date);
 				console.log("DATASET:");
-				console.log(this.datasets);
-				console.log(this.datasets.length);
+				console.log(datasets);
+				console.log(datasets.length);
 
+                let datasetsize = datasets.length;
                 //check if there is already data
-                if (this.datasets.length > 0) {
-                    for (let h = 0; h < this.datasets.length; h++) {
+                if (datasetsize > 0) {
+                    for (let h = 0; h < datasetsize; h++) {
                         //check if there is already data with same label
-                        if (this.datasets[h].label === currentOb.text)
+                        if (datasets[h].label === currentOb.text)
                         {
-                            this.datasets[h].data.push(currentOb.value);
+                            datasets[h].data.push(currentOb.value);
 							console.log("YAY");
                         } else
                         {
-                            this.datasets.push({
+                            datasets.push({
                                 label: currentOb.text,
                                 fill: false,
                                 backgroundColor: "rgba(0, 155, 0, 1)",
@@ -169,7 +170,7 @@ export class DiagramComponent {
                 }
                 else
                 {
-                    this.datasets.push({
+                    datasets.push({
                         label: currentOb.text,
                         fill: false,
                         backgroundColor: "rgba(0, 0, 155, 1)",
@@ -186,6 +187,7 @@ export class DiagramComponent {
         this.canvas.height = 200;
         let context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
+        this.chart.update();
     }
 
 }
