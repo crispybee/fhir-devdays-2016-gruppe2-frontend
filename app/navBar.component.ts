@@ -9,6 +9,6 @@ export class NavBarComponent {
     navBarTitle: string;
 
     constructor() {
-        this.navBarTitle = "Patient";
+        this.navBarTitle = "Dr. Gregory House";
     }
 }

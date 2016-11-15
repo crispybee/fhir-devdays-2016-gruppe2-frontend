@@ -39,3 +39,11 @@
 .clickable-element {
     cursor: pointer;
 }
+
+.unclickable {
+    pointer-events: none;
+}
+
+.practitioner {
+    color: #d58512;
+}
