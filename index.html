@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="app/css/bootstrap.css">
     <link rel="stylesheet" href="app/css/dashboard.css">
     <link rel="stylesheet" href="app/css/loading-animation.css">
+    <link rel="stylesheet" href="app/css/mickey.css">
+    <link rel="stylesheet" href="app/css/clippy.css">
     <link rel="stylesheet" href="app/css/styles.css">
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for older browsers -->
@@ -35,17 +37,102 @@
 <!-- 3. Display the application -->
 <body>
     <my-app>
+        <!--
         <div class="spinner">
             <div class="rect1"></div>
             <div class="rect2"></div>
             <div class="rect3"></div>
             <div class="rect4"></div>
             <div class="rect5"></div>
+        </div>-->
+        <div id="watch">
+            <div class="digit">
+                <span>1</span>
+            </div>
+            <div class="digit">
+                <span>2</span>
+            </div>
+            <div class="digit">
+                <span>3</span>
+            </div>
+            <div class="digit">
+                <span>4</span>
+            </div>
+            <div class="digit">
+                <span>5</span>
+            </div>
+            <div class="digit">
+                <span>6</span>
+            </div>
+            <div class="digit">
+                <span>7</span>
+            </div>
+            <div class="digit">
+                <span>8</span>
+            </div>
+            <div class="digit">
+                <span>9</span>
+            </div>
+            <div class="digit">
+                <span>10</span>
+            </div>
+            <div class="digit">
+                <span>11</span>
+            </div>
+            <div class="digit">
+                <span>12</span>
+            </div>
+            <div id="mickey"></div>
+            <div class="left" id="hours"></div>
+            <div class="right" id="minutes"></div>
         </div>
-    </my-app>
+        <script>
+            var $hours = document.getElementById('hours');
+            var $minutes = document.getElementById('minutes');
+
+            setTimeout(function () {
+                "use strict";
+
+                var hours = new Date().getHours();
+                var minutes = new Date().getMinutes();
+
+                if (hours >= 6 && hours < 12) {
+                    $hours.className = 'left';
+                } else {
+                    $hours.className = 'right';
+                }
+
+                if (minutes <= 30) {
+                    $minutes.className = 'back left';
+                } else {
+                    $minutes.className = 'left';
+                }
+
+                set($hours,  30 * hours);
+                set($minutes, 6 * minutes);
+            }, 1000);
+
+            function set ($elmt, deg) {
+                "use strict";
+
+                if ($elmt.id === 'hours' && deg < 180) {
+                    deg = deg - 5;
+                }
+
+                if ($elmt.id === 'minutes' && deg < 180) {
+                    deg = deg + 5;
+                } else {
+                    deg = deg - 5;
+                }
+
+                $elmt.style.transform = 'rotate(' + deg + 'deg)';
+                $elmt.style.webkitTransform = 'rotate(' + deg + 'deg)';
+            }
+        </script>
     <script src="app/js/jquery-1.12.4.js"></script>
     <script src="app/js/bootstrap.js"></script>
     <script src="app/js/fhir-client.js"></script>
-    <script src="app/js/Chart.bundle.js"></script>
+        <script src="app/js/Chart.bundle.js"></script>
+        <script src="app/js/clippy.js"></script>
 </body>
 </html>

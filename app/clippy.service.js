@@ -8,21 +8,28 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var clippy_service_1 = require("./clippy.service");
-var NavBarComponent = (function () {
-    function NavBarComponent(clippy) {
-        this.clippy = clippy;
-        this.navBarTitle = "Dr. Gregory House";
+var core_1 = require("@angular/core");
+var Clippy = (function () {
+    function Clippy() {
+        this.importantInformation = [
+            "",
+            ""
+        ];
+        clippy.load('Clippy', function (agent) {
+            agent.show();
+            setInterval(function () {
+                agent.speak("Bla!");
+            }, 15000);
+            setInterval(function () {
+                agent.animate();
+            }, 8000);
+        });
     }
-    NavBarComponent = __decorate([
-        core_1.Component({
-            selector: 'navbar-component',
-            templateUrl: 'app/html/navbar.html'
-        }), 
-        __metadata('design:paramtypes', [clippy_service_1.Clippy])
-    ], NavBarComponent);
-    return NavBarComponent;
+    Clippy = __decorate([
+        core_1.Injectable(), 
+        __metadata('design:paramtypes', [])
+    ], Clippy);
+    return Clippy;
 }());
-exports.NavBarComponent = NavBarComponent;
-//# sourceMappingURL=navBar.component.js.map
+exports.Clippy = Clippy;
+//# sourceMappingURL=clippy.service.js.map
