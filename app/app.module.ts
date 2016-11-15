@@ -7,6 +7,7 @@ import { SidebarPatientsComponent } 		from './sidebarPatients.component';
 import { CanvasLoadingComponent } 			from "./canvasLoading.component";
 import { CanvasPatientOverviewComponent } 	from './canvasPatientOverview.component';
 import { CanvasPatientDetailComponent } 	from "./canvasPatientDetail.component";
+import { DiagramComponent } 				from "./diagram.component";
 import { DefaultComponent } 				from './default.component';
 import { PageNotFoundComponent } 			from './pageNotFound.component';
 import { FhirProvider } 					from './fhirProvider.service';
@@ -16,7 +17,7 @@ import { routing, appRoutingProvider }  	from './app.routing';
 @NgModule({
 	imports: [ BrowserModule, routing ],
 	providers: [ appRoutingProvider, FhirProvider ],
-	declarations: [ AppComponent, SidebarLoadingComponent, SidebarPatientsComponent, NavBarComponent, CanvasLoadingComponent, CanvasPatientOverviewComponent, CanvasPatientDetailComponent, DefaultComponent, PageNotFoundComponent ],
+	declarations: [ AppComponent, SidebarLoadingComponent, SidebarPatientsComponent, NavBarComponent, CanvasLoadingComponent, CanvasPatientOverviewComponent, CanvasPatientDetailComponent, DiagramComponent, DefaultComponent, PageNotFoundComponent ],
 	bootstrap: [ AppComponent ]
 })
 export class AppModule {

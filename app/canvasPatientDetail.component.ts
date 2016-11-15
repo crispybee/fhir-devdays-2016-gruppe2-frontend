@@ -12,19 +12,19 @@ export class CanvasPatientDetailComponent {
 	data: string[] = [];
 
 	constructor(private fhirProvider: FhirProvider) {
-		this.canvasDetailTitle = "Blood sugar";
-		this.sectionTitle = "Latest blood sugar values";
+		this.canvasDetailTitle = "Patient Name Placeholder";
+		this.sectionTitle = "Latest X values";
 
 		fhirProvider.getObservations().subscribe(data => {
 			console.log(data);
 
-			for (let i = 0; i < data.length; i++) {
-				let observation = <fhir.Observation>data[i].resource;
-				let comments: string = observation.comments;
-				let observationCode: string = observation.code.coding[0].display;
-
-				this.data.push(observationCode);
-			}
+			// for (let i = 0; i < data.length; i++) {
+			// 	let observation = <fhir.Observation>data[i].resource;
+			// 	let comments: string = observation.comments;
+			// 	let observationCode: string = observation.code.coding[0].display;
+            //
+			// 	this.data.push(observationCode);
+			// }
 		});
 	}
 }

@@ -12,19 +12,19 @@ var core_1 = require('@angular/core');
 var fhirProvider_service_1 = require("./fhirProvider.service");
 var CanvasPatientDetailComponent = (function () {
     function CanvasPatientDetailComponent(fhirProvider) {
-        var _this = this;
         this.fhirProvider = fhirProvider;
         this.data = [];
-        this.canvasDetailTitle = "Blood sugar";
-        this.sectionTitle = "Latest blood sugar values";
+        this.canvasDetailTitle = "Patient Name Placeholder";
+        this.sectionTitle = "Latest X values";
         fhirProvider.getObservations().subscribe(function (data) {
             console.log(data);
-            for (var i = 0; i < data.length; i++) {
-                var observation = data[i].resource;
-                var comments = observation.comments;
-                var observationCode = observation.code.coding[0].display;
-                _this.data.push(observationCode);
-            }
+            // for (let i = 0; i < data.length; i++) {
+            // 	let observation = <fhir.Observation>data[i].resource;
+            // 	let comments: string = observation.comments;
+            // 	let observationCode: string = observation.code.coding[0].display;
+            //
+            // 	this.data.push(observationCode);
+            // }
         });
     }
     CanvasPatientDetailComponent = __decorate([
