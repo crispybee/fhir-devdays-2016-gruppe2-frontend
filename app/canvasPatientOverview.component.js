@@ -16,8 +16,10 @@ var CanvasPatientOverviewComponent = (function () {
         var _this = this;
         this.fhirProvider = fhirProvider;
         this.router = router;
+        this.canvasOverviewTitle = "Loading...";
+        this.sectionTitle = "Loading...";
         this.patientFirstName = "Loading...";
-        this.patientLastName = "";
+        this.patientLastName = "Loading...";
         this.patientText = "Loading...";
         this.patientTextStatus = "Loading...";
         this.patientId = "Loading...";
@@ -27,13 +29,12 @@ var CanvasPatientOverviewComponent = (function () {
         this.patientLastUpdated = "Loading...";
         this.patientProfileUrl = "Loading...";
         this.patientVersionId = "Loading...";
-        this.sectionTitle = "Personal Data";
+        this.sectionTitle = "Medical Data:";
         router.queryParams.subscribe(function (queryId) {
             var id = queryId['identifier'];
             console.log("queryParams:", queryId);
             fhirProvider.getPatient(id).subscribe(function (data) {
                 var patient = data[0].resource;
-                _this.canvasOverviewTitle = patient.resourceType + ":";
                 _this.patientFirstName = patient.name[0].given[0];
                 _this.patientLastName = patient.name[0].family[0];
                 _this.patientText = patient.text.div;
@@ -45,9 +46,15 @@ var CanvasPatientOverviewComponent = (function () {
                 _this.patientLastUpdated = patient.meta.lastUpdated;
                 _this.patientProfileUrl = patient.meta.profile[0];
                 _this.patientVersionId = patient.meta.versionId;
+                _this.canvasOverviewTitle = patient.resourceType + ": " + _this.patientFirstName + " " + _this.patientLastName + " (ID: " + _this.patientId + ")";
+                _this.patientTextContainer.nativeElement.innerHTML = _this.patientText;
             });
         });
     }
+    __decorate([
+        core_1.ViewChild('patientTextContainer'), 
+        __metadata('design:type', core_1.ElementRef)
+    ], CanvasPatientOverviewComponent.prototype, "patientTextContainer", void 0);
     CanvasPatientOverviewComponent = __decorate([
         core_1.Component({
             selector: 'canvas-overview-component',
