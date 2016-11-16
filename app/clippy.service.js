@@ -11,32 +11,34 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var Clippy = (function () {
     function Clippy() {
-        this.importantInformation = [
-            "It is FHIR alarm, we call it a burnt area",
-            "SMART is the hot news",
-            "Bald ist FHIRabend",
-            "Irish Interoperability Projects - FHIReland",
-            "FHIR!I am the god of hell fire and I bring you:\n\t\tFHIR!\n\t\tI'll take you to burn.\n\t\tFHIR!\n\t\tI'll take you to learn.\n\t\tI'll see you burn!",
-            "Is it hot in here? Wait...it's just me...",
-            "Set a hospital on FHIR and it will be hot",
-            "....and it burns, burns, burns...the ring of FHIR....the ring of FHIR....",
-            "A FHIR cannot kill a dragon!",
-            "Daenerys stormborn of the house Targaryen, the first of her name, the unburnt queen of meereen, queen of the andals and the rhoynar and the FHIR",
-            "Everyone in the jury will get 50€ if we win :)",
-            "the hotter you are, the faster we come",
-            "friendly FHIR",
-            "Don't play with FHIR"
-        ];
         clippy.load('Clippy', function (agent) {
+            var importantInformation = [
+                "It is FHIR alarm?",
+                "SMART is the hot news",
+                "Bald ist FHIRabend",
+                "Irish Interoperability Projects - FHIReland",
+                "FHIR! I am the god of hell fire and I bring you:\n\t\t\t\t FHIR!\n\t\t\t\t I'll take you to burn.\n\t\t\t\t FHIR!\n\t\t\t\t I'll take you to learn.\n\t\t\t\t I'll see you burn!",
+                "Is it hot in here? Wait...it's just me...",
+                "....and it burns, burns, burns...the ring of FHIR....the ring of FHIR....",
+                // "Daenerys stormborn of the house Targaryen, the first of her name, the unburnt queen of meereen, queen of the andals and the rhoynar and the FHIR",
+                "Everyone in the jury will get 50€ if we win :)",
+                "the hotter you are, the faster we come",
+                "Friendly FHIR",
+                "Don't play with FHIR"
+            ];
             agent.show();
             setInterval(function () {
-                agent.speak("Bla!");
+                agent.speak(importantInformation[Math.floor(Math.random() * importantInformation.length) + 0]);
             }, 15000);
             setInterval(function () {
                 agent.animate();
             }, 8000);
         });
     }
+    Clippy.prototype.randomInt = function (min, max) {
+        var randomNumber = Math.floor((Math.random() * max) + min);
+        return randomNumber;
+    };
     Clippy = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [])
