@@ -26,7 +26,7 @@ var DiagramComponent = (function () {
         this.allObservationsOfPatient = [];
         this.observationsCleanedList = [];
         this.date = "";
-        this.value = "";
+        this.value = 0;
         this.reference = "";
         this.text = "Not specified";
         this.referenceToPatient = "";
@@ -67,6 +67,7 @@ var DiagramComponent = (function () {
             _this.labels = [];
             _this.datasets = [];
             _this.options = {
+                maintainAspectRatio: true,
                 responsive: true,
                 tooltips: {
                     mode: 'index',
@@ -97,6 +98,7 @@ var DiagramComponent = (function () {
             _this.config.data.labels = _this.labels;
             _this.config.data.datasets = _this.datasets;
             _this.config.options = _this.options;
+            _this.chart.update();
         });
     }
     DiagramComponent.prototype.fillProperties = function (obsRes) {
@@ -104,7 +106,7 @@ var DiagramComponent = (function () {
             this.date = obsRes.issued.toString();
         }
         if (typeof obsRes.valueQuantity.value !== 'undefined') {
-            this.value = obsRes.valueQuantity.value;
+            this.value = parseFloat(obsRes.valueQuantity.value.toString());
         }
         if (typeof obsRes.referenceRange !== 'undefined') {
             this.reference = obsRes.referenceRange[0];
@@ -115,51 +117,57 @@ var DiagramComponent = (function () {
     };
     DiagramComponent.prototype.fillDatasets = function (observationList, datasets) {
         for (var i = 0; i < observationList.length; i++) {
-            if (observationList[i].value !== "") {
-                var currentOb = observationList[i];
-                this.labels.push(currentOb.date);
-                console.log("date " + observationList[i].date);
-                console.log("DATASET:");
-                console.log(datasets);
-                console.log(datasets.length);
-                var datasetsize = datasets.length;
-                //check if there is already data
-                if (datasetsize > 0) {
-                    for (var h = 0; h < datasetsize; h++) {
-                        //check if there is already data with same label
-                        if (datasets[h].label === currentOb.text) {
-                            datasets[h].data.push(currentOb.value);
-                            console.log("YAY");
-                        }
-                        else {
-                            datasets.push({
-                                label: currentOb.text,
-                                fill: false,
-                                backgroundColor: "rgba(0, 155, 0, 1)",
-                                borderColor: "rgba(155, 0, 0, 1)",
-                                data: [currentOb.value]
-                            });
-                        }
+            var currentOb = observationList[i];
+            this.labels.push(currentOb.date);
+            // console.log("date " + observationList[i].date);
+            // console.log("DATASET:");
+            // console.log(datasets);
+            // console.log(datasets.length);
+            var datasetsize = datasets.length;
+            //check if there is already data
+            if (datasetsize > 0) {
+                for (var h = 0; h < datasetsize; h++) {
+                    //check if there is already data with same label
+                    if (datasets[h].label === currentOb.text) {
+                        datasets[h].data.push(currentOb.value);
+                        console.log("YAY");
+                    }
+                    else {
+                        datasets.push({
+                            label: currentOb.text,
+                            fill: false,
+                            backgroundColor: "rgba(0, 155, 0, 1)",
+                            borderColor: "rgba(155, 0, 0, 1)",
+                            data: [0, currentOb.value],
+                            showLine: true,
+                            onResize: function () { },
+                        });
+                        console.log("YAY");
                     }
                 }
-                else {
-                    datasets.push({
-                        label: currentOb.text,
-                        fill: false,
-                        backgroundColor: "rgba(0, 0, 155, 1)",
-                        borderColor: "rgba(155, 0, 0, 1)",
-                        data: [currentOb.value]
-                    });
-                }
+            }
+            else {
+                datasets.push({
+                    label: currentOb.text,
+                    fill: false,
+                    backgroundColor: "rgba(0, 0, 155, 1)",
+                    borderColor: "rgba(155, 0, 0, 1)",
+                    data: [0, currentOb.value],
+                    showLine: true,
+                    onResize: function () { },
+                });
+                console.log("YAY");
             }
         }
+        //this.chart.resize(this.chart.render, true);
     };
     DiagramComponent.prototype.ngAfterViewInit = function () {
         this.canvas = this.canvasRef.nativeElement;
         this.canvas.height = 200;
         var context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
-        this.chart.update();
+        //this.chart.resize(this.chart.render, true);
+        //(this.chart.update();
     };
     __decorate([
         core_1.ViewChild('canvas'), 
