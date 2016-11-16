@@ -226,7 +226,6 @@ export class DiagramComponent {
 
     ngAfterViewInit() {
         this.canvas = this.canvasRef.nativeElement;
-        this.canvas.height = 400;
         let context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
 

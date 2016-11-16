@@ -180,7 +180,6 @@ var DiagramComponent = (function () {
     };
     DiagramComponent.prototype.ngAfterViewInit = function () {
         this.canvas = this.canvasRef.nativeElement;
-        this.canvas.height = 400;
         var context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
     };
