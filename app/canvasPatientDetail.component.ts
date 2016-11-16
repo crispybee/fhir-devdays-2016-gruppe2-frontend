@@ -6,8 +6,7 @@ import {DiagramComponent} from "./diagram.component";
 
 @Component({
 	selector: 'canvas-detail-component',
-	templateUrl: 'app/html/canvasDetail.html',
-	directives: [DiagramComponent]
+	templateUrl: 'app/html/canvasDetail.html'
 })
 export class CanvasPatientDetailComponent {
 	canvasDetailTitle: string;
