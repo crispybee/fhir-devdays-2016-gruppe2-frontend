@@ -11,6 +11,7 @@ export class CanvasPatientDetailComponent {
 	canvasDetailTitle: string;
 	sectionTitle: string;
 	data: string[] = [];
+	patientId: string;
 
 	constructor(private fhirProvider: FhirProvider, router: ActivatedRoute) {
 		this.canvasDetailTitle = "Patient Name Placeholder";
@@ -31,6 +32,8 @@ export class CanvasPatientDetailComponent {
 		router.queryParams.subscribe(queryId => {
 			let id: string = queryId['identifier'];
 			console.log("Given patient ID:", queryId);
+
+			this.patientId = id;
 
 			fhirProvider.getPatient(id).subscribe(data => {
 				let patient = <fhir.Patient>data[0].resource;

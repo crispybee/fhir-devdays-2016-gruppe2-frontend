@@ -3,7 +3,7 @@
                 outlets: {
                     'canvas': ['canvas', 'canvas-patient-overview']
                 }
-            }]" routerLinkActive="active"></a>&nbsp; {{canvasDetailTitle}}</h1>
+            }]" [queryParams]="{ identifier: patientId }" routerLinkActive="active"></a>&nbsp; {{canvasDetailTitle}}</h1>
 
     <div class="col-md-6">
         <h4>Daten:</h4>

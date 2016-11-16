@@ -13,6 +13,7 @@ var fhirProvider_service_1 = require("./fhirProvider.service");
 var router_1 = require("@angular/router");
 var CanvasPatientDetailComponent = (function () {
     function CanvasPatientDetailComponent(fhirProvider, router) {
+        var _this = this;
         this.fhirProvider = fhirProvider;
         this.data = [];
         this.canvasDetailTitle = "Patient Name Placeholder";
@@ -30,6 +31,7 @@ var CanvasPatientDetailComponent = (function () {
         router.queryParams.subscribe(function (queryId) {
             var id = queryId['identifier'];
             console.log("Given patient ID:", queryId);
+            _this.patientId = id;
             fhirProvider.getPatient(id).subscribe(function (data) {
                 var patient = data[0].resource;
                 console.log("Patient with ID " + id, patient);
