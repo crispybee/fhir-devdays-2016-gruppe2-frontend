@@ -12,7 +12,7 @@ var core_1 = require("@angular/core");
 var Rx_1 = require("rxjs/Rx");
 var FhirProvider = (function () {
     function FhirProvider() {
-        // serviceURL:string = 'https://fhir-open-api-dstu2.smarthealthit.org';
+        // serviceURL: string = 'https://fhir-open-api-dstu2.smarthealthit.org';
         this.serviceURL = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
         this.init(this.serviceURL);
     }
