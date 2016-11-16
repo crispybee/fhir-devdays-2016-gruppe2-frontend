@@ -9,7 +9,8 @@ declare var jQuery:any;
 export class FhirProvider {
 
     // serviceURL:string = 'https://fhir-open-api-dstu2.smarthealthit.org';
-    serviceURL:string = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
+	serviceURL:string = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
+	// serviceURL:string = 'http://172.31.3.123:8080/baseDstu2';
     smart:any;
 
     constructor() {
@@ -26,7 +27,7 @@ export class FhirProvider {
         return Observable.fromPromise(deferred.promise());
     }
 
-    protected handleError(error:Error) {
+    protected handleError(error: Error) {
         // in a real world app, we may send the error to some remote logging infrastructure
         // instead of just logging it to the console
         console.error(error);
@@ -74,6 +75,15 @@ export class FhirProvider {
 			type: "Patient", query: {
                 _profile: "http://hl7.no/fhir/StructureDefinition/LabPatientNorway"
             }
+		})).map(res => <fhir.BundleEntry[]> res.data.entry)
+			.catch(this.handleError);
+	}
+
+	public getPatient(patientId: string): Observable<fhir.BundleEntry[]> {
+		return this.deferredToObservable(this.smart.api.search({
+			type: "Patient", query: {
+				_id: patientId
+			}
 		})).map(res => <fhir.BundleEntry[]> res.data.entry)
 			.catch(this.handleError);
 	}

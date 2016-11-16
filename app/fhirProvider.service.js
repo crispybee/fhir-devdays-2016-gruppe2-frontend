@@ -71,6 +71,14 @@ var FhirProvider = (function () {
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
+    FhirProvider.prototype.getPatient = function (patientId) {
+        return this.deferredToObservable(this.smart.api.search({
+            type: "Patient", query: {
+                _id: patientId
+            }
+        })).map(function (res) { return res.data.entry; })
+            .catch(this.handleError);
+    };
     /**
      * Initializes the smart on fhir client
      *
