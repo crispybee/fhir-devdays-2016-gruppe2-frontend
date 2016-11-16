@@ -31,8 +31,8 @@ var SidebarPatientsComponent = (function () {
                 var lastName = patient.name[0].family[0];
                 var firstName = patient.name[0].given[0];
                 var text = patient.name[0].text;
-                var identifier = patient.identifier[0].value;
-                _this.dataPool.push(new sidebarSearchFilter_service_1.Entry(firstName + " " + lastName, identifier));
+                var id = patient.id;
+                _this.dataPool.push(new sidebarSearchFilter_service_1.Entry(firstName + " " + lastName, id));
             }
         });
         this.shownDataPool = this.dataPool;

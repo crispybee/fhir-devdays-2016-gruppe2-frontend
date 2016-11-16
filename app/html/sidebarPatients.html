@@ -9,9 +9,9 @@
         <li *ngFor="let entry of shownDataPool">
             <a [routerLink]="['/', {
                 outlets: {
-                    'canvas': ['canvas', 'canvas-patient-overview', { identifier: entry.identifier }]
+                    'canvas': ['canvas', 'canvas-patient-overview']
                 }
-            }]">{{entry.description}}
+            }]" [queryParams]="{ identifier: entry.id }">{{entry.description}}
             </a>
         </li>
     </ul>

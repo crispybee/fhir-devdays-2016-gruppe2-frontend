@@ -1,6 +1,20 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">{{canvasOverviewTitle}}</h1>
 
+            <div class="row">
+                <h4>{{patientFirstName}}</h4>
+                <h4>{{patientLastName}}</h4>
+                <h4>{{patientText}}</h4>
+                <h4>{{patientTextStatus}}</h4>
+                <h4>{{patientId}}</h4>
+                <h4>{{patientIdentifier}}</h4>
+                <h4>{{patientIdentifier2}}</h4>
+                <h4>{{patientIdentifier3}}</h4>
+                <h4>{{patientLastUpdated}}</h4>
+                <h4>{{patientProfileUrl}}</h4>
+                <h4>{{patientVersionId}}</h4>
+            </div>
+
           <div class="row placeholders">
             <div class="col-xs-6 col-sm-3 placeholder">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto corporis culpa dolorem ea error eveniet, expedita in ipsam itaque labore minus modi nesciunt officiis quisquam, repellendus similique tempora, vel voluptate?
@@ -20,6 +34,6 @@
                 outlets: {
                     'canvas': ['canvas', 'canvas-patient-detail']
                 }
-            }]">Show Details
+            }]" [queryParams]="{ identifier: patientId }">Show Details
             </a>
         </div>

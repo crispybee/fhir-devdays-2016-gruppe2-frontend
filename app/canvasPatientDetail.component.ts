@@ -1,5 +1,6 @@
 import { Component } 	from '@angular/core';
 import { FhirProvider } from "./fhirProvider.service";
+import {ActivatedRoute} from "@angular/router";
 
 
 @Component({
@@ -10,8 +11,9 @@ export class CanvasPatientDetailComponent {
 	canvasDetailTitle: string;
 	sectionTitle: string;
 	data: string[] = [];
+	patientId: string;
 
-	constructor(private fhirProvider: FhirProvider) {
+	constructor(private fhirProvider: FhirProvider, router: ActivatedRoute) {
 		this.canvasDetailTitle = "Patient Name Placeholder";
 		this.sectionTitle = "Latest X values";
 
@@ -25,6 +27,23 @@ export class CanvasPatientDetailComponent {
             //
 			// 	this.data.push(observationCode);
 			// }
+		});
+
+		router.queryParams.subscribe(queryId => {
+			let id: string = queryId['identifier'];
+			console.log("Given patient ID:", queryId);
+
+			this.patientId = id;
+
+			fhirProvider.getPatient(id).subscribe(data => {
+				let patient = <fhir.Patient>data[0].resource;
+
+				console.log("Patient with ID " + id, patient);
+
+				fhirProvider.getObservationsByPatientId(this.patientId).subscribe(data => {
+					console.log("All Observations having a reference to patient ID " + this.patientId, data);
+				})
+			});
 		});
 	}
 }

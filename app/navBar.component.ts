@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Clippy} from "./clippy.service";
 
 
 @Component({
@@ -8,7 +9,7 @@ import { Component } from '@angular/core';
 export class NavBarComponent {
     navBarTitle: string;
 
-    constructor() {
+    constructor(private clippy: Clippy) {
         this.navBarTitle = "Dr. Gregory House";
     }
 }

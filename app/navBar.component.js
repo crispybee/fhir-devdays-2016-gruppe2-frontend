@@ -9,8 +9,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var clippy_service_1 = require("./clippy.service");
 var NavBarComponent = (function () {
-    function NavBarComponent() {
+    function NavBarComponent(clippy) {
+        this.clippy = clippy;
         this.navBarTitle = "Dr. Gregory House";
     }
     NavBarComponent = __decorate([
@@ -18,7 +20,7 @@ var NavBarComponent = (function () {
             selector: 'navbar-component',
             templateUrl: 'app/html/navbar.html'
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [clippy_service_1.Clippy])
     ], NavBarComponent);
     return NavBarComponent;
 }());

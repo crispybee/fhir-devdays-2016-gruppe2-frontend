@@ -31,9 +31,9 @@ export class SidebarPatientsComponent {
 				let lastName: string = patient.name[0].family[0];
 				let firstName: string = patient.name[0].given[0];
 				let text: string = patient.name[0].text;
-				let identifier: string = patient.identifier[0].value;
+				let id: string = patient.id;
 
-				this.dataPool.push(new Entry(firstName + " " + lastName, identifier));
+				this.dataPool.push(new Entry(firstName + " " + lastName, id));
 			}
 		});
 
