@@ -39,6 +39,10 @@ export class CanvasPatientDetailComponent {
 				let patient = <fhir.Patient>data[0].resource;
 
 				console.log("Patient with ID " + id, patient);
+
+				fhirProvider.getObservationsByPatientId(this.patientId).subscribe(data => {
+					console.log("All Observations having a reference to patient ID " + this.patientId, data);
+				})
 			});
 		});
 	}

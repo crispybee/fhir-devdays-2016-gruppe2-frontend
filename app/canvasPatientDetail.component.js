@@ -35,6 +35,9 @@ var CanvasPatientDetailComponent = (function () {
             fhirProvider.getPatient(id).subscribe(function (data) {
                 var patient = data[0].resource;
                 console.log("Patient with ID " + id, patient);
+                fhirProvider.getObservationsByPatientId(_this.patientId).subscribe(function (data) {
+                    console.log("All Observations having a reference to patient ID " + _this.patientId, data);
+                });
             });
         });
     }

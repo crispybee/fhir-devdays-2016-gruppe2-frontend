@@ -52,6 +52,24 @@ export class FhirProvider {
             .catch(this.handleError);
     }
 
+	/**
+	 * Gives back all Observations which contain a reference to the patientId. Returns undefined if there aren't any.
+	 *
+	 * @param patientId
+	 * @returns {Observable<fhir.BundleEntry>}
+	 */
+    public getObservationsByPatientId(patientId: string): Observable<fhir.BundleEntry[]> {
+		return this.deferredToObservable(this.smart.api.search({
+			type: "Observation", query: {
+				_profile: "http://hl7.no/fhir/StructureDefinition/LabObservationNorway",
+				patient: {
+						_id: patientId
+					}
+				}
+		})).map(res => <fhir.BundleEntry[]> res.data.entry)
+			.catch(this.handleError);
+	}
+
     public getOrganizations():Observable<fhir.BundleEntry[]> {
         return this.deferredToObservable(this.smart.api.search({
             type: "Organization", query: {

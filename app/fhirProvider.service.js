@@ -47,6 +47,23 @@ var FhirProvider = (function () {
         })).map(function (res) { return res.data.entry; })
             .catch(this.handleError);
     };
+    /**
+     * Gives back all Observations which contain a reference to the patientId. Returns undefined if there aren't any.
+     *
+     * @param patientId
+     * @returns {Observable<fhir.BundleEntry>}
+     */
+    FhirProvider.prototype.getObservationsByPatientId = function (patientId) {
+        return this.deferredToObservable(this.smart.api.search({
+            type: "Observation", query: {
+                _profile: "http://hl7.no/fhir/StructureDefinition/LabObservationNorway",
+                patient: {
+                    _id: patientId
+                }
+            }
+        })).map(function (res) { return res.data.entry; })
+            .catch(this.handleError);
+    };
     FhirProvider.prototype.getOrganizations = function () {
         return this.deferredToObservable(this.smart.api.search({
             type: "Organization", query: {
