@@ -25,7 +25,6 @@ var DiagramComponent = (function () {
         var _this = this;
         this.allObservationsOfPatient = [];
         this.observationsCleanedList = [];
-        this.date = "";
         this.value = 0;
         this.reference = "";
         this.text = "Not specified";
@@ -38,25 +37,24 @@ var DiagramComponent = (function () {
             },
             options: {}
         };
+        console.log("Patient id");
+        console.log(this.patientId);
         fhirProvider.getObservations().subscribe(function (data) {
             for (var i = 0; i < data.length; i++) {
                 var obsRes = data[i].resource;
                 //if (obsRes.subject.reference === this.referenceToPatient) {
                 _this.allObservationsOfPatient.push(obsRes);
             }
+            console.log("all observations");
+            console.log(_this.allObservationsOfPatient);
             for (var j = 0; j < _this.allObservationsOfPatient.length; j++) {
                 var observation = _this.allObservationsOfPatient[j];
                 if (typeof observation.valueQuantity !== "undefined") {
-                    // if (observation.status == "preliminary") {
-                    // 	this.fillProperties(observation);
-                    // 	let obs: OneObservationCleaned = new OneObservationCleaned(
-                    // 		this.date,
-                    // 		this.value,
-                    // 		this.reference,
-                    // 		this.text);
-                    //
-                    // 	this.observationsCleanedList.push(obs);
-                    // }
+                    if (observation.status == "preliminary") {
+                        _this.fillProperties(observation);
+                        var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
+                        _this.observationsCleanedList.push(obs);
+                    }
                     if (observation.status == "final") {
                         _this.fillProperties(observation);
                         var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
@@ -82,17 +80,27 @@ var DiagramComponent = (function () {
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'date'
-                            }
+                                labelString: 'date',
+                                type: 'linear'
+                            },
+                            scaleOverride: true,
+                            scaleSteps: 10,
+                            scaleStepWidth: 50,
+                            scaleStartValue: 0
                         }],
                     yAxes: [{
                             display: true,
                             scaleLabel: {
                                 display: true,
-                                labelString: 'value'
-                            }
+                                labelString: 'value',
+                                type: 'linear'
+                            },
+                            scaleOverride: true,
+                            scaleSteps: 10,
+                            scaleStepWidth: 50,
+                            scaleStartValue: 0
                         }]
-                }
+                },
             };
             _this.fillDatasets(_this.observationsCleanedList, _this.datasets);
             _this.config.data.labels = _this.labels;
@@ -103,7 +111,7 @@ var DiagramComponent = (function () {
     }
     DiagramComponent.prototype.fillProperties = function (obsRes) {
         if (typeof obsRes.issued !== 'undefined') {
-            this.date = obsRes.issued.toString();
+            this.date = Date.parse(obsRes.issued.toString());
         }
         if (typeof obsRes.valueQuantity.value !== 'undefined') {
             this.value = parseFloat(obsRes.valueQuantity.value.toString());
@@ -111,64 +119,67 @@ var DiagramComponent = (function () {
         if (typeof obsRes.referenceRange !== 'undefined') {
             this.reference = obsRes.referenceRange[0];
         }
-        if (typeof obsRes.code.text !== 'undefined') {
-            this.text = obsRes.code.text;
+        if (typeof obsRes.code.coding[0].display !== 'undefined') {
+            this.text = obsRes.code.coding[0].display + " in " + obsRes.valueQuantity.unit.toString();
         }
     };
     DiagramComponent.prototype.fillDatasets = function (observationList, datasets) {
         for (var i = 0; i < observationList.length; i++) {
             var currentOb = observationList[i];
             this.labels.push(currentOb.date);
-            // console.log("date " + observationList[i].date);
-            // console.log("DATASET:");
-            // console.log(datasets);
-            // console.log(datasets.length);
             var datasetsize = datasets.length;
             //check if there is already data
             if (datasetsize > 0) {
                 for (var h = 0; h < datasetsize; h++) {
                     //check if there is already data with same label
-                    if (datasets[h].label === currentOb.text) {
-                        datasets[h].data.push(currentOb.value);
-                        console.log("YAY");
+                    if (this.datasets[h].label === currentOb.text) {
+                        this.datasets[h].data.push(currentOb.value);
+                        console.log(currentOb.text);
+                        console.log(this.datasets);
+                        console.log("YAY 1");
                     }
                     else {
-                        datasets.push({
+                        var color = "rgba(" + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + ", 1)";
+                        this.datasets.push({
                             label: currentOb.text,
                             fill: false,
-                            backgroundColor: "rgba(0, 155, 0, 1)",
-                            borderColor: "rgba(155, 0, 0, 1)",
-                            data: [0, currentOb.value],
+                            backgroundColor: color,
+                            borderColor: color,
+                            data: [currentOb.value],
                             showLine: true,
-                            onResize: function () { },
                         });
-                        console.log("YAY");
+                        console.log(currentOb.text);
+                        console.log(this.datasets);
+                        console.log("YAY 2");
                     }
                 }
             }
             else {
-                datasets.push({
+                var color = "rgba(" + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + ", 1)";
+                this.datasets.push({
                     label: currentOb.text,
                     fill: false,
-                    backgroundColor: "rgba(0, 0, 155, 1)",
-                    borderColor: "rgba(155, 0, 0, 1)",
-                    data: [0, currentOb.value],
+                    backgroundColor: color,
+                    borderColor: color,
+                    data: [currentOb.value],
                     showLine: true,
-                    onResize: function () { },
                 });
-                console.log("YAY");
+                console.log(currentOb.text);
+                console.log(this.datasets);
+                console.log("YAY 3");
             }
         }
-        //this.chart.resize(this.chart.render, true);
     };
     DiagramComponent.prototype.ngAfterViewInit = function () {
         this.canvas = this.canvasRef.nativeElement;
-        this.canvas.height = 200;
+        this.canvas.height = 500;
         var context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
-        //this.chart.resize(this.chart.render, true);
-        //(this.chart.update();
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], DiagramComponent.prototype, "patientId", void 0);
     __decorate([
         core_1.ViewChild('canvas'), 
         __metadata('design:type', core_1.ElementRef)

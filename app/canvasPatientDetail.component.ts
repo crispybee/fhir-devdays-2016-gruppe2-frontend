@@ -1,11 +1,13 @@
 import { Component } 	from '@angular/core';
 import { FhirProvider } from "./fhirProvider.service";
 import {ActivatedRoute} from "@angular/router";
+import {DiagramComponent} from "./diagram.component";
 
 
 @Component({
 	selector: 'canvas-detail-component',
-	templateUrl: 'app/html/canvasDetail.html'
+	templateUrl: 'app/html/canvasDetail.html',
+	directives: [DiagramComponent]
 })
 export class CanvasPatientDetailComponent {
 	canvasDetailTitle: string;

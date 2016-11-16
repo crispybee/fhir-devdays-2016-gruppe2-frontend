@@ -11,6 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var fhirProvider_service_1 = require("./fhirProvider.service");
 var router_1 = require("@angular/router");
+var diagram_component_1 = require("./diagram.component");
 var CanvasPatientDetailComponent = (function () {
     function CanvasPatientDetailComponent(fhirProvider, router) {
         var _this = this;
@@ -44,7 +45,8 @@ var CanvasPatientDetailComponent = (function () {
     CanvasPatientDetailComponent = __decorate([
         core_1.Component({
             selector: 'canvas-detail-component',
-            templateUrl: 'app/html/canvasDetail.html'
+            templateUrl: 'app/html/canvasDetail.html',
+            directives: [diagram_component_1.DiagramComponent]
         }), 
         __metadata('design:paramtypes', [fhirProvider_service_1.FhirProvider, router_1.ActivatedRoute])
     ], CanvasPatientDetailComponent);
