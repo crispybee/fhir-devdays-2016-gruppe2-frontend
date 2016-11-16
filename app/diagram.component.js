@@ -98,6 +98,7 @@ var DiagramComponent = (function () {
             _this.config.data.labels = _this.labels;
             _this.config.data.datasets = _this.datasets;
             _this.config.options = _this.options;
+            _this.chart.update();
         });
     }
     DiagramComponent.prototype.fillProperties = function (obsRes) {

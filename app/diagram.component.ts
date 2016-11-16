@@ -120,6 +120,7 @@ export class DiagramComponent {
         this.config.data.labels = this.labels;
         this.config.data.datasets = this.datasets;
         this.config.options = this.options;
+        this.chart.update();
 		});
     }
 
@@ -197,6 +198,7 @@ export class DiagramComponent {
         this.chart = new Chart(context, this.config);
         //this.chart.resize(this.chart.render, true);
         //(this.chart.update();
+       
     }
 
 }
