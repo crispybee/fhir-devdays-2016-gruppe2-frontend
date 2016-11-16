@@ -1,16 +1,17 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {FhirProvider} from "./fhirProvider.service";
 import Observation = fhir.Observation;
+import decimal = fhir.decimal;
 
 declare var Chart: any;
 
 export class OneObservationCleaned {
     public date: string;
-    public value: any;
+    public value: decimal;
     public referenceRange: any;
     public text: string;
 
-    constructor(date: string, value: any, referenceRange: any, text: string) {
+    constructor(date: string, value: decimal, referenceRange: any, text: string) {
         this.date = date;
         this.value = value;
         this.referenceRange = referenceRange;
@@ -31,7 +32,7 @@ export class DiagramComponent {
 	public allObservationsOfPatient: fhir.Observation[] = [];
 	public observationsCleanedList: OneObservationCleaned[] = [];
 	date: string = "";
-	value: any = "";
+	value: decimal = 0;
 	reference: any = "";
 	text: any = "Not specified";
 	referenceToPatient: string = "";
@@ -87,6 +88,7 @@ export class DiagramComponent {
         this.labels = [];
         this.datasets = [];
         this.options = {
+            maintainAspectRatio: true,
             responsive: true,
             tooltips: {
                 mode: 'index',
@@ -114,6 +116,7 @@ export class DiagramComponent {
             }
         };
         this.fillDatasets(this.observationsCleanedList, this.datasets);
+
         this.config.data.labels = this.labels;
         this.config.data.datasets = this.datasets;
         this.config.options = this.options;
@@ -126,7 +129,7 @@ export class DiagramComponent {
 			this.date = obsRes.issued.toString();
 		}
 		if (typeof obsRes.valueQuantity.value !== 'undefined') {
-			this.value = obsRes.valueQuantity.value;
+			this.value = parseFloat(obsRes.valueQuantity.value.toString());
 		}
 		if (typeof obsRes.referenceRange !== 'undefined') {
 			this.reference = obsRes.referenceRange[0];
@@ -138,14 +141,13 @@ export class DiagramComponent {
 
     fillDatasets(observationList: OneObservationCleaned[], datasets:any[]) {
         for (let i = 0; i < observationList.length; i++) {
-            if (observationList[i].value !== "") {
                 let currentOb = observationList[i];
                 this.labels.push(currentOb.date);
 
-                console.log("date " + observationList[i].date);
-				console.log("DATASET:");
-				console.log(datasets);
-				console.log(datasets.length);
+                // console.log("date " + observationList[i].date);
+				// console.log("DATASET:");
+				// console.log(datasets);
+				// console.log(datasets.length);
 
                 let datasetsize = datasets.length;
                 //check if there is already data
@@ -163,8 +165,11 @@ export class DiagramComponent {
                                 fill: false,
                                 backgroundColor: "rgba(0, 155, 0, 1)",
                                 borderColor: "rgba(155, 0, 0, 1)",
-                                data: [currentOb.value]
-                            });
+                                data: [0,currentOb.value],
+                                showLine:true,
+                                onResize:function(){},
+                            })
+                            console.log("YAY");
                         }
                     }
                 }
@@ -175,11 +180,14 @@ export class DiagramComponent {
                         fill: false,
                         backgroundColor: "rgba(0, 0, 155, 1)",
                         borderColor: "rgba(155, 0, 0, 1)",
-                        data: [currentOb.value]
+                        data: [0,currentOb.value],
+                        showLine:true,
+                        onResize:function(){},
                     });
+                    console.log("YAY");
                 }
             }
-        }
+        //this.chart.resize(this.chart.render, true);
     }
 
     ngAfterViewInit() {
@@ -187,7 +195,8 @@ export class DiagramComponent {
         this.canvas.height = 200;
         let context = this.canvas.getContext('2d');
         this.chart = new Chart(context, this.config);
-        this.chart.update();
+        //this.chart.resize(this.chart.render, true);
+        //(this.chart.update();
     }
 
 }
