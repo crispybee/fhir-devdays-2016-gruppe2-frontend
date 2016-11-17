@@ -15,22 +15,22 @@ export class OneObservationCleaned {
     public text: string;
     public status: string;
 
-    
+
 
     constructor(date: string, value: decimal, referenceRange: any, text: string) {
         this.date = date;
         this.value = value;
         this.referenceRange = referenceRange;
         this.text = text;
-        
+
         if( value>= this.referenceRange.high && this.referenceRange.value.high!=  null)
-       {console.log("high");
-   status="high";}
-       else if(value <= this.referenceRange.low && this.referenceRange.low != null)
-       {console.log("low");
-    status="low";}
-       else{console.log("normal")
-   status="normal";}
+        {console.log("high");
+            status="high";}
+        else if(value <= this.referenceRange.low && this.referenceRange.low != null)
+        {console.log("low");
+            status="low";}
+        else{console.log("normal")
+            status="normal";}
 
     }
 }
@@ -68,96 +68,92 @@ export class DiagramComponent {
     };
 
     constructor(fhirProvider: FhirProvider) {
-        console.log("Patient Id in under component");
-        console.log(this.patientId);
 
         fhirProvider.getObservations().subscribe(data => {
 
             fhirProvider.getObservationsByPatientId(this.patientId).subscribe(data2 => {
                 if (data2 != null) {
 
-                            for (let i = 0; i < data.length; i++) {
-                                let obsRes = <fhir.Observation>data[i].resource;
-                                this.allObservationsOfPatient.push(obsRes)
+                    for (let i = 0; i < data.length; i++) {
+                        let obsRes = <fhir.Observation>data[i].resource;
+                        this.allObservationsOfPatient.push(obsRes)
+                    }
+
+                    console.log("all observations");
+                    console.log(this.allObservationsOfPatient);
+
+                    for (let j = 0; j < this.allObservationsOfPatient.length; j++) {
+                        let observation: fhir.Observation = this.allObservationsOfPatient[j];
+                        if (observation.valueQuantity) {
+                            // if (observation.status == "preliminary") {
+                            //     this.fillProperties(observation);
+                            //     let obs: OneObservationCleaned = new OneObservationCleaned(
+                            //         this.date,
+                            //         this.value,
+                            //         this.reference,
+                            //         this.text);
+                            //
+                            //     this.observationsCleanedList.push(obs);
+                            // }
+                            if (observation.status == "final") {
+                                this.fillProperties(observation);
+                                let obs: OneObservationCleaned = new OneObservationCleaned(
+                                    this.date,
+                                    this.value,
+                                    this.reference,
+                                    this.text);
+
+                                this.observationsCleanedList.push(obs);
                             }
-                            console.log("Patient Id in under component");
-                            console.log(this.patientId);
+                        }
+                    }
 
-                            console.log("all observations");
-                            console.log(this.allObservationsOfPatient);
-
-                            for (let j = 0; j < this.allObservationsOfPatient.length; j++) {
-                                let observation: fhir.Observation = this.allObservationsOfPatient[j];
-                                if (typeof observation.valueQuantity !== "undefined") {
-                                    if (observation.status == "preliminary") {
-                                        this.fillProperties(observation);
-                                        let obs: OneObservationCleaned = new OneObservationCleaned(
-                                            this.date,
-                                            this.value,
-                                            this.reference,
-                                            this.text);
-
-                                        this.observationsCleanedList.push(obs);
-                                    }
-                                    if (observation.status == "final") {
-                                        this.fillProperties(observation);
-                                        let obs: OneObservationCleaned = new OneObservationCleaned(
-                                            this.date,
-                                            this.value,
-                                            this.reference,
-                                            this.text);
-
-                                        this.observationsCleanedList.push(obs);
-                                    }
-                                }
-                            }
-
-                            this.labels = [];
-                            this.datasets = [];
-                            this.options = {
-                                maintainAspectRatio: true,
-                                responsive: true,
-                                tooltips: {
-                                    mode: 'index',
-                                    intersect: false,
+                    this.labels = [];
+                    this.datasets = [];
+                    this.options = {
+                        maintainAspectRatio: true,
+                        responsive: true,
+                        tooltips: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        },
+                        scales: {
+                            xAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'date',
+                                    type: 'linear'
                                 },
-                                hover: {
-                                    mode: 'nearest',
-                                    intersect: true
+                                scaleOverride: true,
+                                scaleSteps: 10,
+                                scaleStepWidth: 50,
+                                scaleStartValue: 0
+                            }],
+                            yAxes: [{
+                                display: true,
+                                scaleLabel: {
+                                    display: true,
+                                    labelString: 'value',
+                                    type: 'linear'
                                 },
-                                scales: {
-                                    xAxes: [{
-                                        display: true,
-                                        scaleLabel: {
-                                            display: true,
-                                            labelString: 'date',
-                                            type: 'linear'
-                                        },
-                                        scaleOverride: true,
-                                        scaleSteps: 10,
-                                        scaleStepWidth: 50,
-                                        scaleStartValue: 0
-                                    }],
-                                    yAxes: [{
-                                        display: true,
-                                        scaleLabel: {
-                                            display: true,
-                                            labelString: 'value',
-                                            type: 'linear'
-                                        },
-                                        scaleOverride: true,
-                                        scaleSteps: 10,
-                                        scaleStepWidth: 50,
-                                        scaleStartValue: 0
-                                    }]
-                                },
+                                scaleOverride: true,
+                                scaleSteps: 10,
+                                scaleStepWidth: 50,
+                                scaleStartValue: 0
+                            }]
+                        },
 
-                            };
-                            this.fillDatasets(this.observationsCleanedList, this.datasets);
-                            this.config.data.labels = this.labels;
-                            this.config.data.datasets = this.datasets;
-                            this.config.options = this.options;
-                            this.chart.update();
+                    };
+                    this.fillDatasets(this.observationsCleanedList, this.datasets);
+                    this.config.data.labels = this.labels;
+                    this.config.data.datasets = this.datasets;
+                    this.config.options = this.options;
+                    this.chart.update();
 
 
                 }
@@ -165,23 +161,21 @@ export class DiagramComponent {
 
 
         });
-        console.log("Patient Id in under component tief");
-        console.log(this.patientId);
     }
 
 
     fillProperties(obsRes: fhir.Observation) {
-        if (typeof obsRes.issued !== 'undefined') {
+        if (obsRes.issued) {
             this.date = Date.parse(obsRes.issued.toString());
 
         }
-        if (typeof obsRes.valueQuantity.value !== 'undefined') {
+        if ( obsRes.valueQuantity.value) {
             this.value = parseFloat(obsRes.valueQuantity.value.toString());
         }
-        if (typeof obsRes.referenceRange !== 'undefined') {
+        if (obsRes.referenceRange ) {
             this.reference = obsRes.referenceRange[0];
         }
-        if (typeof obsRes.code.coding[0].display !== 'undefined') {
+        if ( obsRes.code) {
             this.text = obsRes.code.coding[0].display + " in " + obsRes.valueQuantity.unit.toString();
         }
     }
@@ -194,16 +188,24 @@ export class DiagramComponent {
             //check if there is already data
             if (datasetsize > 0) {
                 for (let h = 0; h < datasetsize; h++) {
+                    let contained:boolean;
+                    for (let k = 0; k < datasetsize; k++) {
+                        if (!contained) {
+                            if (datasets[k].label === currentOb.text) {
+                                contained = true;
+                            }
+                        }
+                    }
                     //check if there is already data with same label
-                    if (this.datasets[h].label.toString() == currentOb.text.toString()) {
-                        this.datasets[h].data.push(currentOb.value);
-                        console.log(currentOb.text);
-                        console.log(this.datasets);
+                    if (contained) {
+                        datasets[h].data.push(currentOb.value);
                         console.log("YAY 1");
+                        console.log(currentOb.text);
+                        console.log(datasets);
 
                     } else {
                         let color: string = "rgba(" + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + ", 1)";
-                        this.datasets.push({
+                        datasets.push({
                             label: currentOb.text,
                             fill: false,
                             backgroundColor: color,
@@ -211,15 +213,16 @@ export class DiagramComponent {
                             data: [currentOb.value],
                             showLine: true,
                         });
-                        console.log(currentOb.text);
-                        console.log(this.datasets);
+
                         console.log("YAY 2");
+                        console.log(currentOb.text);
+                        console.log(datasets);
                     }
                 }
             }
             else {
                 let color: string = "rgba(" + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + ", 1)";
-                this.datasets.push({
+                datasets.push({
                     label: currentOb.text,
                     fill: false,
                     backgroundColor: color,
@@ -227,9 +230,10 @@ export class DiagramComponent {
                     data: [currentOb.value],
                     showLine: true,
                 });
-                console.log(currentOb.text);
-                console.log(this.datasets);
+
                 console.log("YAY 3");
+                console.log(currentOb.text);
+                console.log(datasets);
             }
         }
         this.labels.sort((n1,n2) => {
@@ -239,7 +243,6 @@ export class DiagramComponent {
             if (n1 < n2) {
                 return -1;
             }
-
             return 0;
         });
 
