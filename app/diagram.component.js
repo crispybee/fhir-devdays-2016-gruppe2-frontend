@@ -50,8 +50,6 @@ var DiagramComponent = (function () {
             },
             options: {}
         };
-        console.log("Patient Id in under component");
-        console.log(this.patientId);
         fhirProvider.getObservations().subscribe(function (data) {
             fhirProvider.getObservationsByPatientId(_this.patientId).subscribe(function (data2) {
                 if (data2 != null) {
@@ -59,18 +57,21 @@ var DiagramComponent = (function () {
                         var obsRes = data[i].resource;
                         _this.allObservationsOfPatient.push(obsRes);
                     }
-                    console.log("Patient Id in under component");
-                    console.log(_this.patientId);
                     console.log("all observations");
                     console.log(_this.allObservationsOfPatient);
                     for (var j = 0; j < _this.allObservationsOfPatient.length; j++) {
                         var observation = _this.allObservationsOfPatient[j];
-                        if (typeof observation.valueQuantity !== "undefined") {
-                            if (observation.status == "preliminary") {
-                                _this.fillProperties(observation);
-                                var obs = new OneObservationCleaned(0, _this.date, _this.value, _this.reference, _this.text);
-                                _this.observationsCleanedList.push(obs);
-                            }
+                        if (observation.valueQuantity) {
+                            // if (observation.status == "preliminary") {
+                            //     this.fillProperties(observation);
+                            //     let obs: OneObservationCleaned = new OneObservationCleaned(
+                            //         this.date,
+                            //         this.value,
+                            //         this.reference,
+                            //         this.text);
+                            //
+                            //     this.observationsCleanedList.push(obs);
+                            // }
                             if (observation.status == "final") {
                                 _this.fillProperties(observation);
                                 var obs = new OneObservationCleaned(0, _this.date, _this.value, _this.reference, _this.text);
@@ -126,20 +127,18 @@ var DiagramComponent = (function () {
                 }
             });
         });
-        console.log("Patient Id in under component tief");
-        console.log(this.patientId);
     }
     DiagramComponent.prototype.fillProperties = function (obsRes) {
-        if (typeof obsRes.issued !== 'undefined') {
+        if (obsRes.issued) {
             this.date = Date.parse(obsRes.issued.toString());
         }
-        if (typeof obsRes.valueQuantity.value !== 'undefined') {
+        if (obsRes.valueQuantity.value) {
             this.value = parseFloat(obsRes.valueQuantity.value.toString());
         }
-        if (typeof obsRes.referenceRange !== 'undefined') {
+        if (obsRes.referenceRange) {
             this.reference = obsRes.referenceRange[0];
         }
-        if (typeof obsRes.code.coding[0].display !== 'undefined') {
+        if (obsRes.code) {
             this.text = obsRes.code.coding[0].display + " in " + obsRes.valueQuantity.unit.toString();
         }
     };
@@ -151,16 +150,24 @@ var DiagramComponent = (function () {
             //check if there is already data
             if (datasetsize > 0) {
                 for (var h = 0; h < datasetsize; h++) {
+                    var contained = void 0;
+                    for (var k = 0; k < datasetsize; k++) {
+                        if (!contained) {
+                            if (datasets[k].label === currentOb.text) {
+                                contained = true;
+                            }
+                        }
+                    }
                     //check if there is already data with same label
-                    if (this.datasets[h].label.toString() == currentOb.text.toString()) {
-                        this.datasets[h].data.push(currentOb.value);
-                        console.log(currentOb.text);
-                        console.log(this.datasets);
+                    if (contained) {
+                        datasets[h].data.push(currentOb.value);
                         console.log("YAY 1");
+                        console.log(currentOb.text);
+                        console.log(datasets);
                     }
                     else {
                         var color = "rgba(" + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + ", 1)";
-                        this.datasets.push({
+                        datasets.push({
                             label: currentOb.text,
                             fill: false,
                             backgroundColor: color,
@@ -168,15 +175,15 @@ var DiagramComponent = (function () {
                             data: [currentOb.value],
                             showLine: true,
                         });
-                        console.log(currentOb.text);
-                        console.log(this.datasets);
                         console.log("YAY 2");
+                        console.log(currentOb.text);
+                        console.log(datasets);
                     }
                 }
             }
             else {
                 var color = "rgba(" + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + "," + Math.floor(Math.random() * 256) + ", 1)";
-                this.datasets.push({
+                datasets.push({
                     label: currentOb.text,
                     fill: false,
                     backgroundColor: color,
@@ -184,9 +191,9 @@ var DiagramComponent = (function () {
                     data: [currentOb.value],
                     showLine: true,
                 });
-                console.log(currentOb.text);
-                console.log(this.datasets);
                 console.log("YAY 3");
+                console.log(currentOb.text);
+                console.log(datasets);
             }
         }
         this.labels.sort(function (n1, n2) {
