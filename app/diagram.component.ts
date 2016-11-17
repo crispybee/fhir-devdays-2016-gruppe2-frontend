@@ -9,6 +9,7 @@ import integer = fhir.integer;
 declare var Chart: any;
 
 export class OneObservationCleaned {
+	public counter: number;
     public date: any;
     public value: decimal;
     public referenceRange: any;
@@ -17,7 +18,8 @@ export class OneObservationCleaned {
 
     
 
-    constructor(date: string, value: decimal, referenceRange: any, text: string) {
+    constructor(counter: number, date: string, value: decimal, referenceRange: any, text: string) {
+		this.counter = counter;
         this.date = date;
         this.value = value;
         this.referenceRange = referenceRange;
@@ -94,6 +96,7 @@ export class DiagramComponent {
                                     if (observation.status == "preliminary") {
                                         this.fillProperties(observation);
                                         let obs: OneObservationCleaned = new OneObservationCleaned(
+                                            0,
                                             this.date,
                                             this.value,
                                             this.reference,
@@ -104,6 +107,7 @@ export class DiagramComponent {
                                     if (observation.status == "final") {
                                         this.fillProperties(observation);
                                         let obs: OneObservationCleaned = new OneObservationCleaned(
+                                            0,
                                             this.date,
                                             this.value,
                                             this.reference,

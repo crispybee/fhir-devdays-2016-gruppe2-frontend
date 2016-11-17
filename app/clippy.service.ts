@@ -11,7 +11,7 @@ export class Clippy {
 		clippy.load('Clippy', function (agent) {
 
 			let importantInformation: string[] = [
-				"It is FHIR alarm?",
+				"Is there a FHIR alarm?",
 				"SMART is the hot news",
 				"Bald ist FHIRabend",
 				"Irish Interoperability Projects - FHIReland",

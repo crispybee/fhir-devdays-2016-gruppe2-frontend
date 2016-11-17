@@ -11,13 +11,60 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var fhirProvider_service_1 = require("./fhirProvider.service");
 var router_1 = require("@angular/router");
+var diagram_component_1 = require("./diagram.component");
 var CanvasPatientDetailComponent = (function () {
     function CanvasPatientDetailComponent(fhirProvider, router) {
         var _this = this;
         this.fhirProvider = fhirProvider;
         this.data = [];
+        this.allObservationsOfPatient = [];
+        this.allObservationsCleaned = [];
         this.canvasDetailTitle = "Patient Name Placeholder";
-        this.sectionTitle = "Latest X values";
+        this.sectionTitle = "Observations:";
+        router.queryParams.subscribe(function (queryId) {
+            var id = queryId['identifier'];
+            console.log("Given patient ID:", queryId);
+            _this.patientId = id;
+            fhirProvider.getPatient(id).subscribe(function (data) {
+                var patient = data[0].resource;
+                console.log("Patient with ID " + id, patient);
+                _this.canvasDetailTitle = patient.name[0].given[0] + " " + patient.name[0].family[0];
+                fhirProvider.getObservationsByPatientId(_this.patientId).subscribe(function (observationData) {
+                    console.log("All Observations having a reference to patient ID " + _this.patientId, observationData);
+                    if (observationData != null) {
+                        for (var i = 0; i < observationData.length; i++) {
+                            var obsRes = observationData[i].resource;
+                            //if (obsRes.subject.reference === this.referenceToPatient) {
+                            _this.allObservationsOfPatient.push(obsRes);
+                        }
+                        console.log("Patient Id in under component");
+                        console.log(_this.patientId);
+                        console.log("all observations");
+                        console.log(_this.allObservationsOfPatient);
+                        for (var i = 0; i < _this.allObservationsOfPatient.length; i++) {
+                            var date = void 0;
+                            var value = void 0;
+                            var reference = void 0;
+                            var text = void 0;
+                            if (typeof _this.allObservationsOfPatient[i].issued !== 'undefined') {
+                                date = Date.parse(_this.allObservationsOfPatient[i].issued.toString());
+                            }
+                            if (typeof _this.allObservationsOfPatient[i].valueQuantity.value !== 'undefined') {
+                                value = parseFloat(_this.allObservationsOfPatient[i].valueQuantity.value.toString());
+                            }
+                            if (typeof _this.allObservationsOfPatient[i].referenceRange !== 'undefined') {
+                                reference = _this.allObservationsOfPatient[i].referenceRange[0];
+                            }
+                            if (_this.allObservationsOfPatient[i].code) {
+                                text = _this.allObservationsOfPatient[i].code.coding[0].display + " in " + _this.allObservationsOfPatient[i].valueQuantity.unit.toString();
+                            }
+                            _this.allObservationsCleaned.push(new diagram_component_1.OneObservationCleaned(i + 1, date, value, reference, text));
+                        }
+                        console.log("LISTE: ", _this.allObservationsCleaned);
+                    }
+                });
+            });
+        });
         fhirProvider.getObservations().subscribe(function (data) {
             console.log(data);
             // for (let i = 0; i < data.length; i++) {
@@ -27,18 +74,6 @@ var CanvasPatientDetailComponent = (function () {
             //
             // 	this.data.push(observationCode);
             // }
-        });
-        router.queryParams.subscribe(function (queryId) {
-            var id = queryId['identifier'];
-            console.log("Given patient ID:", queryId);
-            _this.patientId = id;
-            fhirProvider.getPatient(id).subscribe(function (data) {
-                var patient = data[0].resource;
-                console.log("Patient with ID " + id, patient);
-                fhirProvider.getObservationsByPatientId(_this.patientId).subscribe(function (data) {
-                    console.log("All Observations having a reference to patient ID " + _this.patientId, data);
-                });
-            });
         });
     }
     CanvasPatientDetailComponent = __decorate([
