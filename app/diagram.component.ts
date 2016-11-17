@@ -65,9 +65,7 @@ export class DiagramComponent {
 
                             for (let i = 0; i < data.length; i++) {
                                 let obsRes = <fhir.Observation>data[i].resource;
-                                //if (obsRes.subject.reference === this.referenceToPatient) {
-                                this.allObservationsOfPatient.push(obsRes);
-                                //}
+                                this.allObservationsOfPatient.push(obsRes)
                             }
                             console.log("Patient Id in under component");
                             console.log(this.patientId);
@@ -184,7 +182,7 @@ export class DiagramComponent {
             if (datasetsize > 0) {
                 for (let h = 0; h < datasetsize; h++) {
                     //check if there is already data with same label
-                    if (this.datasets[h].label === currentOb.text) {
+                    if (this.datasets[h].label.toString() == currentOb.text.toString()) {
                         this.datasets[h].data.push(currentOb.value);
                         console.log(currentOb.text);
                         console.log(this.datasets);
@@ -221,6 +219,16 @@ export class DiagramComponent {
                 console.log("YAY 3");
             }
         }
+        this.labels.sort((n1,n2) => {
+            if (n1 > n2) {
+                return 1;
+            }
+            if (n1 < n2) {
+                return -1;
+            }
+
+            return 0;
+        });
 
     }
 
