@@ -18,7 +18,6 @@ var SidebarPatientsComponent = (function () {
         this.searchList = new sidebarSearchFilter_service_1.SidebarSearchFilter;
         this.dataPool = [];
         this.shownDataPool = [];
-        this.dataPool.push(new sidebarSearchFilter_service_1.Entry('Local dummy patient', 'dummyIdentifier'));
         fhirProvider.getDiagnosticReports().subscribe(function (data) {
             var diagnosticReportResource = data[0].resource;
             console.log("Diagnostic Report:");

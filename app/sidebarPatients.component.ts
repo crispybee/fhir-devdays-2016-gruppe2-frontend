@@ -14,7 +14,6 @@ export class SidebarPatientsComponent {
 	shownDataPool: Entry[] = [];
 
 	constructor(private fhirProvider: FhirProvider) {
-		this.dataPool.push(new Entry('Local dummy patient', 'dummyIdentifier'));
 
 		fhirProvider.getDiagnosticReports().subscribe(data => {
 			let diagnosticReportResource: fhir.DiagnosticReport = <fhir.DiagnosticReport>data[0].resource;
