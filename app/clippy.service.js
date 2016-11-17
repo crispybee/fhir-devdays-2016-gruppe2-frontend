@@ -13,7 +13,7 @@ var Clippy = (function () {
     function Clippy() {
         clippy.load('Clippy', function (agent) {
             var importantInformation = [
-                "It is FHIR alarm?",
+                "Is there a FHIR alarm?",
                 "SMART is the hot news",
                 "Bald ist FHIRabend",
                 "Irish Interoperability Projects - FHIReland",

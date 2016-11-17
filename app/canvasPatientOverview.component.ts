@@ -1,8 +1,7 @@
-import { Component } from '@angular/core';
+import {Component, ViewChild, ElementRef} from '@angular/core';
 import integer = fhir.integer;
-import {Entry} from "./sidebarSearchFilter.service";
 import {FhirProvider} from "./fhirProvider.service";
-import {Router, ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 
 
 @Component({
@@ -10,10 +9,13 @@ import {Router, ActivatedRoute} from "@angular/router";
     templateUrl: 'app/html/canvasOverview.html'
 })
 export class CanvasPatientOverviewComponent {
-    canvasOverviewTitle: string;
-    sectionTitle: string;
+
+	@ViewChild('patientTextContainer') patientTextContainer: ElementRef;
+
+    canvasOverviewTitle: string = "Loading...";
+    sectionTitle: string = "Loading...";
     patientFirstName: string = "Loading...";
-    patientLastName: string = "";
+    patientLastName: string = "Loading...";
     patientText: string = "Loading...";
 	patientTextStatus: string = "Loading...";
 	patientId: string = "Loading...";
@@ -26,7 +28,7 @@ export class CanvasPatientOverviewComponent {
 
 
     constructor(private fhirProvider: FhirProvider, private router: ActivatedRoute) {
-        this.sectionTitle = "Personal Data";
+        this.sectionTitle = "Medical Data:";
 
 		router.queryParams.subscribe(queryId => {
 			let id: string = queryId['identifier'];
@@ -35,7 +37,6 @@ export class CanvasPatientOverviewComponent {
 			fhirProvider.getPatient(id).subscribe(data => {
 				let patient = <fhir.Patient>data[0].resource;
 
-				this.canvasOverviewTitle = patient.resourceType + ":";
 				this.patientFirstName = patient.name[0].given[0];
 				this.patientLastName = patient.name[0].family[0];
 				this.patientText = patient.text.div;
@@ -47,7 +48,8 @@ export class CanvasPatientOverviewComponent {
 				this.patientLastUpdated = patient.meta.lastUpdated;
 				this.patientProfileUrl = patient.meta.profile[0];
 				this.patientVersionId = patient.meta.versionId;
-
+				this.canvasOverviewTitle = patient.resourceType + ": " + this.patientFirstName + " " + this.patientLastName + " (ID: " + this.patientId + ")";
+				this.patientTextContainer.nativeElement.innerHTML = this.patientText;
 			});
 		});
     }

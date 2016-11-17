@@ -9,6 +9,7 @@ import integer = fhir.integer;
 declare var Chart: any;
 
 export class OneObservationCleaned {
+	public counter: number;
     public date: any;
     public value: decimal;
     public referenceRange: any;
@@ -17,7 +18,8 @@ export class OneObservationCleaned {
 
 
 
-    constructor(date: string, value: decimal, referenceRange: any, text: string) {
+    constructor(counter: number, date: string, value: decimal, referenceRange: any, text: string) {
+		this.counter = counter;
         this.date = date;
         this.value = value;
         this.referenceRange = referenceRange;
@@ -74,36 +76,42 @@ export class DiagramComponent {
             fhirProvider.getObservationsByPatientId(this.patientId).subscribe(data2 => {
                 if (data2 != null) {
 
-                    for (let i = 0; i < data.length; i++) {
-                        let obsRes = <fhir.Observation>data[i].resource;
-                        this.allObservationsOfPatient.push(obsRes)
-                    }
+                            for (let i = 0; i < data.length; i++) {
+                                let obsRes = <fhir.Observation>data[i].resource;
+                                this.allObservationsOfPatient.push(obsRes)
+                            }
+                            console.log("Patient Id in under component");
+                            console.log(this.patientId);
 
-                    console.log("all observations");
-                    console.log(this.allObservationsOfPatient);
+                            console.log("all observations");
+                            console.log(this.allObservationsOfPatient);
 
-                    for (let j = 0; j < this.allObservationsOfPatient.length; j++) {
-                        let observation: fhir.Observation = this.allObservationsOfPatient[j];
-                        if (observation.valueQuantity) {
-                            // if (observation.status == "preliminary") {
-                            //     this.fillProperties(observation);
-                            //     let obs: OneObservationCleaned = new OneObservationCleaned(
-                            //         this.date,
-                            //         this.value,
-                            //         this.reference,
-                            //         this.text);
-                            //
-                            //     this.observationsCleanedList.push(obs);
-                            // }
-                            if (observation.status == "final") {
-                                this.fillProperties(observation);
-                                let obs: OneObservationCleaned = new OneObservationCleaned(
-                                    this.date,
-                                    this.value,
-                                    this.reference,
-                                    this.text);
+                            for (let j = 0; j < this.allObservationsOfPatient.length; j++) {
+                                let observation: fhir.Observation = this.allObservationsOfPatient[j];
+                                if (typeof observation.valueQuantity !== "undefined") {
+                                    if (observation.status == "preliminary") {
+                                        this.fillProperties(observation);
+                                        let obs: OneObservationCleaned = new OneObservationCleaned(
+                                            0,
+                                            this.date,
+                                            this.value,
+                                            this.reference,
+                                            this.text);
 
-                                this.observationsCleanedList.push(obs);
+                                        this.observationsCleanedList.push(obs);
+                                    }
+                                    if (observation.status == "final") {
+                                        this.fillProperties(observation);
+                                        let obs: OneObservationCleaned = new OneObservationCleaned(
+                                            0,
+                                            this.date,
+                                            this.value,
+                                            this.reference,
+                                            this.text);
+
+                                        this.observationsCleanedList.push(obs);
+                                    }
+                                }
                             }
                         }
                     }

@@ -11,7 +11,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require('@angular/core');
 var fhirProvider_service_1 = require("./fhirProvider.service");
 var OneObservationCleaned = (function () {
-    function OneObservationCleaned(date, value, referenceRange, text) {
+    function OneObservationCleaned(counter, date, value, referenceRange, text) {
+        this.counter = counter;
         this.date = date;
         this.value = value;
         this.referenceRange = referenceRange;
@@ -67,12 +68,12 @@ var DiagramComponent = (function () {
                         if (typeof observation.valueQuantity !== "undefined") {
                             if (observation.status == "preliminary") {
                                 _this.fillProperties(observation);
-                                var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
+                                var obs = new OneObservationCleaned(0, _this.date, _this.value, _this.reference, _this.text);
                                 _this.observationsCleanedList.push(obs);
                             }
                             if (observation.status == "final") {
                                 _this.fillProperties(observation);
-                                var obs = new OneObservationCleaned(_this.date, _this.value, _this.reference, _this.text);
+                                var obs = new OneObservationCleaned(0, _this.date, _this.value, _this.reference, _this.text);
                                 _this.observationsCleanedList.push(obs);
                             }
                         }

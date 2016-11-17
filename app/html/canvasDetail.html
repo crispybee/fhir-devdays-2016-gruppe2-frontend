@@ -6,11 +6,11 @@
             }]" [queryParams]="{ identifier: patientId }" routerLinkActive="active"></a>&nbsp; {{canvasDetailTitle}}</h1>
 
     <div class="col-md-6">
-        <h4>Daten:</h4>
+        <h4>Data:</h4>
         Lorem ipsum dolor sit amet, consectetur adipisicing elit. A eligendi incidunt iusto minus, molestias nemo perspiciatis quisquam reprehenderit soluta tenetur. Consequuntur corporis delectus illo incidunt numquam praesentium recusandae rem similique.
     </div>
     <div class="col-md-6">
-        <diagram-component [patientId]= "patientId">Loading Diagram...</diagram-component>
+        <diagram-component [patientId]="patientId">Loading Diagram...</diagram-component>
     </div>
 
 
@@ -21,36 +21,19 @@
             <thead>
             <tr>
                 <th>#</th>
-                <th>Header</th>
-                <th>Header</th>
-                <th>Header</th>
-                <th>Header</th>
+                <th>Date</th>
+                <th>Value</th>
+                <th>Reference range</th>
+                <th>Text</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let entry of data">
-                <td>{{entry}}</td>
-            </tr>
-            <tr>
-                <td>1,001</td>
-                <td>{{data[0]}}</td>
-                <td>{{data[1]}}</td>
-                <td>{{data[2]}}</td>
-                <td>{{data[3]}}</td>
-            </tr>
-            <tr>
-                <td>1,002</td>
-                <td>amet</td>
-                <td>consectetur</td>
-                <td>adipiscing</td>
-                <td>elit</td>
-            </tr>
-            <tr>
-                <td>1,003</td>
-                <td>Integer</td>
-                <td>nec</td>
-                <td>odio</td>
-                <td>Praesent</td>
+            <tr *ngFor="let entry of allObservationsCleaned">
+                <td>{{entry.counter}}</td>
+                <td>{{entry.date}}</td>
+                <td>{{entry.value}}</td>
+                <td>{{entry.reference}}</td>
+                <td>{{entry.text}}</td>
             </tr>
             </tbody>
         </table>
