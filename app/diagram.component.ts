@@ -76,8 +76,8 @@ export class DiagramComponent {
 			fhirProvider.getObservationsByPatientId(this.patientId).subscribe(data2 => {
 				if (data2 != null) {
 
-					for (let i = 0; i < data.length; i++) {
-						let obsRes = <fhir.Observation>data[i].resource;
+					for (let i = 0; i < data2.length; i++) {
+						let obsRes = <fhir.Observation>data2[i].resource;
 						this.allObservationsOfPatient.push(obsRes)
 					}
 

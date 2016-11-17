@@ -13,7 +13,9 @@ var Rx_1 = require("rxjs/Rx");
 var FhirProvider = (function () {
     function FhirProvider() {
         // serviceURL: string = 'https://fhir-open-api-dstu2.smarthealthit.org';
-        this.serviceURL = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
+        // serviceURL: string = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
+        // serviceURL: string = 'http://172.31.3.123:8080/baseDstu2';
+        this.serviceURL = "https://fhir.gecko.hs-heilbronn.de/baseDstu2";
         this.init(this.serviceURL);
     }
     /**

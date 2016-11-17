@@ -53,8 +53,8 @@ var DiagramComponent = (function () {
         fhirProvider.getObservations().subscribe(function (data) {
             fhirProvider.getObservationsByPatientId(_this.patientId).subscribe(function (data2) {
                 if (data2 != null) {
-                    for (var i = 0; i < data.length; i++) {
-                        var obsRes = data[i].resource;
+                    for (var i = 0; i < data2.length; i++) {
+                        var obsRes = data2[i].resource;
                         _this.allObservationsOfPatient.push(obsRes);
                     }
                     console.log("all observations");

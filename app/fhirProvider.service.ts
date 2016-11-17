@@ -9,9 +9,9 @@ declare var jQuery:any;
 export class FhirProvider {
 
     // serviceURL: string = 'https://fhir-open-api-dstu2.smarthealthit.org';
-	serviceURL: string = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
+	// serviceURL: string = 'https://fhir.iap.hs-heilbronn.de/baseDstu2';
 	// serviceURL: string = 'http://172.31.3.123:8080/baseDstu2';
-	// serviceURL: string = "https://fhir.gecko.hs-heilbronn.de/baseDstu2";
+	serviceURL: string = "https://fhir.gecko.hs-heilbronn.de/baseDstu2";
 	// serviceURL: string = "http://fhir2.healthintersections.com.au";
     smart:any;
 
