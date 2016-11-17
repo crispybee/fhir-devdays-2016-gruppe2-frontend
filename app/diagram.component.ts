@@ -13,12 +13,25 @@ export class OneObservationCleaned {
     public value: decimal;
     public referenceRange: any;
     public text: string;
+    public status: string;
+
+    
 
     constructor(date: string, value: decimal, referenceRange: any, text: string) {
         this.date = date;
         this.value = value;
         this.referenceRange = referenceRange;
         this.text = text;
+        
+        if( value>= this.referenceRange.high && this.referenceRange.value.high!=  null)
+       {console.log("high");
+   status="high";}
+       else if(value <= this.referenceRange.low && this.referenceRange.low != null)
+       {console.log("low");
+    status="low";}
+       else{console.log("normal")
+   status="normal";}
+
     }
 }
 

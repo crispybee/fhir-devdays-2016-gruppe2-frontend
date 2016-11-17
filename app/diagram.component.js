@@ -16,6 +16,18 @@ var OneObservationCleaned = (function () {
         this.value = value;
         this.referenceRange = referenceRange;
         this.text = text;
+        if (value >= this.referenceRange.high && this.referenceRange.value.high != null) {
+            console.log("high");
+            status = "high";
+        }
+        else if (value <= this.referenceRange.low && this.referenceRange.low != null) {
+            console.log("low");
+            status = "low";
+        }
+        else {
+            console.log("normal");
+            status = "normal";
+        }
     }
     return OneObservationCleaned;
 }());
