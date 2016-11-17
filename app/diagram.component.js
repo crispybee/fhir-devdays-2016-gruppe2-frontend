@@ -57,7 +57,6 @@ var DiagramComponent = (function () {
                 if (data2 != null) {
                     for (var i = 0; i < data.length; i++) {
                         var obsRes = data[i].resource;
-                        //if (obsRes.subject.reference === this.referenceToPatient) {
                         _this.allObservationsOfPatient.push(obsRes);
                     }
                     console.log("Patient Id in under component");
@@ -153,7 +152,7 @@ var DiagramComponent = (function () {
             if (datasetsize > 0) {
                 for (var h = 0; h < datasetsize; h++) {
                     //check if there is already data with same label
-                    if (this.datasets[h].label === currentOb.text) {
+                    if (this.datasets[h].label.toString() == currentOb.text.toString()) {
                         this.datasets[h].data.push(currentOb.value);
                         console.log(currentOb.text);
                         console.log(this.datasets);
@@ -190,6 +189,15 @@ var DiagramComponent = (function () {
                 console.log("YAY 3");
             }
         }
+        this.labels.sort(function (n1, n2) {
+            if (n1 > n2) {
+                return 1;
+            }
+            if (n1 < n2) {
+                return -1;
+            }
+            return 0;
+        });
     };
     DiagramComponent.prototype.ngAfterViewInit = function () {
         this.canvas = this.canvasRef.nativeElement;
